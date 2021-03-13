@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">Payment SDK</string>
+
+    <!--App Common text-->
+    <string name="app_common_go_back">Go Back</string>
+    <string name="app_common_next">Next</string>
+    <string name="app_common_confirm">Confirm</string>
+    <string name="app_common_agree">I AGREE</string>
+    <string name="app_common_accept">Accept</string>
+    <string name="app_common_decline">Decline</string>
+    <string name="app_common_cancel">Cancel</string>
+    <string name="app_common_failed">Failed</string>
+    <string name="app_common_done">Done</string>
+    <string name="app_common_api_error">Error Occurred</string>
+    <string name="app_common_try_again">Try Again</string>
+    <string name="app_common_invalid_response">Invalid response</string>
+    <string name="app_common_internet_not_connected">Internet not working properly. Please try again.</string>
+    <string name="app_common_settings">Settings</string>
+    <string name="app_common_or">Or</string>
+    <string name="app_common_error">Something went wrong!</string>
+    <string name="app_common_retry">Retry</string>
+    <string name="app_common_permission_acceptence">Permission acceptance</string>
+    <string name="app_common_permission_acceptence_success_message">Permission granted. Please try again</string>
+    <string name="app_common_permission_acceptence_fail_message">You must have to accept permission to continue</string>
+
+    <!--Alert Dialog Text-->
+    <string name="alert_dialog_common_validation_title">Whoops! Please find below errors -</string>
+    <string name="alert_dialog_common_validation_sub_title">Error while sending verification code to your mobile number. Please try again after some times</string>
+    <string name="alert_dialog_otp_miss_match">The entered OTP is not valid. Please use valid OTP to continue.</string>
+
+    <!--Policy list-->
+    <string name="password_check_list">Password checklist</string>
+    <string name="password_policy_length">Password should be at least 8 characters</string>
+    <string name="password_policy_lower_character">Add at least 1 lower letter</string>
+    <string name="password_policy_caps_character">Add at least 1 CAP letter</string>
+    <string name="password_policy_number_character">Add at least 1 number</string>
+    <string name="password_policy_special_character">Add at least 1 symbol (#, @, . , $)</string>
+
+    <!--Initial page Text-->
+    <string name="initial_page_initializing">Initializing</string>
+
+    <!--Payment page Text-->
+    <string name="payment_page_order_id">Order ID: %s</string>
+    <string name="payment_page_default_amount">0 IQD</string>
+    <string name="payment_page_pay_amount">%s IQD</string>
+    <string name="payment_page_pay_via">Pay via</string>
+    <string name="payment_page_mobile_number">Mobile Number</string>
+    <string name="payment_page_password">Password</string>
+    <string name="payment_page_i_accept_the">I accept the</string>
+    <string name="payment_page_terms_and_condition"><u>Terms &amp; Conditions</u></string>
+    <string name="payment_page_proceed_to_pay">Proceed to pay</string>
+    <string name="payment_page_generate_qr">Generate QR</string>
+    <string name="payment_page_qr_scan_title">Use another mobile or \nlet your friends &amp; family help</string>
+    <string name="payment_page_use_login">Use Login Credential</string>
+    <string name="payment_page_mobile_number_hint">XXX-XXX-XXXX</string>
+    <string name="payment_page_enter_your_password">Enter your password</string>
+    <string name="payment_page_qr_token_empty">QR token empty</string>
+    <string name="payment_page_payment_success">Payment Successful</string>
+    <string name="payment_page_back_to_app">Please wait while we take you back.</string>
+
+    <!--Terms Condition page Text-->
+    <string name="toc_page_title"><![CDATA[Terms & Conditions]]></string>
+    <string name="toc_page_text">Here are a few examples:  \n\n\nThe Intellectual Property disclosure will inform users that the contents, logo and other visual media you created is your property and is protected by copyright laws.  \n\nA Termination clause will inform that users’ accounts on your website and mobile app or users’ access to your website and mobile (if users can’t have an account with you) can be terminated in case of abuses or at your sole discretion. \nA Governing Law will inform users which laws govern the agreement. This should the country in which your company is headquartered or the country from which you operate your website and mobile app. \nA Links To Other Web Sites clause will inform users that you are not responsible for any third party websites that you link to. This kind of clause will generally inform users that they are responsible for reading and agreeing (or disagreeing) with the Terms and Conditions or Privacy Policies of these third parties.  \n\n\nIf your website or mobile app allows users to create content and make that content public to other users, a Content section will inform users that they own the rights to the content they have created. The “Content” clause usually mentions that users must give you (the website or mobile app developer) a license so that you can share this content on your website/mobile app and to make it available to other users.  \n\nBecause the content created by users is public to other users, a DMCA notice clause (or Copyright Infringement ) section is helpful to inform users and copyright authors that, if any content is found to be a copyright infringement, you will respond to any DMCA takedown notices received and you will take down the content.  \n\nA Limit What Users Can Do clause can inform users that by agreeing to use your service, they’re also agreeing to not do certain things. This can be part of a very long and thorough list in your Terms and Conditions agreements so as to encompass the most amount of negative uses. \n\nHere’s how 500px lists its prohibited activities:  Here are a few examples:  \n\n\nThe Intellectual Property disclosure will inform users that the contents, logo and other visual media you created is your property and is protected by copyright laws.  \n\nA Termination clause will inform that users’ accounts on your website and mobile app or users’ access to your website and mobile (if users can’t have an account with you) can be terminated in case of abuses or at your sole discretion. \nA Governing Law will inform users which laws govern the agreement. This should the country in which your company is headquartered or the country from which you operate your website and mobile app. \nA Links To Other Web Sites clause will inform users that you are not responsible for any third party websites that you link to. This kind of clause will generally inform users that they are responsible for reading and agreeing (or disagreeing) with the Terms and Conditions or Privacy Policies of these third parties.  \n\n\nIf your website or mobile app allows users to create content and make that content public to other users, a Content section will inform users that they own the rights to the content they have created. The “Content” clause usually mentions that users must give you (the website or mobile app developer) a license so that you can share this content on your website/mobile app and to make it available to other users.  \n\nBecause the content created by users is public to other users, a DMCA notice clause (or Copyright Infringement ) section is helpful to inform users and copyright authors that, if any content is found to be a copyright infringement, you will respond to any DMCA takedown notices received and you will take down the content.  \n\nA Limit What Users Can Do clause can inform users that by agreeing to use your service, they’re also agreeing to not do certain things. This can be part of a very long and thorough list in your Terms and Conditions agreements so as to encompass the most amount of negative uses. \n\nHere’s how 500px lists its prohibited activities:  Here are a few examples:  \n\n\nThe Intellectual Property disclosure will inform users that the contents, logo and other visual media you created is your property and is protected by copyright laws.  \n\nA Termination clause will inform that users’ accounts on your website and mobile app or users’ access to your website and mobile (if users can’t have an account with you) can be terminated in case of abuses or at your sole discretion. \nA Governing Law will inform users which laws govern the agreement. This should the country in which your company is headquartered or the country from which you operate your website and mobile app. \nA Links To Other Web Sites clause will inform users that you are not responsible for any third party websites that you link to. This kind of clause will generally inform users that they are responsible for reading and agreeing (or disagreeing) with the Terms and Conditions or Privacy Policies of these third parties.  \n\n\nIf your website or mobile app allows users to create content and make that content public to other users, a Content section will inform users that they own the rights to the content they have created. The “Content” clause usually mentions that users must give you (the website or mobile app developer) a license so that you can share this content on your website/mobile app and to make it available to other users.  \n\nBecause the content created by users is public to other users, a DMCA notice clause (or Copyright Infringement ) section is helpful to inform users and copyright authors that, if any content is found to be a copyright infringement, you will respond to any DMCA takedown notices received and you will take down the content.  \n\nA Limit What Users Can Do clause can inform users that by agreeing to use your service, they’re also agreeing to not do certain things. This can be part of a very long and thorough list in your Terms and Conditions agreements so as to encompass the most amount of negative uses. \n\nHere’s how 500px lists its prohibited activities:  Here are a few examples:  \n\n\nThe Intellectual Property disclosure will inform users that the contents, logo and other visual media you created is your property and is protected by copyright laws.  \n\nA Termination clause will inform that users’ accounts on your website and mobile app or users’ access to your website and mobile (if users can’t have an account with you) can be terminated in case of abuses or at your sole discretion. \nA Governing Law will inform users which laws govern the agreement. This should the country in which your company is headquartered or the country from which you operate your website and mobile app. \nA Links To Other Web Sites clause will inform users that you are not responsible for any third party websites that you link to. This kind of clause will generally inform users that they are responsible for reading and agreeing (or disagreeing) with the Terms and Conditions or Privacy Policies of these third parties.  \n\n\nIf your website or mobile app allows users to create content and make that content public to other users, a Content section will inform users that they own the rights to the content they have created. The “Content” clause usually mentions that users must give you (the website or mobile app developer) a license so that you can share this content on your website/mobile app and to make it available to other users.  \n\nBecause the content created by users is public to other users, a DMCA notice clause (or Copyright Infringement ) section is helpful to inform users and copyright authors that, if any content is found to be a copyright infringement, you will respond to any DMCA takedown notices received and you will take down the content.  \n\nA Limit What Users Can Do clause can inform users that by agreeing to use your service, they’re also agreeing to not do certain things. This can be part of a very long and thorough list in your Terms and Conditions agreements so as to encompass the most amount of negative uses. \n\nHere’s how 500px lists its prohibited activities:</string>
+
+    <!--Payment message Text-->
+    <string name="payment_message_initial_failed">Payment initialization failed</string>
+    <string name="payment_message_orderid_empty">Order id empty</string>
+    <string name="payment_message_order_amount_empty">Order amount empty</string>
+    <string name="payment_message_token_empty">Payment token empty</string>
+
+</resources>

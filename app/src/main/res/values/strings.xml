@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Merchant Pay</string>
+
+    <!--App Common text-->
+    <string name="app_common_go_back">Go Back</string>
+    <string name="app_common_next">Next</string>
+    <string name="app_common_confirm">Confirm</string>
+    <string name="app_common_agree">I AGREE</string>
+    <string name="app_common_accept">Accept</string>
+    <string name="app_common_decline">Decline</string>
+    <string name="app_common_cancel">Cancel</string>
+    <string name="app_common_failed">Failed</string>
+    <string name="app_common_done">Done</string>
+    <string name="app_common_api_error">Error Occurred</string>
+    <string name="app_common_try_again">Try Again</string>
+    <string name="app_common_internet_not_connected">Internet not working properly. Please try again.</string>
+    <string name="app_common_settings">Settings</string>
+    <string name="app_common_or">Or</string>
+    <string name="app_common_error">Something went wrong!</string>
+    <string name="app_common_retry">Retry</string>
+    <string name="app_common_pay">Pay</string>
+
+</resources>

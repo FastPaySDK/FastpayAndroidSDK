@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="@dimen/size_90dp"
+            android:layout_height="@dimen/size_90dp"
+            android:layout_marginTop="@dimen/size_90dp"
+            android:background="@color/colorWhiteIdentical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_fastpay_merchant" />
+
+        <com.fastpay.merchantsdk.view.custom.CustomEditText
+            android:id="@+id/orderIdEditText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_45dp"
+            android:layout_marginStart="@dimen/size_30dp"
+            android:layout_marginTop="@dimen/size_80dp"
+            android:layout_marginEnd="@dimen/size_30dp"
+            android:background="@color/colorBtnDarkLightColor"
+            android:hint="Enter order id"
+            android:inputType="numberDecimal"
+            android:paddingStart="@dimen/size_15dp"
+            android:paddingEnd="@dimen/size_15dp"
+            android:textColor="@color/colorBaseTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appLogo"
+            app:textStyle="Normal" />
+
+        <com.fastpay.merchantsdk.view.custom.CustomEditText
+            android:id="@+id/paymentAmountEditText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_45dp"
+            android:layout_marginStart="@dimen/size_30dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:layout_marginEnd="@dimen/size_30dp"
+            android:background="@color/colorBtnDarkLightColor"
+            android:hint="Enter amount"
+            android:inputType="numberDecimal"
+            android:paddingStart="@dimen/size_15dp"
+            android:paddingEnd="@dimen/size_15dp"
+            android:textColor="@color/colorBaseTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/orderIdEditText"
+            app:textStyle="Normal" />
+
+        <com.fastpay.merchantsdk.view.custom.CustomTextView
+            android:id="@+id/payBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30dp"
+            android:layout_marginTop="@dimen/size_35dp"
+            android:layout_marginEnd="@dimen/size_30dp"
+            android:background="@color/colorBtnSuccessColorDark"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingTop="@dimen/size_15dp"
+            android:paddingBottom="@dimen/size_15dp"
+            android:text="@string/app_common_pay"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/colorBtnTextColor"
+            android:textSize="@dimen/text_small_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/paymentAmountEditText"
+            app:textStyle="Medium" />
+
+        <com.fastpay.merchantsdk.view.custom.CustomView
+            android:id="@+id/custom_view"
+            android:layout_width="@dimen/size_90dp"
+            android:layout_height="@dimen/size_90dp"
+            android:layout_marginTop="@dimen/size_40dp"
+            android:background="@color/colorLightBlueTextColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payBtn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
