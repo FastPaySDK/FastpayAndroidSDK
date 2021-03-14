@@ -1,5 +1,20 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.fastpay.payment'
+            artifactId = 'library'
+            version = '1.1'
+        }
+    }
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -40,16 +55,16 @@ android {
     }
 
     flavorDimensions "environment"
-    productFlavors{
-        dev{
+    productFlavors {
+        dev {
             dimension "environment"
             buildConfigField("String", "BASE_URL", "\"https://dev-apigw-sdk.fast-pay.cash/\"")
         }
-        staging{
+        staging {
             dimension "environment"
             buildConfigField("String", "BASE_URL", "\"https://staging-apigw-sdk.fast-pay.cash/\"")
         }
-        production{
+        production {
             dimension "environment"
             buildConfigField("String", "BASE_URL", "\"https://apigw-sdk.fast-pay.cash/\"")
         }
