@@ -10,7 +10,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'com.fastpay.payment'
-            artifactId = 'library'
+            artifactId = 'lib'
             version = '1.1'
         }
     }
