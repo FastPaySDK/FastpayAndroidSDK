@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
-apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.fastpay.payment'
 version '1.0.0'
 
@@ -57,21 +56,21 @@ android {
         }
     }
 
-    flavorDimensions "environment"
-    productFlavors {
-        dev {
-            dimension "environment"
-            buildConfigField("String", "BASE_URL", "\"https://dev-apigw-sdk.fast-pay.cash/\"")
-        }
-        staging {
-            dimension "environment"
-            buildConfigField("String", "BASE_URL", "\"https://staging-apigw-sdk.fast-pay.cash/\"")
-        }
-        production {
-            dimension "environment"
-            buildConfigField("String", "BASE_URL", "\"https://apigw-sdk.fast-pay.cash/\"")
-        }
-    }
+//    flavorDimensions "environment"
+//    productFlavors {
+//        dev {
+//            dimension "environment"
+//            buildConfigField("String", "BASE_URL", "\"https://dev-apigw-sdk.fast-pay.cash/\"")
+//        }
+//        staging {
+//            dimension "environment"
+//            buildConfigField("String", "BASE_URL", "\"https://staging-apigw-sdk.fast-pay.cash/\"")
+//        }
+//        production {
+//            dimension "environment"
+//            buildConfigField("String", "BASE_URL", "\"https://apigw-sdk.fast-pay.cash/\"")
+//        }
+//    }
 }
 
 dependencies {
@@ -104,3 +103,5 @@ dependencies {
 
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
 }
+
+apply plugin: 'com.github.dcendents.android-maven'

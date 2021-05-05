@@ -60,7 +60,7 @@ public class ApiClient {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL + BuildConfig.API_VERSION)
+                .baseUrl("https://dev-apigw-sdk.fast-pay.cash/"/*BuildConfig.BASE_URL + BuildConfig.API_VERSION*/)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient.build())
