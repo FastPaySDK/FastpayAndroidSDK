@@ -1,7 +1,4 @@
-apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.fastpay.payment'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
