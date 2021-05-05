@@ -1,2 +1,3 @@
+include ':retrofit-2.9.0'
 rootProject.name='Merchant SDK'
 include ':app', ':merchantSDK'
