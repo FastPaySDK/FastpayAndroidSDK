@@ -1,27 +1,30 @@
 package com.fastpay.payment.model.response;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BaseResponseModel implements Serializable {
 
-    @SerializedName("code")
-    @Expose
     private int code;
-    @SerializedName("message")
-    @Expose
     private String message;
-    @SerializedName("errors")
-    @Expose
     private ArrayList<String> errors = new ArrayList<>();
-    @SerializedName("data")
-    @Expose
     private Object data;
 
+    public BaseResponseModel() {
+    }
+
+    public BaseResponseModel(int code, String message, ArrayList<String> errors) {
+        this.code = code;
+        this.message = message;
+        this.errors = errors;
+    }
+
+    public BaseResponseModel(int code, String message, ArrayList<String> errors, Object data) {
+        this.code = code;
+        this.message = message;
+        this.errors = errors;
+        this.data = data;
+    }
 
     public int getCode() {
         return code;

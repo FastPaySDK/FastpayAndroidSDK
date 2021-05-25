@@ -21,20 +21,26 @@ public class FastpayRequest implements Parcelable {
     private String mStorePassword;
     private String mAmount;
     private String mOrderId;
+    private String mEnvironment;
     private String mCurrency = "IQD"; // Default is IQD
     private int mStoreLogo;  // Optional
 
+    public enum Environment {
+        Sandbox,
+        Production
+    }
 
     public FastpayRequest(Context context) {
         mContext = context;
     }
 
-    public FastpayRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId) {
+    public FastpayRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId, String environment) {
         this.mContext = mContext;
         this.mStoreId = mStoreId;
         this.mStorePassword = mStorePassword;
         this.mAmount = mAmount;
         this.mOrderId = mOrderId;
+        this.mEnvironment = environment;
     }
 
     public FastpayRequest storeId(String storeId) {
@@ -67,6 +73,10 @@ public class FastpayRequest implements Parcelable {
         return this;
     }
 
+    public FastpayRequest environment(String environment) {
+        mEnvironment = environment;
+        return this;
+    }
 
     public String getStoreId() {
         return mStoreId;
@@ -92,10 +102,13 @@ public class FastpayRequest implements Parcelable {
         return mStoreLogo;
     }
 
+    public String getEnvironment() {
+        return mEnvironment;
+    }
+
     public Intent getIntent() {
         return new Intent(mContext, PaymentActivity.class).putExtra(EXTRA_PAYMENT_REQUEST, this);
     }
-
 
     private FastpayRequest(Parcel in) {
         mStoreId = in.readString();
@@ -104,6 +117,7 @@ public class FastpayRequest implements Parcelable {
         mOrderId = in.readString();
         mCurrency = in.readString();
         mStoreLogo = in.readInt();
+        mEnvironment = in.readString();
     }
 
     @Override
@@ -114,6 +128,7 @@ public class FastpayRequest implements Parcelable {
         dest.writeString(mOrderId);
         dest.writeString(mCurrency);
         dest.writeInt(mStoreLogo);
+        dest.writeString(mEnvironment);
     }
 
     @Override

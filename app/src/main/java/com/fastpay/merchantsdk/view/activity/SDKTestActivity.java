@@ -12,6 +12,7 @@ import com.fastpay.merchantsdk.R;
 import com.fastpay.merchantsdk.databinding.ActivitySdkTestLayoutBinding;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
+import com.fastpay.payment.model.merchant.FastpaySDK;
 
 public class SDKTestActivity extends BaseActivity {
 
@@ -41,7 +42,7 @@ public class SDKTestActivity extends BaseActivity {
                 case Activity.RESULT_OK:
                     if (data != null && data.hasExtra(FastpayResult.EXTRA_PAYMENT_RESULT)) {
                         FastpayResult result = data.getParcelableExtra(FastpayResult.EXTRA_PAYMENT_RESULT);
-                        Log.e("payment_result", result.getTransactionStatus());
+                        Log.e("payment_result", result.getTransactionId());
                     }
                     break;
                 case Activity.RESULT_CANCELED:
@@ -57,23 +58,33 @@ public class SDKTestActivity extends BaseActivity {
     private void buildUi() {
         layoutBinding.orderIdEditText.setText("ORD51100");
         layoutBinding.paymentAmountEditText.setText("250");
+
+/*        InputStream stream = null;
+        try {
+            stream = getAssets().open("success.gif");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        layoutBinding.customView.playGif(stream);*/
     }
 
     private void initListener() {
         layoutBinding.payBtn.setOnClickListener(view -> {
-           // layoutBinding.customView.tickAnimation();
+            // layoutBinding.customView.tickAnimation();
 
             String orderId = layoutBinding.orderIdEditText.getText().toString().trim();
             String amount = layoutBinding.paymentAmountEditText.getText().toString().trim();
 
             if (!orderId.isEmpty() && !amount.isEmpty() && Double.parseDouble(amount) > 0) {
-                FastpayRequest request = new FastpayRequest(this, "1000007066_485",
-                        "Password100@", amount, orderId);
+                FastpayRequest request = new FastpayRequest(this, "1570_122", "Password@121",
+                        amount, orderId, FastpaySDK.SANDBOX);
 
 /*                FastpayRequest request = new FastpayRequest(this)
-                        .orderId("test-order-123"),
+                        .orderId("test-order-123")
                         .amount(amount)
-                        .storeLogo(R.drawable.ic_fastpay_logo);*/ // Optional
+                        .storeLogo(R.drawable.ic_fastpay_logo)
+                        .environment(FastpaySDK.SANDBOX);*/ // Optional
 
                 startActivityForResult(request.getIntent(), FASTPAY_REQUEST_CODE);
             } else {

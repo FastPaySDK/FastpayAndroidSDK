@@ -55,22 +55,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-//    flavorDimensions "environment"
-//    productFlavors {
-//        dev {
-//            dimension "environment"
-//            buildConfigField("String", "BASE_URL", "\"https://dev-apigw-sdk.fast-pay.cash/\"")
-//        }
-//        staging {
-//            dimension "environment"
-//            buildConfigField("String", "BASE_URL", "\"https://staging-apigw-sdk.fast-pay.cash/\"")
-//        }
-//        production {
-//            dimension "environment"
-//            buildConfigField("String", "BASE_URL", "\"https://apigw-sdk.fast-pay.cash/\"")
-//        }
-//    }
 }
 
 dependencies {
@@ -81,28 +65,21 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.3.0'
 
     /*Androidx*/
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.cardview:cardview:1.0.0"
-
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
-
-    /*Network*/
-    implementation files('libs/retrofit-2.9.0.jar')
-    implementation files('libs/converter-gson-2.9.0.jar')
-    implementation files('libs/converter-scalars-2.9.0.jar')
-    implementation files('libs/gson-2.8.5.jar')
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.7'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
-
-    /*Animation*/
-    implementation 'com.daimajia.easing:library:2.0@aar'
-    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
 }
 
 apply plugin: 'com.github.dcendents.android-maven'
+
+
+
+
+
+
+
+

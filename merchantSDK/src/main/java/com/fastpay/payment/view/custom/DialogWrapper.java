@@ -10,8 +10,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+
 import com.fastpay.payment.R;
 
 //import jp.wasabeef.blurry.Blurry;
@@ -63,11 +62,11 @@ public class DialogWrapper extends Dialog {
                     .animate(300)
                     .onto(rootView);*/
 
-            YoYo.with(Techniques.ZoomIn)
+/*            YoYo.with(Techniques.ZoomIn)
                     .pivot(displayMetrics.widthPixels / 2, displayMetrics.heightPixels / 2)
                     .duration(400)
                     .repeat(0)
-                    .playOn(dialogView);
+                    .playOn(dialogView);*/
         }
         super.show();
     }
@@ -75,11 +74,11 @@ public class DialogWrapper extends Dialog {
     @Override
     public void dismiss() {
         if (rootView != null) {
-            YoYo.with(Techniques.ZoomOut)
+/*            YoYo.with(Techniques.ZoomOut)
                     .pivot(displayMetrics.widthPixels / 2, displayMetrics.heightPixels / 2)
                     .duration(200)
                     .repeat(0)
-                    .playOn(dialogView);
+                    .playOn(dialogView);*/
 
             new Thread(() -> {
                 try {

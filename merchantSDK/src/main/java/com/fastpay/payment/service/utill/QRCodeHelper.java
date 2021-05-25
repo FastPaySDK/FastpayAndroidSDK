@@ -58,7 +58,7 @@ public class QRCodeHelper {
             imageView.setImageBitmap(getRoundedCornerBitmap(finalQrBitmap));
 
         }catch (Exception er){
-
+            er.printStackTrace();
         }
     }
 

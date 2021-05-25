@@ -1,8 +1,5 @@
 package com.fastpay.payment.model.request;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 /**
@@ -11,14 +8,8 @@ import java.io.Serializable;
 
 public class ValidatePayment implements Serializable {
 
-    @SerializedName("storeId")
-    @Expose
     private String storeId;
-    @SerializedName("storePassword")
-    @Expose
     private String storePassword;
-    @SerializedName("orderId")
-    @Expose
     private String orderId;
 
     public ValidatePayment() {

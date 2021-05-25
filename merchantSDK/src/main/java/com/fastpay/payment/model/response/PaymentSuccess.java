@@ -1,7 +1,5 @@
 package com.fastpay.payment.model.response;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -10,8 +8,6 @@ import java.io.Serializable;
  */
 public class PaymentSuccess implements Serializable {
 
-    @SerializedName("summary")
-    @Expose
     private PaymentSummery paymentSummery;
 
     public PaymentSuccess() {

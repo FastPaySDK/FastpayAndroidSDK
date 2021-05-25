@@ -13,4 +13,5 @@ public class ShareData {
     public static String KURDISH_LANG = "ku";
 
     public static final int PERMISSION_REQUEST_CODE = 100;
+
 }

@@ -1,8 +1,5 @@
 package com.fastpay.payment.model.response;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 /**
@@ -10,17 +7,17 @@ import java.io.Serializable;
  */
 public class PaymentReciepient implements Serializable {
 
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("mobile_number")
-    @Expose
     private String mobileNumber;
-    @SerializedName("avatar")
-    @Expose
     private String avatar;
 
     public PaymentReciepient() {
+    }
+
+    public PaymentReciepient(String name, String mobileNumber, String avatar) {
+        this.name = name;
+        this.mobileNumber = mobileNumber;
+        this.avatar = avatar;
     }
 
     public String getName() {

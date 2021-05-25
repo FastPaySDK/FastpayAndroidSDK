@@ -18,16 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.fastpay.payment.R;
 import com.fastpay.payment.service.utill.NavigationUtil;
 
 import java.util.ArrayList;
 
-//import jp.wasabeef.blurry.Blurry;
-
 import static android.content.Context.WINDOW_SERVICE;
+
+//import jp.wasabeef.blurry.Blurry;
 
 public class CustomAlertDialog extends Dialog {
 
@@ -169,11 +167,11 @@ public class CustomAlertDialog extends Dialog {
                     .animate(300)
                     .onto(rootView);*/
 
-            YoYo.with(Techniques.ZoomIn)
+/*            YoYo.with(Techniques.ZoomIn)
                     .pivot(displayMetrics.widthPixels / 2, displayMetrics.heightPixels / 2)
                     .duration(400)
                     .repeat(0)
-                    .playOn(dialogCardView);
+                    .playOn(dialogCardView);*/
         }
         super.show();
     }
@@ -181,11 +179,11 @@ public class CustomAlertDialog extends Dialog {
     @Override
     public void dismiss() {
         if (rootView != null) {
-            YoYo.with(Techniques.ZoomOut)
+/*            YoYo.with(Techniques.ZoomOut)
                     .pivot(displayMetrics.widthPixels / 2, displayMetrics.heightPixels / 2)
                     .duration(200)
                     .repeat(0)
-                    .playOn(dialogCardView);
+                    .playOn(dialogCardView);*/
 
             new Thread(() -> {
                 try {
@@ -194,7 +192,7 @@ public class CustomAlertDialog extends Dialog {
                     e.printStackTrace();
                 }
                 activity.runOnUiThread(() -> {
-                   // Blurry.delete(rootView);
+                    // Blurry.delete(rootView);
                     super.dismiss();
                 });
             }).start();

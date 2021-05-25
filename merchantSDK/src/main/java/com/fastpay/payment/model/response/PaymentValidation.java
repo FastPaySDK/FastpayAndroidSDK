@@ -1,8 +1,5 @@
 package com.fastpay.payment.model.response;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 /**
@@ -11,31 +8,27 @@ import java.io.Serializable;
 
 public class PaymentValidation implements Serializable {
 
-    @SerializedName("gw_transaction_id")
-    @Expose
+
     private String transactionId;
-    @SerializedName("merchant_order_id")
-    @Expose
     private String merchantOrderId;
-    @SerializedName("received_amount")
-    @Expose
     private String receivedAmount;
-    @SerializedName("currency")
-    @Expose
     private String currency;
-    @SerializedName("status")
-    @Expose
     private String status;
-    @SerializedName("customer_name")
-    @Expose
     private String customerName;
-    @SerializedName("customer_mobile_number")
-    @Expose
     private String customerMobileNumber;
-    @SerializedName("at")
-    @Expose
     private String paymentAt;
 
+    public PaymentValidation(String transactionId, String merchantOrderId, String receivedAmount,
+                             String currency, String status, String customerName, String customerMobileNumber, String paymentAt) {
+        this.transactionId = transactionId;
+        this.merchantOrderId = merchantOrderId;
+        this.receivedAmount = receivedAmount;
+        this.currency = currency;
+        this.status = status;
+        this.customerName = customerName;
+        this.customerMobileNumber = customerMobileNumber;
+        this.paymentAt = paymentAt;
+    }
 
     public String getTransactionId() {
         return transactionId;

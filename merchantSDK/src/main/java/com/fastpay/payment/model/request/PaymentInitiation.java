@@ -1,7 +1,5 @@
 package com.fastpay.payment.model.request;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -11,20 +9,10 @@ import java.io.Serializable;
 
 public class PaymentInitiation implements Serializable {
 
-    @SerializedName("storeId")
-    @Expose
     private String storeId;
-    @SerializedName("storePassword")
-    @Expose
     private String storePassword;
-    @SerializedName("billAmount")
-    @Expose
     private String billAmount;
-    @SerializedName("orderId")
-    @Expose
     private String orderId;
-    @SerializedName("currency")
-    @Expose
     private String currency;
 
     public PaymentInitiation() {

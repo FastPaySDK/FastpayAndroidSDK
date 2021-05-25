@@ -1,16 +1,12 @@
 package com.fastpay.payment.view.activity;
 
-import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -25,41 +21,37 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.fastpay.payment.BuildConfig;
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
-import com.fastpay.payment.model.request.PaymentInitiation;
-import com.fastpay.payment.model.request.PaymentRequest;
-import com.fastpay.payment.model.request.ValidatePayment;
+import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.model.response.InitiationSuccess;
 import com.fastpay.payment.model.response.PaymentSummery;
 import com.fastpay.payment.model.response.PaymentValidation;
-import com.fastpay.payment.service.controller.PaymentController;
 import com.fastpay.payment.service.listener.InitiationApiListener;
 import com.fastpay.payment.service.listener.PayWithCredentialApiListener;
 import com.fastpay.payment.service.listener.PaymentValidationApiListener;
+import com.fastpay.payment.service.network.request.RequestAuthPayment;
+import com.fastpay.payment.service.network.request.RequestPaymentInitiate;
+import com.fastpay.payment.service.network.request.RequestPaymentValidate;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
+import com.fastpay.payment.service.utill.DownloadImage;
 import com.fastpay.payment.service.utill.FormValidationUtil;
+import com.fastpay.payment.service.utill.GifDecoderView;
 import com.fastpay.payment.service.utill.NavigationUtil;
+import com.fastpay.payment.service.utill.QRCodeHelper;
 import com.fastpay.payment.service.utill.ShareData;
-import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomProgressDialog;
-import com.fastpay.payment.view.custom.CustomTickView;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
-import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-
-import static com.fastpay.payment.service.utill.ShareData.PERMISSION_REQUEST_CODE;
 
 /**
  * Created by Sahidul Islam on 2/15/2021.
@@ -82,9 +74,7 @@ public class PaymentActivity extends BaseActivity {
     private ImageView passwordEditTextEndImageView;
     private CheckBox confirmCheckBox;
 
-    private CustomTickView customTickView;
-
-    private PaymentController paymentController;
+    private GifDecoderView customTickView;
 
     private FastpayRequest requestExtra;
     private InitiationSuccess initiationModel;
@@ -99,6 +89,7 @@ public class PaymentActivity extends BaseActivity {
     private int dotCount = 0, animDot = 3;
 
     private int dotAnimDelay = 700;
+    private int successAnimDelay = 1 * 1000;
     private int successDelay = 3 * 1000;
     private int qrPaymentDelay = 10 * 1000;
 
@@ -138,8 +129,10 @@ public class PaymentActivity extends BaseActivity {
         NavigationUtil.exitPageSide(this);
     }
 
-    @Override
+/*    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -159,7 +152,7 @@ public class PaymentActivity extends BaseActivity {
                 }
                 break;
         }
-    }
+    }*/
 
     private void initView() {
         mainRootView = findViewById(R.id.mainRootView);
@@ -197,17 +190,13 @@ public class PaymentActivity extends BaseActivity {
     }
 
     private void buildUi() {
-
         merchantNameTextView.setText(TextUtils.isEmpty(initiationModel.getStoreName()) ? getString(R.string.app_name) : initiationModel.getStoreName());
 
         if (requestExtra != null && requestExtra.getAppLogo() > 0) {
             merchantLogoImageView.setImageDrawable(ContextCompat.getDrawable(this, requestExtra.getAppLogo()));
         } else {
             if (!TextUtils.isEmpty(initiationModel.getStoreLogo())) {
-                Picasso.get().load(initiationModel.getStoreLogo())
-                        .placeholder(android.R.drawable.ic_menu_gallery)
-                        .error(android.R.drawable.ic_menu_gallery)
-                        .into(merchantLogoImageView);
+                new DownloadImage(merchantLogoImageView).execute(initiationModel.getStoreLogo());
             } else {
                 Drawable appIcon = getPackageManager().getApplicationIcon(getApplicationInfo());
                 merchantLogoImageView.setImageDrawable(appIcon);
@@ -327,27 +316,16 @@ public class PaymentActivity extends BaseActivity {
             }
         });
 
-        YoYo.with(Techniques.ZoomOut)
-                .duration(150)
-                .onEnd(hideAnimator -> {
-                    paymentInitLayout.setVisibility(View.GONE);
-
-                    YoYo.with(Techniques.ZoomIn)
-                            .duration(200)
-                            .onEnd(visibleAnimator -> {
-                                paymentHeaderLayout.setVisibility(View.VISIBLE);
-                                payViaLayout.setVisibility(View.VISIBLE);
-                                paymentLayout.setVisibility(View.VISIBLE);
-                                paymentOptionLayout.setVisibility(View.VISIBLE);
-                            })
-                            .playOn(payViaLayout);
-                })
-                .playOn(paymentInitLayout);
+        paymentInitLayout.setVisibility(View.GONE);
+        paymentHeaderLayout.setVisibility(View.VISIBLE);
+        payViaLayout.setVisibility(View.VISIBLE);
+        paymentLayout.setVisibility(View.VISIBLE);
+        paymentOptionLayout.setVisibility(View.VISIBLE);
 
         initListener();
         if (BuildConfig.DEBUG) {
-            mobileNumberEditText.setText("1814214731");
-            passwordEditText.setText("Password1@");
+            mobileNumberEditText.setText("1521331666");
+            passwordEditText.setText("Password@1");
         }
     }
 
@@ -363,35 +341,27 @@ public class PaymentActivity extends BaseActivity {
         });
 
         qrPaymentBtnImageView.setOnClickListener(view -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            showPaymentQr();
+
+/*            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
             } else {
                 showPaymentQr();
-            }
+            }*/
         });
 
         generateQrTextView.setOnClickListener(view -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            showPaymentQr();
+/*            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
             } else {
                 showPaymentQr();
-            }
+            }*/
         });
 
         loginTitleTextView.setOnClickListener(view -> {
-            YoYo.with(Techniques.ZoomOut)
-                    .duration(150)
-                    .onEnd(hideAnimator -> {
-                        qrOptionLayout.setVisibility(View.GONE);
-
-                        YoYo.with(Techniques.ZoomIn)
-                                .duration(200)
-                                .onEnd(visibleAnimator -> {
-                                    paymentOptionLayout.setVisibility(View.VISIBLE);
-                                })
-                                .playOn(paymentOptionLayout);
-                    })
-                    .playOn(qrOptionLayout);
+            qrOptionLayout.setVisibility(View.GONE);
+            paymentOptionLayout.setVisibility(View.VISIBLE);
         });
 
         paymentBtn.setOnClickListener(view -> {
@@ -442,16 +412,9 @@ public class PaymentActivity extends BaseActivity {
 
         if (ConfigurationUtil.isInternetAvailable(this)) {
             showInitialAnim();
-            paymentController = new PaymentController(this);
-
-            PaymentInitiation requestModel = new PaymentInitiation();
-            requestModel.setStoreId(requestExtra.getStoreId());
-            requestModel.setStorePassword(requestExtra.getStorePassword());
-            requestModel.setBillAmount(requestExtra.getAmount());
-            requestModel.setOrderId(requestExtra.getOrderId());
-            requestModel.setCurrency(requestExtra.getCurrency());
-
-            paymentController.initiatePaymentApi(requestModel, new InitiationApiListener() {
+            RequestPaymentInitiate paymentInitiate = new RequestPaymentInitiate(this, requestExtra.getEnvironment());
+            paymentInitiate.buildParams(requestExtra);
+            paymentInitiate.setResponseListener(new InitiationApiListener() {
                 @Override
                 public void successResponse(InitiationSuccess model) {
                     if (model != null && !TextUtils.isEmpty(model.getToken())) {
@@ -474,13 +437,14 @@ public class PaymentActivity extends BaseActivity {
                 }
 
                 @Override
-                public void errorResponse(String message) {
+                public void errorResponse(String error) {
                     Intent intent = new Intent();
-                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, message);
+                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, error);
                     setResult(Activity.RESULT_CANCELED, intent);
                     finish();
                 }
             });
+            paymentInitiate.execute();
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(true);
         }
@@ -489,15 +453,15 @@ public class PaymentActivity extends BaseActivity {
     private void payWithCredential() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
-            paymentController = new PaymentController(this);
 
-            PaymentRequest requestModel = new PaymentRequest();
-            requestModel.setMobileNumber(ShareData.COUNTRY_CODE + mobileNumberEditText.getText().toString().replaceAll("\\s+", ""));
-            requestModel.setPassword(passwordEditText.getText().toString().trim());
-            requestModel.setToken(initiationModel.getToken());
-            requestModel.setOrderId(initiationModel.getOrderId());
+            String mobileNumber = ShareData.COUNTRY_CODE + mobileNumberEditText.getText().toString().replaceAll("\\s+", "");
+            String password = passwordEditText.getText().toString().trim();
+            String orderId = initiationModel.getOrderId();
+            String token = initiationModel.getToken();
 
-            paymentController.payWithCredentialApi(requestModel, new PayWithCredentialApiListener() {
+            RequestAuthPayment authPayment = new RequestAuthPayment(this, requestExtra.getEnvironment());
+            authPayment.buildParams(orderId, token, mobileNumber, password);
+            authPayment.setResponseListener(new PayWithCredentialApiListener() {
                 @Override
                 public void successResponse(PaymentSummery model) {
                     // CustomProgressDialog.dismiss();
@@ -516,6 +480,7 @@ public class PaymentActivity extends BaseActivity {
                     CustomProgressDialog.dismiss();
                 }
             });
+            authPayment.execute();
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(true);
         }
@@ -525,14 +490,10 @@ public class PaymentActivity extends BaseActivity {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             if (!CustomProgressDialog.isShowing())
                 CustomProgressDialog.show(this);
-            paymentController = new PaymentController(this);
 
-            ValidatePayment requestModel = new ValidatePayment();
-            requestModel.setStoreId(requestExtra.getStoreId());
-            requestModel.setStorePassword(requestExtra.getStorePassword());
-            requestModel.setOrderId(requestExtra.getOrderId());
-
-            paymentController.paymentValidationApi(requestModel, new PaymentValidationApiListener() {
+            RequestPaymentValidate paymentValidate = new RequestPaymentValidate(this, requestExtra.getEnvironment());
+            paymentValidate.buildParams(requestExtra.getStoreId(), requestExtra.getStorePassword(), requestExtra.getOrderId());
+            paymentValidate.setResponseListener(new PaymentValidationApiListener() {
                 @Override
                 public void successResponse(PaymentValidation model) {
                     CustomProgressDialog.dismiss();
@@ -551,6 +512,7 @@ public class PaymentActivity extends BaseActivity {
                     CustomProgressDialog.dismiss();
                 }
             });
+            paymentValidate.execute();
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(true);
         }
@@ -558,13 +520,10 @@ public class PaymentActivity extends BaseActivity {
 
     private void checkQrPayment() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
-            paymentController = new PaymentController(this);
-            ValidatePayment requestModel = new ValidatePayment();
-            requestModel.setStoreId(requestExtra.getStoreId());
-            requestModel.setStorePassword(requestExtra.getStorePassword());
-            requestModel.setOrderId(requestExtra.getOrderId());
 
-            paymentController.paymentValidationApi(requestModel, new PaymentValidationApiListener() {
+            RequestPaymentValidate paymentValidate = new RequestPaymentValidate(this, requestExtra.getEnvironment());
+            paymentValidate.buildParams(requestExtra.getStoreId(), requestExtra.getStorePassword(), requestExtra.getOrderId());
+            paymentValidate.setResponseListener(new PaymentValidationApiListener() {
                 @Override
                 public void successResponse(PaymentValidation model) {
                     handler.removeCallbacksAndMessages(null);
@@ -579,6 +538,7 @@ public class PaymentActivity extends BaseActivity {
                 public void errorResponse(String message) {
                 }
             });
+            paymentValidate.execute();
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(true);
         }
@@ -616,23 +576,13 @@ public class PaymentActivity extends BaseActivity {
 
     private void showPaymentQr() {
         if (!TextUtils.isEmpty(initiationModel.getQrToken())) {
-            YoYo.with(Techniques.ZoomOut)
-                    .duration(150)
-                    .onEnd(hideAnimator -> {
-                        paymentOptionLayout.setVisibility(View.GONE);
+            paymentOptionLayout.setVisibility(View.GONE);
+            qrOptionLayout.setVisibility(View.VISIBLE);
 
-                        YoYo.with(Techniques.ZoomIn)
-                                .duration(200)
-                                .onEnd(visibleAnimator -> {
-                                    qrOptionLayout.setVisibility(View.VISIBLE);
+            QRCodeHelper qrCodeHelper = new QRCodeHelper(this, qrCodeImageView, null);
+            qrCodeHelper.generateQRWithOutImage(initiationModel.getQrToken());
 
-                                    ShowQR(initiationModel.getQrToken(), qrCodeImageView, initiationModel.getStoreLogo());
-                                })
-                                .playOn(qrOptionLayout);
-                    })
-                    .playOn(paymentOptionLayout);
-
-            handler = new Handler();
+            handler = new Handler(Looper.getMainLooper());
             runnable = () -> {
                 checkQrPayment();
                 handler.postDelayed(runnable, qrPaymentDelay);
@@ -646,7 +596,7 @@ public class PaymentActivity extends BaseActivity {
         if (paymentInitLayout.getVisibility() == View.GONE)
             paymentInitLayout.setVisibility(View.VISIBLE);
 
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
         runnable = () -> {
             if (dotCount == animDot) {
                 dotCount = 0;
@@ -672,36 +622,27 @@ public class PaymentActivity extends BaseActivity {
     }
 
     private void showSuccessResult(PaymentValidation model) {
-        YoYo.with(Techniques.ZoomOut)
-                .duration(150)
-                .onEnd(hideAnimator -> {
-                    paymentLayout.setVisibility(View.GONE);
+        paymentLayout.setVisibility(View.GONE);
+        successLayout.setVisibility(View.VISIBLE);
 
-                    YoYo.with(Techniques.ZoomIn)
-                            .duration(200)
-                            .onEnd(visibleAnimator -> {
-                                successLayout.setVisibility(View.VISIBLE);
-                                customTickView.startAnimation();
-                                customTickView.mTickAnimator.addListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        //  super.onAnimationEnd(animation);
+        try {
+            InputStream stream = getAssets().open("success.gif");
+            customTickView.playGif(stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-                                        successTextView.setVisibility(View.VISIBLE);
-                                        backAppTextView.setVisibility(View.VISIBLE);
-                                    }
-                                });
-                            })
-                            .playOn(successLayout);
-                })
-                .playOn(paymentLayout);
-
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            Intent intent = new Intent();
-            intent.putExtra(FastpayResult.EXTRA_PAYMENT_RESULT, getPaymentResult(model));
-            setResult(Activity.RESULT_OK, intent);
-            finish();
-        }, successDelay);
+            successTextView.setVisibility(View.VISIBLE);
+            backAppTextView.setVisibility(View.VISIBLE);
+
+            handler.postDelayed(() -> {
+                Intent intent = new Intent();
+                intent.putExtra(FastpayResult.EXTRA_PAYMENT_RESULT, getPaymentResult(model));
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }, successDelay);
+        }, successAnimDelay);
     }
 }

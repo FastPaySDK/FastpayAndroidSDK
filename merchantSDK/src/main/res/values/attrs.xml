@@ -8,4 +8,9 @@
             <enum name="Medium" value="3"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="GIFView">
+        <attr name="srcCompat" format="reference" />
+    </declare-styleable>
+
 </resources >

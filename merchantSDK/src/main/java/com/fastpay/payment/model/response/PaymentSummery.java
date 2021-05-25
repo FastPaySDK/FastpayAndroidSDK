@@ -1,8 +1,5 @@
 package com.fastpay.payment.model.response;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 /**
@@ -11,14 +8,15 @@ import java.io.Serializable;
 
 public class PaymentSummery implements Serializable {
 
-    @SerializedName("recipient")
-    @Expose
     private PaymentReciepient recipient;
-    @SerializedName("invoice_id")
-    @Expose
     private String invoiceId;
 
     public PaymentSummery() {
+    }
+
+    public PaymentSummery(PaymentReciepient recipient, String invoiceId) {
+        this.recipient = recipient;
+        this.invoiceId = invoiceId;
     }
 
     public PaymentReciepient getRecipient() {
