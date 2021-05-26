@@ -136,14 +136,14 @@ public class PaymentActivity extends BaseActivity {
                 } else {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(PaymentActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         CustomAlertDialog dialog = new CustomAlertDialog(this, mainRootView);
-                        dialog.showFailResponse(getString(R.string.app_common_permission_acceptence), getString(R.string.app_common_permission_acceptence_fail_message));
+                        dialog.showFailResponse(getString(R.string.fp_app_common_permission_acceptence), getString(R.string.fp_app_common_permission_acceptence_fail_message));
                         dialog.setOnConfirmationBtnClickListener(view -> {
                             dialog.dismiss();
                             ActivityCompat.requestPermissions(PaymentActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
                         });
                     } else {
                         CustomAlertDialog dialog = new CustomAlertDialog(this, mainRootView);
-                        dialog.showPermissionError(getString(R.string.app_common_permission_acceptence), getString(R.string.app_common_permission_acceptence_fail_message));
+                        dialog.showPermissionError(getString(R.string.fp_app_common_permission_acceptence), getString(R.string.fp_app_common_permission_acceptence_fail_message));
                     }
                 }
                 break;
@@ -186,7 +186,7 @@ public class PaymentActivity extends BaseActivity {
     }
 
     private void buildUi() {
-        merchantNameTextView.setText(TextUtils.isEmpty(initiationModel.getStoreName()) ? getString(R.string.app_name) : initiationModel.getStoreName());
+        merchantNameTextView.setText(TextUtils.isEmpty(initiationModel.getStoreName()) ? getString(R.string.fp_app_name) : initiationModel.getStoreName());
 
         if (requestExtra != null && requestExtra.getAppLogo() > 0) {
             merchantLogoImageView.setImageDrawable(ContextCompat.getDrawable(this, requestExtra.getAppLogo()));
@@ -200,7 +200,7 @@ public class PaymentActivity extends BaseActivity {
         }
 
         if (!TextUtils.isEmpty(initiationModel.getOrderId()))
-            orderIdTextView.setText(getString(R.string.payment_page_order_id, initiationModel.getOrderId()));
+            orderIdTextView.setText(getString(R.string.fp_payment_page_order_id, initiationModel.getOrderId()));
 
         if (!TextUtils.isEmpty(initiationModel.getBillAmount()) && !TextUtils.isEmpty(initiationModel.getCurrency()))
             paymentAmountTextView.setText(ConfigurationUtil.getFormatedAmount(Double.parseDouble(initiationModel.getBillAmount()) + " " + initiationModel.getCurrency()));
@@ -220,7 +220,7 @@ public class PaymentActivity extends BaseActivity {
         mobileNumberBackground2 = new TransitionDrawable(new Drawable[]{getResources().getDrawable(R.drawable.drawable_edittext_form_invalid_background_white), getResources().getDrawable(R.drawable.drawable_edittext_form_valid_background_white)});
         successIconBackground = new TransitionDrawable(new Drawable[]{getResources().getDrawable(R.drawable.ic_empty), getResources().getDrawable(R.drawable.ic_success_check_icon)});
 
-        mobileNumberEditText.setHint(getString(R.string.payment_page_mobile_number_hint));
+        mobileNumberEditText.setHint(getString(R.string.fp_payment_page_mobile_number_hint));
         mobileNumberEditText.setHintTextColor(getResources().getColor(R.color.colorBaseGrayBackground));
         mobileNumberEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
         mobileNumberEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
@@ -277,7 +277,7 @@ public class PaymentActivity extends BaseActivity {
         mobileNumberEditText.addTextChangedListener(new MobileNumberFormat(mobileNumberEditText));
 
         // Password view
-        passwordEditText.setHint(getString(R.string.payment_page_enter_your_password));
+        passwordEditText.setHint(getString(R.string.fp_payment_page_enter_your_password));
         passwordEditText.setText("");
         passwordEditText.setHintTextColor(getResources().getColor(R.color.colorBaseGrayBackground));
         passwordEditText.setTextColor(getResources().getColor(R.color.colorBaseTextColor));
@@ -387,21 +387,21 @@ public class PaymentActivity extends BaseActivity {
     private void initiatePayment() {
         if (requestExtra == null || requestExtra.getStoreId().isEmpty() || requestExtra.getStorePassword().isEmpty()) {
             Intent intent = new Intent();
-            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.payment_message_initial_failed));
+            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_initial_failed));
             setResult(Activity.RESULT_CANCELED, intent);
             finish();
         }
 
         if (requestExtra.getOrderId().isEmpty()) {
             Intent intent = new Intent();
-            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.payment_message_orderid_empty));
+            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_orderid_empty));
             setResult(Activity.RESULT_CANCELED, intent);
             finish();
         }
 
         if (requestExtra.getAmount().isEmpty()) {
             Intent intent = new Intent();
-            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.payment_message_order_amount_empty));
+            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_order_amount_empty));
             setResult(Activity.RESULT_CANCELED, intent);
             finish();
         }
@@ -418,7 +418,7 @@ public class PaymentActivity extends BaseActivity {
                         buildUi();
                     } else {
                         Intent intent = new Intent();
-                        intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.payment_message_token_empty));
+                        intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_token_empty));
                         setResult(Activity.RESULT_CANCELED, intent);
                         finish();
                     }
@@ -584,7 +584,7 @@ public class PaymentActivity extends BaseActivity {
                 handler.postDelayed(runnable, qrPaymentDelay);
             };
         } else {
-            Toast.makeText(this, getString(R.string.payment_page_qr_token_empty), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.fp_payment_page_qr_token_empty), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -597,13 +597,13 @@ public class PaymentActivity extends BaseActivity {
             if (dotCount == animDot) {
                 dotCount = 0;
                 runOnUiThread(() -> {
-                    initialText = getString(R.string.initial_page_initializing);
+                    initialText = getString(R.string.fp_initial_page_initializing);
                     initialTextView.setText(initialText);
                 });
             } else {
                 dotCount++;
 
-                initialText = getString(R.string.initial_page_initializing);
+                initialText = getString(R.string.fp_initial_page_initializing);
                 for (int i = 0; i < dotCount; i++) {
                     initialText = initialText.concat(" .");
                 }

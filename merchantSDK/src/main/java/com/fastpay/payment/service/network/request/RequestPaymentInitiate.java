@@ -63,7 +63,7 @@ public class RequestPaymentInitiate extends BaseHttp {
                 listener.failResponse(responseModel.getErrors());
             }
         } else {
-            listener.errorResponse(mContext.get().getString(R.string.app_common_api_error));
+            listener.errorResponse(mContext.get().getString(R.string.fp_app_common_api_error));
         }
     }
 }
