@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.zxing.client.android.BuildConfig;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,15 +34,15 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
         this.mContext = context;
         this.requestUrl = requestUrl;
         this.requestMethod = REQUEST_METHOD_GET;
-
-        Log.v("BaseHttp: ", requestUrl);
+        if (BuildConfig.DEBUG)
+            Log.v("BaseHttp: ", requestUrl);
     }
 
     public void post(String requestParams) {
         this.requestMethod = REQUEST_METHOD_POST;
         this.requestParams = requestParams;
-
-        Log.v("BaseHttp: ", "Params: " + requestParams);
+        if (BuildConfig.DEBUG)
+            Log.v("BaseHttp: ", "Params: " + requestParams);
     }
 
     @Override
@@ -60,7 +62,8 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
 
-        Log.v("BaseHttp: ", "Response: " + response);
+        if (BuildConfig.DEBUG)
+            Log.v("BaseHttp: ", "Response: " + response);
         onTaskComplete();
     }
 
@@ -105,7 +108,8 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
     }
 
     private String getResponseInString(HttpURLConnection httpURLConnection) throws IOException {
-        Log.v("BaseHttp: ", "Status: " + httpURLConnection.getResponseCode());
+        if (BuildConfig.DEBUG)
+            Log.v("BaseHttp: ", "Status: " + httpURLConnection.getResponseCode());
 
         StringBuilder result = new StringBuilder();
         try {

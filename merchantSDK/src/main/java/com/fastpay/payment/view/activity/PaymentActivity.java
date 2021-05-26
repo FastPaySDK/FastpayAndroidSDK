@@ -25,7 +25,6 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import com.fastpay.payment.BuildConfig;
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
@@ -48,14 +47,11 @@ import com.fastpay.payment.service.utill.ShareData;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
+import com.google.zxing.client.android.BuildConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-
-/**
- * Created by Sahidul Islam on 2/15/2021.
- */
 
 public class PaymentActivity extends BaseActivity {
 

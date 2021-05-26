@@ -106,4 +106,18 @@ public class FastpayResult implements Parcelable {
         dest.writeString(payeeMobileNumber);
         dest.writeString(paymentTime);
     }
+
+    @Override
+    public String toString() {
+        return "FastpayResult{" +
+                "transactionStatus='" + transactionStatus + '\'' +
+                ", transactionId='" + transactionId + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", paymentAmount='" + paymentAmount + '\'' +
+                ", paymentCurrency='" + paymentCurrency + '\'' +
+                ", payeeName='" + payeeName + '\'' +
+                ", payeeMobileNumber='" + payeeMobileNumber + '\'' +
+                ", paymentTime='" + paymentTime + '\'' +
+                '}';
+    }
 }
