@@ -319,10 +319,10 @@ public class PaymentActivity extends BaseActivity {
         paymentOptionLayout.setVisibility(View.VISIBLE);
 
         initListener();
-        if (BuildConfig.DEBUG) {
+/*        if (BuildConfig.DEBUG) {
             mobileNumberEditText.setText("1521331666");
             passwordEditText.setText("Password@1");
-        }
+        }*/
     }
 
     private void initListener() {
@@ -478,7 +478,7 @@ public class PaymentActivity extends BaseActivity {
             });
             authPayment.execute();
         } else {
-            new CustomAlertDialog(this, mainRootView).showInternetError(true);
+            new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
     }
 
@@ -510,7 +510,7 @@ public class PaymentActivity extends BaseActivity {
             });
             paymentValidate.execute();
         } else {
-            new CustomAlertDialog(this, mainRootView).showInternetError(true);
+            new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
     }
 
@@ -536,7 +536,7 @@ public class PaymentActivity extends BaseActivity {
             });
             paymentValidate.execute();
         } else {
-            new CustomAlertDialog(this, mainRootView).showInternetError(true);
+            new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
     }
 

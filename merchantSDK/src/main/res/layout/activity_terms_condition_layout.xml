@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBaseBackground">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/goBackBtn"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_30dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_go_back_icon" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/fastpayLogo"
         android:layout_width="@dimen/size_100dp"
         android:layout_height="@dimen/size_30dp"
