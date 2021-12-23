@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhiteIdentical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/fastpaySdkLogo"
@@ -21,15 +21,16 @@
             app:layout_constraintBottom_toTopOf="@+id/initialText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_fastpay_sdk_logo" />
+            app:srcCompat="@drawable/deshi_logo" />
 
-        <com.fastpay.payment.view.custom.CustomTextView
+        <com.deshi.payment.view.custom.CustomTextView
             android:id="@+id/initialText"
             android:layout_width="@dimen/size_100dp"
             android:layout_height="wrap_content"
             android:text="@string/fp_initial_page_initializing"
             android:textColor="@color/colorBaseTextColor"
             android:textSize="@dimen/text_14sp"
+            android:paddingLeft="@dimen/size_15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +85,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.fastpay.payment.view.custom.CustomTextView
+            <com.deshi.payment.view.custom.CustomTextView
                 android:id="@+id/merchantName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -97,7 +98,7 @@
                 app:layout_constraintStart_toEndOf="@+id/merchantLogoLayout"
                 app:layout_constraintTop_toTopOf="@+id/merchantLogoLayout" />
 
-            <com.fastpay.payment.view.custom.CustomTextView
+            <com.deshi.payment.view.custom.CustomTextView
                 android:id="@+id/orderId"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -127,7 +128,7 @@
             app:layout_constraintStart_toStartOf="@+id/merchantLayout"
             app:layout_constraintTop_toBottomOf="@+id/merchantLayout">
 
-            <com.fastpay.payment.view.custom.CustomTextView
+            <com.deshi.payment.view.custom.CustomTextView
                 android:id="@+id/paymentAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,7 +178,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/payViaText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -197,7 +198,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/payViaText"
                     app:layout_constraintStart_toEndOf="@+id/payViaText"
                     app:layout_constraintTop_toTopOf="@+id/payViaText"
-                    app:srcCompat="@drawable/ic_fastpay_sdk_logo" />
+                    app:srcCompat="@drawable/deshi_logo" />
 
                 <View
                     android:layout_width="0dp"
@@ -222,7 +223,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/payViaLayout">
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/mobileNumberTitleView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -251,7 +252,7 @@
                     app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
                     app:layout_constraintTop_toBottomOf="@+id/mobileNumberTitleView">
 
-                    <com.fastpay.payment.view.custom.CustomTextView
+                    <com.deshi.payment.view.custom.CustomTextView
                         android:id="@+id/mobileNumberCode"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -259,7 +260,7 @@
                         android:gravity="center_horizontal"
                         android:paddingTop="@dimen/size_15dp"
                         android:paddingBottom="@dimen/size_15dp"
-                        android:text="964"
+                        android:text="+880"
                         android:textAlignment="center"
                         android:textSize="@dimen/text_14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -268,7 +269,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.fastpay.payment.view.custom.CustomEditText
+                    <com.deshi.payment.view.custom.CustomEditText
                         android:id="@+id/mobileNumberEditText"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -300,7 +301,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/passwordTitleView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -326,7 +327,7 @@
                     app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
                     app:layout_constraintTop_toBottomOf="@+id/passwordTitleView">
 
-                    <com.fastpay.payment.view.custom.CustomEditText
+                    <com.deshi.payment.view.custom.CustomEditText
                         android:id="@+id/passwordEditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -361,7 +362,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.fastpay.payment.view.custom.CustomCheckbox
+                <com.deshi.payment.view.custom.CustomCheckbox
                     android:id="@+id/confirmCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -376,7 +377,7 @@
                     app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
                     app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/termsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -389,7 +390,7 @@
                     app:layout_constraintTop_toTopOf="@+id/confirmCheckBox"
                     app:textStyle="Medium" />
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/paymentBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -411,7 +412,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/confirmCheckBox"
                     app:textStyle="Medium" />
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/orTitleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -437,7 +438,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/orTitleView"
                     app:srcCompat="@drawable/ic_generate_qr" />
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/generateQrTitleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -467,7 +468,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/payViaLayout">
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/qrScanTitleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -509,7 +510,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/qrOrTitleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -526,7 +527,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/qrCodeViewLayout"
                     app:textStyle="Normal" />
 
-                <com.fastpay.payment.view.custom.CustomTextView
+                <com.deshi.payment.view.custom.CustomTextView
                     android:id="@+id/loginTitleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -558,7 +559,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paymentHeaderLayout">
 
-        <com.fastpay.payment.view.custom.CustomTextView
+        <com.deshi.payment.view.custom.CustomTextView
             android:id="@+id/successTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -575,7 +576,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:textStyle="Medium" />
 
-        <com.fastpay.payment.service.utill.GifDecoderView
+        <com.deshi.payment.service.utill.GifDecoderView
             android:id="@+id/customTickView"
             android:layout_width="@dimen/size_90dp"
             android:layout_height="@dimen/size_90dp"
@@ -584,7 +585,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/successTextView" />
 
-        <com.fastpay.payment.view.custom.CustomTextView
+        <com.deshi.payment.view.custom.CustomTextView
             android:id="@+id/backAppTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -622,7 +623,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_error_icon" />
 
-        <com.fastpay.payment.view.custom.CustomTextView
+        <com.deshi.payment.view.custom.CustomTextView
             android:id="@+id/errorTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -637,7 +638,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:textStyle="Normal" />
 
-        <com.fastpay.payment.view.custom.CustomTextView
+        <com.deshi.payment.view.custom.CustomTextView
             android:id="@+id/retryTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

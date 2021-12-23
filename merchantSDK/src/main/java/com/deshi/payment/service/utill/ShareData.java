@@ -1,0 +1,17 @@
+package com.deshi.payment.service.utill;
+
+public class ShareData {
+
+    // Constant text
+    public static final String DATE = "Date:";
+    public static final String CURRENCY_IQD = "IQD";
+
+    public static String COUNTRY_CODE = "+880";
+    public static String ENGLISH_LANG = "en";
+    public static String BANGLA_LANG = "bn";
+    public static String ARABIC_LANG = "ar";
+    public static String KURDISH_LANG = "ku";
+
+    public static final int PERMISSION_REQUEST_CODE = 100;
+
+}

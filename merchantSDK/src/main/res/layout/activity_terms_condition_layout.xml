@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/goBackBtn"
         app:srcCompat="@drawable/ic_fastpay_sdk_logo" />
 
-    <com.fastpay.payment.view.custom.CustomTextView
+    <com.deshi.payment.view.custom.CustomTextView
         android:id="@+id/pageTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.fastpay.payment.view.custom.CustomTextView
+            <com.deshi.payment.view.custom.CustomTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/size_10dp"

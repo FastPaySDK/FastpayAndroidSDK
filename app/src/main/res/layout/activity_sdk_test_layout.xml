@@ -17,7 +17,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_launcher_fastpay_merchant" />
 
-        <com.fastpay.merchantsdk.view.custom.CustomEditText
+        <com.deshi.merchantsdk.view.custom.CustomEditText
             android:id="@+id/orderIdEditText"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_45dp"
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/appLogo"
             app:textStyle="Normal" />
 
-        <com.fastpay.merchantsdk.view.custom.CustomEditText
+        <com.deshi.merchantsdk.view.custom.CustomEditText
             android:id="@+id/paymentAmountEditText"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_45dp"
@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/orderIdEditText"
             app:textStyle="Normal" />
 
-        <com.fastpay.merchantsdk.view.custom.CustomTextView
+        <com.deshi.merchantsdk.view.custom.CustomTextView
             android:id="@+id/payBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             app:layout_constraintTop_toBottomOf="@+id/paymentAmountEditText"
             app:textStyle="Medium" />
 
-        <com.fastpay.payment.service.utill.GifDecoderView
+        <com.deshi.payment.service.utill.GifDecoderView
             android:id="@+id/custom_view"
             android:layout_width="@dimen/size_150dp"
             android:layout_height="@dimen/size_150dp"

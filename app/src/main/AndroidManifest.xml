@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.fastpay.merchantsdk">
+    package="com.deshi.merchantsdk">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".FastPayApplication"
+        android:name="com.deshi.merchantsdk.FastPayApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_fastpay_logo"
@@ -19,7 +19,7 @@
         tools:targetApi="n">
 
         <activity
-            android:name=".view.activity.SDKTestActivity"
+            android:name="com.deshi.merchantsdk.view.activity.SDKTestActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
