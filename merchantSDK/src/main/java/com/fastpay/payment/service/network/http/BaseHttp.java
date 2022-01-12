@@ -33,7 +33,7 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
     public BaseHttp(Context context, String requestUrl) {
         this.mContext = context;
         this.requestUrl = requestUrl;
-        this.requestMethod = REQUEST_METHOD_GET;
+        this.requestMethod = REQUEST_METHOD_POST;
         if (BuildConfig.DEBUG)
             Log.v("BaseHttp: ", requestUrl);
     }

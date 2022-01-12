@@ -57,4 +57,6 @@ public class InitiationSuccess implements Serializable {
     public String getQrToken() {
         return qrToken;
     }
+
+
 }

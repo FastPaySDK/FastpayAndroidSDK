@@ -13,6 +13,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,13 +29,16 @@ import androidx.core.content.ContextCompat;
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
+import com.fastpay.payment.model.response.CashoutPaymentSummery;
 import com.fastpay.payment.model.response.InitiationSuccess;
 import com.fastpay.payment.model.response.PaymentSummery;
 import com.fastpay.payment.model.response.PaymentValidation;
+import com.fastpay.payment.service.listener.CashOutPaymentListener;
 import com.fastpay.payment.service.listener.InitiationApiListener;
 import com.fastpay.payment.service.listener.PayWithCredentialApiListener;
 import com.fastpay.payment.service.listener.PaymentValidationApiListener;
 import com.fastpay.payment.service.network.request.RequestAuthPayment;
+import com.fastpay.payment.service.network.request.RequestCashOutPayment;
 import com.fastpay.payment.service.network.request.RequestPaymentInitiate;
 import com.fastpay.payment.service.network.request.RequestPaymentValidate;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
@@ -186,24 +190,20 @@ public class PaymentActivity extends BaseActivity {
     }
 
     private void buildUi() {
-        merchantNameTextView.setText(TextUtils.isEmpty(initiationModel.getStoreName()) ? getString(R.string.fp_app_name) : initiationModel.getStoreName());
+        merchantNameTextView.setText(getString(R.string.fp_app_name));
 
         if (requestExtra != null && requestExtra.getAppLogo() > 0) {
             merchantLogoImageView.setImageDrawable(ContextCompat.getDrawable(this, requestExtra.getAppLogo()));
         } else {
-            if (!TextUtils.isEmpty(initiationModel.getStoreLogo())) {
-                new DownloadImage(merchantLogoImageView).execute(initiationModel.getStoreLogo());
-            } else {
-                Drawable appIcon = getPackageManager().getApplicationIcon(getApplicationInfo());
-                merchantLogoImageView.setImageDrawable(appIcon);
-            }
+            Drawable appIcon = getPackageManager().getApplicationIcon(getApplicationInfo());
+            merchantLogoImageView.setImageDrawable(appIcon);
         }
 
         if (!TextUtils.isEmpty(initiationModel.getOrderId()))
             orderIdTextView.setText(getString(R.string.fp_payment_page_order_id, initiationModel.getOrderId()));
 
-        if (!TextUtils.isEmpty(initiationModel.getBillAmount()) && !TextUtils.isEmpty(initiationModel.getCurrency()))
-            paymentAmountTextView.setText(ConfigurationUtil.getFormatedAmount(Double.parseDouble(initiationModel.getBillAmount()) + " " + initiationModel.getCurrency()));
+        if (!TextUtils.isEmpty(initiationModel.getBillAmount()))
+            paymentAmountTextView.setText(ConfigurationUtil.getFormatedAmount(Double.parseDouble(initiationModel.getBillAmount()) + " " + ShareData.CURRENCY_IQD));
 
         paymentButtonBackground = new TransitionDrawable(new Drawable[]{getResources().getDrawable(R.drawable.drawable_inactive_btn_background), getResources().getDrawable(R.drawable.drawable_active_btn_background)});
 
@@ -338,12 +338,6 @@ public class PaymentActivity extends BaseActivity {
 
         qrPaymentBtnImageView.setOnClickListener(view -> {
             showPaymentQr();
-
-/*            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-            } else {
-                showPaymentQr();
-            }*/
         });
 
         generateQrTextView.setOnClickListener(view -> {
@@ -361,7 +355,7 @@ public class PaymentActivity extends BaseActivity {
         });
 
         paymentBtn.setOnClickListener(view -> {
-            payWithCredential();
+            cashOutPayment();
         });
     }
 
@@ -385,12 +379,12 @@ public class PaymentActivity extends BaseActivity {
     }
 
     private void initiatePayment() {
-        if (requestExtra == null || requestExtra.getStoreId().isEmpty() || requestExtra.getStorePassword().isEmpty()) {
+        /*if (requestExtra == null || requestExtra.getStoreId().isEmpty() || requestExtra.getStorePassword().isEmpty()) {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_initial_failed));
             setResult(Activity.RESULT_CANCELED, intent);
             finish();
-        }
+        }*/
 
         if (requestExtra.getOrderId().isEmpty()) {
             Intent intent = new Intent();
@@ -406,7 +400,7 @@ public class PaymentActivity extends BaseActivity {
             finish();
         }
 
-        if (ConfigurationUtil.isInternetAvailable(this)) {
+        /*if (ConfigurationUtil.isInternetAvailable(this)) {
             showInitialAnim();
             RequestPaymentInitiate paymentInitiate = new RequestPaymentInitiate(this, requestExtra.getEnvironment());
             paymentInitiate.buildParams(requestExtra);
@@ -443,10 +437,68 @@ public class PaymentActivity extends BaseActivity {
             paymentInitiate.execute();
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(true);
+        }*/
+        InitiationSuccess success = new InitiationSuccess(null,null,requestExtra.getOrderId(),requestExtra.getAmount(),ShareData.CURRENCY_IQD,null,null);
+        this.initiationModel = success;
+        buildUi();
+    }
+
+    private void cashOutPayment(){
+        if (ConfigurationUtil.isInternetAvailable(this)) {
+            CustomProgressDialog.show(this);
+
+            String mobileNumber = ShareData.COUNTRY_CODE + mobileNumberEditText.getText().toString().replaceAll("\\s+", "");
+            String password = passwordEditText.getText().toString().trim();
+            String orderId = initiationModel.getOrderId();
+            String amount = initiationModel.getBillAmount();
+
+            RequestCashOutPayment authPayment = new RequestCashOutPayment(this, requestExtra.getEnvironment());
+            authPayment.buildParams(orderId, amount, mobileNumber, password);
+            /*authPayment.setResponseListener(new PayWithCredentialApiListener() {
+                @Override
+                public void successResponse(PaymentSummery model) {
+                    // CustomProgressDialog.dismiss();
+                    validatePayment();
+                }
+
+                @Override
+                public void failResponse(ArrayList<String> messages) {
+                    showError(TextUtils.join("\n\n", messages), paymentError);
+                    CustomProgressDialog.dismiss();
+                }
+
+                @Override
+                public void errorResponse(String message) {
+                    showError(message, paymentError);
+                    CustomProgressDialog.dismiss();
+                }
+            });*/
+            authPayment.setResponseListener(new CashOutPaymentListener() {
+                @Override
+                public void successResponse(CashoutPaymentSummery model) {
+                    CustomProgressDialog.dismiss();
+                    showSuccessResult(model);
+                }
+
+                @Override
+                public void failResponse(ArrayList<String> messages) {
+                    showError(TextUtils.join("\n\n", messages), paymentError);
+                    CustomProgressDialog.dismiss();
+                }
+
+                @Override
+                public void errorResponse(String error) {
+                    showError(error, paymentError);
+                    CustomProgressDialog.dismiss();
+                }
+            });
+            authPayment.execute();
+        } else {
+            new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
     }
 
-    private void payWithCredential() {
+    /*private void payWithCredential() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
 
@@ -480,9 +532,9 @@ public class PaymentActivity extends BaseActivity {
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
-    }
+    }*/
 
-    private void validatePayment() {
+    /*private void validatePayment() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             if (!CustomProgressDialog.isShowing())
                 CustomProgressDialog.show(this);
@@ -512,9 +564,9 @@ public class PaymentActivity extends BaseActivity {
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
-    }
+    }*/
 
-    private void checkQrPayment() {
+    /*private void checkQrPayment() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
 
             RequestPaymentValidate paymentValidate = new RequestPaymentValidate(this, requestExtra.getEnvironment());
@@ -538,7 +590,7 @@ public class PaymentActivity extends BaseActivity {
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
-    }
+    }*/
 
     private void showError(String message, int errorState) {
         errorTextView.setText(message);
@@ -564,10 +616,10 @@ public class PaymentActivity extends BaseActivity {
         });
     }
 
-    private FastpayResult getPaymentResult(PaymentValidation model) {
-        return new FastpayResult(model.getStatus(), model.getTransactionId(),
-                model.getMerchantOrderId(), model.getReceivedAmount(), model.getCurrency(),
-                model.getCustomerName(), model.getCustomerMobileNumber(), model.getPaymentAt());
+    private FastpayResult getPaymentResult(CashoutPaymentSummery model) {
+        return new FastpayResult("success", model.getSummary().getInvoiceId(),
+                model.getSummary().getOrderId(), model.getSummary().getAmount(),ShareData.CURRENCY_IQD,
+                model.getSummary().getRecipient().getName(), model.getSummary().getRecipient().getMobileNumber(), "");
     }
 
     private void showPaymentQr() {
@@ -580,7 +632,7 @@ public class PaymentActivity extends BaseActivity {
 
             handler = new Handler(Looper.getMainLooper());
             runnable = () -> {
-                checkQrPayment();
+                //checkQrPayment();
                 handler.postDelayed(runnable, qrPaymentDelay);
             };
         } else {
@@ -617,7 +669,7 @@ public class PaymentActivity extends BaseActivity {
         handler.post(runnable);
     }
 
-    private void showSuccessResult(PaymentValidation model) {
+    private void showSuccessResult(CashoutPaymentSummery model) {
         paymentLayout.setVisibility(View.GONE);
         successLayout.setVisibility(View.VISIBLE);
 
