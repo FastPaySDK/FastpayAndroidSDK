@@ -78,7 +78,7 @@ public class SDKTestActivity extends BaseActivity {
 
             if (!orderId.isEmpty() && !amount.isEmpty() && Double.parseDouble(amount) > 0) {
                 FastpayRequest request = new FastpayRequest(this, "", "",
-                        amount, orderId, FastpaySDK.SANDBOX);
+                        amount, orderId, FastpaySDK.PRODUCTION);
 
 /*                FastpayRequest request = new FastpayRequest(this)
                         .orderId("test-order-123")
