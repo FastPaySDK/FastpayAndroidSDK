@@ -77,7 +77,7 @@ public class SDKTestActivity extends BaseActivity {
             String amount = layoutBinding.paymentAmountEditText.getText().toString().trim();
 
             if (!orderId.isEmpty() && !amount.isEmpty() && Double.parseDouble(amount) > 0) {
-                FastpayRequest request = new FastpayRequest(this, "1953_939", "Password100@",
+                FastpayRequest request = new FastpayRequest(this, "", "",
                         amount, orderId, FastpaySDK.SANDBOX);
 
 /*                FastpayRequest request = new FastpayRequest(this)

@@ -17,6 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RequestCashOutPayment  extends BaseHttp {
 
@@ -59,10 +62,25 @@ public class RequestCashOutPayment  extends BaseHttp {
             if (responseModel.getCode() == 200) {
                 listener.successResponse(new CashoutPaymentParser().getModel(responseModel.getData().toString()));
             } else {
-                listener.failResponse(responseModel.getErrors());
+                ArrayList<String> errorList = new ArrayList();
+                if (responseModel.getMessage() != null){
+                    String newString = responseModel.getMessage();
+                    if (newString.contains("["))
+                        newString = newString.replace("[","");
+                    if (newString.contains("]"))
+                        newString = newString.replace("]","");
+                    if (newString.contains(","))
+                        errorList.addAll(Arrays.asList(newString.split(",")));
+                    else
+                        errorList.add(newString);
+                    listener.failResponse(errorList);
+                }else{
+                    errorList.add("Error Occurred");
+                    listener.failResponse(errorList);
+                }
             }
         } else {
-            listener.errorResponse(mContext.get().getString(R.string.fp_app_common_api_error));
+            listener.errorResponse("Error Occurred");
         }
     }
 }

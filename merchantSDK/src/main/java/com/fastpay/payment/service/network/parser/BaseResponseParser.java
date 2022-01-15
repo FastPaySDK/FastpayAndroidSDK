@@ -26,8 +26,8 @@ public class BaseResponseParser {
                     code = jsonObject.getInt("code");
                 }
 
-                if (jsonObject.has("message")) {
-                    message = jsonObject.getString("message");
+                if (jsonObject.has("messages")) {
+                    message = jsonObject.getString("messages");
                 }
 
                 if (jsonObject.has("errors")) {
