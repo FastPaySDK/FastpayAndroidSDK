@@ -24,8 +24,7 @@ public class RequestAuthPayment extends BaseHttp {
     private PayWithCredentialApiListener listener;
 
     public RequestAuthPayment(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
-                + HttpParams.API_VERSION + HttpParams.API_PAYMENT);
+        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL + HttpParams.API_VERSION + HttpParams.API_PAYMENT : HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_PAYMENT);
         mContext = new WeakReference<>(context);
     }
 

@@ -25,8 +25,7 @@ public class RequestPaymentInitiate extends BaseHttp {
     private InitiationApiListener listener;
 
     public RequestPaymentInitiate(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
-                + HttpParams.API_VERSION + HttpParams.API_INITIATE);
+        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL + HttpParams.API_VERSION + HttpParams.API_INITIATE : HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_INITIATE);
         mContext = new WeakReference<>(context);
     }
 
