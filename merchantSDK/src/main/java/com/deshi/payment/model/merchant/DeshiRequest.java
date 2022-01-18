@@ -11,7 +11,7 @@ import com.deshi.payment.view.activity.PaymentActivity;
  * Created by Sahidul Islam on 2/15/2021.
  */
 
-public class FastpayRequest implements Parcelable {
+public class DeshiRequest implements Parcelable {
 
     public static final String EXTRA_PAYMENT_REQUEST = "PAYMENT_REQUEST";
     public static final String EXTRA_PAYMENT_MESSAGE = "PAYMENT_MESSAGE";
@@ -30,11 +30,11 @@ public class FastpayRequest implements Parcelable {
         Production
     }
 
-    public FastpayRequest(Context context) {
+    public DeshiRequest(Context context) {
         mContext = context;
     }
 
-    public FastpayRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId, String environment) {
+    public DeshiRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId, String environment) {
         this.mContext = mContext;
         this.mStoreId = mStoreId;
         this.mStorePassword = mStorePassword;
@@ -43,37 +43,37 @@ public class FastpayRequest implements Parcelable {
         this.mEnvironment = environment;
     }
 
-    public FastpayRequest storeId(String storeId) {
+    public DeshiRequest storeId(String storeId) {
         mStoreId = storeId;
         return this;
     }
 
-    public FastpayRequest storePassword(String storePassword) {
+    public DeshiRequest storePassword(String storePassword) {
         mStorePassword = storePassword;
         return this;
     }
 
-    public FastpayRequest amount(String amount) {
+    public DeshiRequest amount(String amount) {
         mAmount = amount;
         return this;
     }
 
-    public FastpayRequest orderId(String orderId) {
+    public DeshiRequest orderId(String orderId) {
         mOrderId = orderId;
         return this;
     }
 
-    public FastpayRequest currency(String currency) {
+    public DeshiRequest currency(String currency) {
         if (!currency.isEmpty()) mCurrency = currency;
         return this;
     }
 
-    public FastpayRequest storeLogo(int storeLogo) {
+    public DeshiRequest storeLogo(int storeLogo) {
         mStoreLogo = storeLogo;
         return this;
     }
 
-    public FastpayRequest environment(String environment) {
+    public DeshiRequest environment(String environment) {
         mEnvironment = environment;
         return this;
     }
@@ -110,7 +110,7 @@ public class FastpayRequest implements Parcelable {
         return new Intent(mContext, PaymentActivity.class).putExtra(EXTRA_PAYMENT_REQUEST, this);
     }
 
-    private FastpayRequest(Parcel in) {
+    private DeshiRequest(Parcel in) {
         mStoreId = in.readString();
         mStorePassword = in.readString();
         mAmount = in.readString();
@@ -136,15 +136,15 @@ public class FastpayRequest implements Parcelable {
         return 0;
     }
 
-    public static final Creator<FastpayRequest> CREATOR = new Creator<FastpayRequest>() {
+    public static final Creator<DeshiRequest> CREATOR = new Creator<DeshiRequest>() {
         @Override
-        public FastpayRequest createFromParcel(Parcel in) {
-            return new FastpayRequest(in);
+        public DeshiRequest createFromParcel(Parcel in) {
+            return new DeshiRequest(in);
         }
 
         @Override
-        public FastpayRequest[] newArray(int size) {
-            return new FastpayRequest[size];
+        public DeshiRequest[] newArray(int size) {
+            return new DeshiRequest[size];
         }
     };
 }

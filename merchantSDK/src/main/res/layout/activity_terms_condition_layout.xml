@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/goBackBtn"
         app:layout_constraintStart_toEndOf="@+id/goBackBtn"
         app:layout_constraintTop_toTopOf="@+id/goBackBtn"
-        app:srcCompat="@drawable/ic_fastpay_sdk_logo" />
+        app:srcCompat="@drawable/deshi_logo" />
 
     <com.deshi.payment.view.custom.CustomTextView
         android:id="@+id/pageTitle"
@@ -39,7 +39,7 @@
         android:paddingEnd="@dimen/size_30dp"
         android:text="@string/fp_toc_page_title"
         android:textAlignment="viewStart"
-        android:textColor="@color/colorNavyBlueIdentical"
+        android:textColor="@color/colorBtnBaseColor"
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
