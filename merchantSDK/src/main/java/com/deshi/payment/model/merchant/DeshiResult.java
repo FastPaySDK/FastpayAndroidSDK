@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Sahidul Islam on 2/15/2021.
  */
 
-public class FastpayResult implements Parcelable {
+public class DeshiResult implements Parcelable {
 
     public static final String EXTRA_PAYMENT_RESULT = "PAYMENT_RESULT";
 
@@ -20,11 +20,11 @@ public class FastpayResult implements Parcelable {
     private String payeeMobileNumber;
     private String paymentTime;
 
-    public FastpayResult() {
+    public DeshiResult() {
     }
 
-    public FastpayResult(String transactionStatus, String transactionId, String orderId, String paymentAmount,
-                         String paymentCurrency, String payeeName, String payeeMobileNumber, String paymentTime) {
+    public DeshiResult(String transactionStatus, String transactionId, String orderId, String paymentAmount,
+                       String paymentCurrency, String payeeName, String payeeMobileNumber, String paymentTime) {
         this.transactionStatus = transactionStatus;
         this.transactionId = transactionId;
         this.orderId = orderId;
@@ -67,7 +67,7 @@ public class FastpayResult implements Parcelable {
         return paymentTime;
     }
 
-    protected FastpayResult(Parcel in) {
+    protected DeshiResult(Parcel in) {
         transactionStatus = in.readString();
         transactionId = in.readString();
         orderId = in.readString();
@@ -78,15 +78,15 @@ public class FastpayResult implements Parcelable {
         paymentTime = in.readString();
     }
 
-    public static final Creator<FastpayResult> CREATOR = new Creator<FastpayResult>() {
+    public static final Creator<DeshiResult> CREATOR = new Creator<DeshiResult>() {
         @Override
-        public FastpayResult createFromParcel(Parcel in) {
-            return new FastpayResult(in);
+        public DeshiResult createFromParcel(Parcel in) {
+            return new DeshiResult(in);
         }
 
         @Override
-        public FastpayResult[] newArray(int size) {
-            return new FastpayResult[size];
+        public DeshiResult[] newArray(int size) {
+            return new DeshiResult[size];
         }
     };
 

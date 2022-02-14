@@ -43,8 +43,8 @@ import com.deshi.payment.service.utill.QRCodeHelper;
 import com.deshi.payment.service.utill.ShareData;
 import com.deshi.payment.view.custom.CustomProgressDialog;
 
-import com.deshi.payment.model.merchant.FastpayRequest;
-import com.deshi.payment.model.merchant.FastpayResult;
+import com.deshi.payment.model.merchant.DeshiRequest;
+import com.deshi.payment.model.merchant.DeshiResult;
 import com.deshi.payment.service.listener.InitiationApiListener;
 import com.deshi.payment.view.custom.CustomAlertDialog;
 import com.deshi.payment.view.custom.MobileNumberFormat;
@@ -72,7 +72,7 @@ public class PaymentActivity extends BaseActivity {
 
     private GifDecoderView customTickView;
 
-    private FastpayRequest requestExtra;
+    private DeshiRequest requestExtra;
     private InitiationSuccess initiationModel;
 
     private TransitionDrawable mobileNumberBackground1, mobileNumberBackground2;
@@ -102,8 +102,8 @@ public class PaymentActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            if (bundle.containsKey(FastpayRequest.EXTRA_PAYMENT_REQUEST)) {
-                requestExtra = bundle.getParcelable(FastpayRequest.EXTRA_PAYMENT_REQUEST);
+            if (bundle.containsKey(DeshiRequest.EXTRA_PAYMENT_REQUEST)) {
+                requestExtra = bundle.getParcelable(DeshiRequest.EXTRA_PAYMENT_REQUEST);
             }
         }
 
@@ -387,21 +387,21 @@ public class PaymentActivity extends BaseActivity {
     private void initiatePayment() {
         if (requestExtra == null || requestExtra.getStoreId().isEmpty() || requestExtra.getStorePassword().isEmpty()) {
             Intent intent = new Intent();
-            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_initial_failed));
+            intent.putExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_initial_failed));
             setResult(Activity.RESULT_CANCELED, intent);
             finish();
         }
 
         if (requestExtra.getOrderId().isEmpty()) {
             Intent intent = new Intent();
-            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_orderid_empty));
+            intent.putExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_orderid_empty));
             setResult(Activity.RESULT_CANCELED, intent);
             finish();
         }
 
         if (requestExtra.getAmount().isEmpty()) {
             Intent intent = new Intent();
-            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_order_amount_empty));
+            intent.putExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_order_amount_empty));
             setResult(Activity.RESULT_CANCELED, intent);
             finish();
         }
@@ -418,7 +418,7 @@ public class PaymentActivity extends BaseActivity {
                         buildUi();
                     } else {
                         Intent intent = new Intent();
-                        intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_token_empty));
+                        intent.putExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_token_empty));
                         setResult(Activity.RESULT_CANCELED, intent);
                         finish();
                     }
@@ -427,7 +427,7 @@ public class PaymentActivity extends BaseActivity {
                 @Override
                 public void failResponse(ArrayList<String> messages) {
                     Intent intent = new Intent();
-                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, TextUtils.join("\n\n", messages));
+                    intent.putExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE, TextUtils.join("\n\n", messages));
                     setResult(Activity.RESULT_CANCELED, intent);
                     finish();
                 }
@@ -435,7 +435,7 @@ public class PaymentActivity extends BaseActivity {
                 @Override
                 public void errorResponse(String error) {
                     Intent intent = new Intent();
-                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, error);
+                    intent.putExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE, error);
                     setResult(Activity.RESULT_CANCELED, intent);
                     finish();
                 }
@@ -564,8 +564,8 @@ public class PaymentActivity extends BaseActivity {
         });
     }
 
-    private FastpayResult getPaymentResult(PaymentValidation model) {
-        return new FastpayResult(model.getStatus(), model.getTransactionId(),
+    private DeshiResult getPaymentResult(PaymentValidation model) {
+        return new DeshiResult(model.getStatus(), model.getTransactionId(),
                 model.getMerchantOrderId(), model.getReceivedAmount(), model.getCurrency(),
                 model.getCustomerName(), model.getCustomerMobileNumber(), model.getPaymentAt());
     }
@@ -635,7 +635,7 @@ public class PaymentActivity extends BaseActivity {
 
             handler.postDelayed(() -> {
                 Intent intent = new Intent();
-                intent.putExtra(FastpayResult.EXTRA_PAYMENT_RESULT, getPaymentResult(model));
+                intent.putExtra(DeshiResult.EXTRA_PAYMENT_RESULT, getPaymentResult(model));
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }, successDelay);

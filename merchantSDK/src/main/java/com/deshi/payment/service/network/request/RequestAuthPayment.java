@@ -7,7 +7,7 @@ import com.deshi.payment.model.response.BaseResponseModel;
 import com.deshi.payment.service.listener.PayWithCredentialApiListener;
 import com.deshi.payment.service.network.parser.BaseResponseParser;
 
-import com.deshi.payment.model.merchant.FastpaySDK;
+import com.deshi.payment.model.merchant.DeshiSDK;
 import com.deshi.payment.service.network.http.BaseHttp;
 import com.deshi.payment.service.network.http.HttpParams;
 import com.deshi.payment.service.network.parser.PaymentSummeryParser;
@@ -25,7 +25,7 @@ public class RequestAuthPayment extends BaseHttp {
     private PayWithCredentialApiListener listener;
 
     public RequestAuthPayment(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
+        super(context, environment.equals(DeshiSDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
                 + HttpParams.API_VERSION + HttpParams.API_PAYMENT);
         mContext = new WeakReference<>(context);
     }

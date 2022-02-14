@@ -6,8 +6,8 @@ import com.deshi.payment.R;
 import com.deshi.payment.model.response.BaseResponseModel;
 import com.deshi.payment.service.network.parser.BaseResponseParser;
 
-import com.deshi.payment.model.merchant.FastpayRequest;
-import com.deshi.payment.model.merchant.FastpaySDK;
+import com.deshi.payment.model.merchant.DeshiRequest;
+import com.deshi.payment.model.merchant.DeshiSDK;
 import com.deshi.payment.service.listener.InitiationApiListener;
 import com.deshi.payment.service.network.http.BaseHttp;
 import com.deshi.payment.service.network.http.HttpParams;
@@ -26,7 +26,7 @@ public class RequestPaymentInitiate extends BaseHttp {
     private InitiationApiListener listener;
 
     public RequestPaymentInitiate(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
+        super(context, environment.equals(DeshiSDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
                 + HttpParams.API_VERSION + HttpParams.API_INITIATE);
         mContext = new WeakReference<>(context);
     }
@@ -35,7 +35,7 @@ public class RequestPaymentInitiate extends BaseHttp {
         this.listener = responseListener;
     }
 
-    public void buildParams(FastpayRequest requestModel) {
+    public void buildParams(DeshiRequest requestModel) {
         JSONObject json = new JSONObject();
         try {
             json.put(HttpParams.PARAM_STORE_ID, requestModel.getStoreId());

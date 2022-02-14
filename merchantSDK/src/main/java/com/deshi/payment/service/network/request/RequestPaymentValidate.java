@@ -6,7 +6,7 @@ import com.deshi.payment.R;
 import com.deshi.payment.service.listener.PaymentValidationApiListener;
 import com.deshi.payment.service.network.parser.PaymentValidateParser;
 
-import com.deshi.payment.model.merchant.FastpaySDK;
+import com.deshi.payment.model.merchant.DeshiSDK;
 import com.deshi.payment.model.response.BaseResponseModel;
 import com.deshi.payment.service.network.http.BaseHttp;
 import com.deshi.payment.service.network.http.HttpParams;
@@ -25,7 +25,7 @@ public class RequestPaymentValidate extends BaseHttp {
     private PaymentValidationApiListener listener;
 
     public RequestPaymentValidate(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
+        super(context, environment.equals(DeshiSDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
                 + HttpParams.API_VERSION + HttpParams.API_VALIDATE);
         mContext = new WeakReference<>(context);
     }

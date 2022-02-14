@@ -11,9 +11,9 @@ import androidx.databinding.DataBindingUtil;
 
 import com.deshi.merchantsdk.R;
 import com.deshi.merchantsdk.databinding.ActivitySdkTestLayoutBinding;
-import com.deshi.payment.model.merchant.FastpayRequest;
-import com.deshi.payment.model.merchant.FastpayResult;
-import com.deshi.payment.model.merchant.FastpaySDK;
+import com.deshi.payment.model.merchant.DeshiRequest;
+import com.deshi.payment.model.merchant.DeshiResult;
+import com.deshi.payment.model.merchant.DeshiSDK;
 
 
 public class SDKTestActivity extends BaseActivity {
@@ -42,14 +42,14 @@ public class SDKTestActivity extends BaseActivity {
         if (requestCode == FASTPAY_REQUEST_CODE) {
             switch (resultCode) {
                 case Activity.RESULT_OK:
-                    if (data != null && data.hasExtra(FastpayResult.EXTRA_PAYMENT_RESULT)) {
-                        FastpayResult result = data.getParcelableExtra(FastpayResult.EXTRA_PAYMENT_RESULT);
+                    if (data != null && data.hasExtra(DeshiResult.EXTRA_PAYMENT_RESULT)) {
+                        DeshiResult result = data.getParcelableExtra(DeshiResult.EXTRA_PAYMENT_RESULT);
                         Log.e("payment_result", result.getTransactionId());
                     }
                     break;
                 case Activity.RESULT_CANCELED:
-                    if (data != null && data.hasExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE)) {
-                        String message = data.getStringExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE);
+                    if (data != null && data.hasExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE)) {
+                        String message = data.getStringExtra(DeshiRequest.EXTRA_PAYMENT_MESSAGE);
                         Log.e("payment_result", "Canceled : " + message);
                     }
                     break;
@@ -79,13 +79,13 @@ public class SDKTestActivity extends BaseActivity {
             String amount = layoutBinding.paymentAmountEditText.getText().toString().trim();
 
             if (!orderId.isEmpty() && !amount.isEmpty() && Double.parseDouble(amount) > 0) {
-                FastpayRequest request = new FastpayRequest(
+                DeshiRequest request = new DeshiRequest(
                         this,
                         "10000085_727",
                         "Password100@",
                         amount,
                         orderId,
-                        FastpaySDK.SANDBOX
+                        DeshiSDK.SANDBOX
                 );
 
 /*                FastpayRequest request = new FastpayRequest(this)
