@@ -57,10 +57,10 @@
     <color name="colorNotificationBackground">#2B335E</color>
 
     <!--Button color-->
-    <color name="colorBtnBaseColor">#2892D7</color>
+    <color name="colorBtnBaseColor">#4CB23F</color>
     <color name="colorBtnPositiveColor">#2892D7</color>
     <color name="colorBtnPositiveColorDark">#1C77B3</color>
-    <color name="colorBtnPositiveInactiveColor">#83C0E8</color>
+    <color name="colorBtnPositiveInactiveColor">#86D07D</color>
     <color name="colorBtnTextColor">#F2F2F7</color>
     <color name="colorBtnDarkLightColor">#E9F0F7</color>
 
@@ -124,7 +124,7 @@
     <color name="colorGreenIdentical">#0DCB82</color>
     <color name="colorLightBlueIdentical">#595C80</color>
     <color name="colorDarkNavyBlueIdentical">#25316F</color>
-    <color name="colorNavyBlueIdentical">#636696</color>
+    <color name="colorNavyBlueIdentical">#0DCB82</color>
     <color name="colorDarkBlueIdentical">#25316F</color>
     <color name="colorDimNavyBlueIdentical">#5A5E79</color>
     <color name="colorGrayIdentical">#464C6C</color>

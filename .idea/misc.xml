@@ -3,10 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Users/prito/OneDrive/Desktop/AndroidStudioProjects/FastpayRevampAndroidSDK/merchantSDK/src/main/res/drawable/drawable_custom_scrollbar_indicator.xml" value="0.176" />
         <entry key="..\:/Users/prito/OneDrive/Desktop/AndroidStudioProjects/FastpayRevampAndroidSDK/merchantSDK/src/main/res/layout/activity_payment_layout.xml" value="0.13949275362318841" />
         <entry key="..\:/Users/prito/OneDrive/Desktop/AndroidStudioProjects/FastpayRevampAndroidSDK/merchantSDK/src/main/res/layout/activity_terms_condition_layout.xml" value="0.16201859229747675" />
         <entry key="..\:/Users/prito/OneDrive/Desktop/AndroidStudioProjects/FastpayRevampAndroidSDK/merchantSDK/src/main/res/layout/custom_dialog_layout.xml" value="0.10364583333333334" />
+=======
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/custom_dialog_btn_background.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_custom_scrollbar_indicator.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_edittext_form_background_white.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_edittext_form_invalid_background_white.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_edittext_form_valid_background_white.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_inactive_btn_background.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_qr_border_background.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_rounded_white_background.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/drawable_transparent_btn_background.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/ic_close_icon.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/ic_empty.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/drawable/ic_green_circle.xml" value="0.23148148148148148" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/layout/activity_payment_layout.xml" value="0.10822401614530777" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/layout/activity_terms_condition_layout.xml" value="0.196174595389897" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/layout/custom_dialog_layout.xml" value="0.2" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Clone/FastpayAndroidSDK/merchantSDK/src/main/res/layout/custom_dialog_progress_dialog.xml" value="0.2234375" />
+>>>>>>> d1882a529671ea6faada333eb3ac1f6239b7413e
       </map>
     </option>
   </component>

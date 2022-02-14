@@ -39,7 +39,7 @@
         android:paddingEnd="@dimen/size_30dp"
         android:text="@string/fp_toc_page_title"
         android:textAlignment="viewStart"
-        android:textColor="@color/colorNavyBlueIdentical"
+        android:textColor="@color/colorBtnBaseColor"
         android:textSize="@dimen/text_large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
