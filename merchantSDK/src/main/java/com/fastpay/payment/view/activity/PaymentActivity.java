@@ -22,6 +22,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -48,6 +52,7 @@ import com.fastpay.payment.service.utill.GifDecoderView;
 import com.fastpay.payment.service.utill.NavigationUtil;
 import com.fastpay.payment.service.utill.QRCodeHelper;
 import com.fastpay.payment.service.utill.ShareData;
+import com.fastpay.payment.service.utill.StoreInformationUtil;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
@@ -56,6 +61,8 @@ import com.google.zxing.client.android.BuildConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class PaymentActivity extends BaseActivity {
 
@@ -97,10 +104,23 @@ public class PaymentActivity extends BaseActivity {
     private int paymentError = 2;
     private int animIdPos = 0;
 
+    //Timer Related
+    private static Timer timer = null;
+    private boolean enableSessionTimeOut = true;
+    private long timeStartingTime = 0;
+    private ActivityResultLauncher<Intent> termsAndConditionsLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == ShareData.PAYMENT_TERMS_TIME_OUT) {
+                    Intent intent = new Intent();
+                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_request_timeout));
+                    setResult(Activity.RESULT_CANCELED, intent);
+                    finish();
+                }
+            });
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_payment_layout);
         initView();
 
@@ -121,11 +141,13 @@ public class PaymentActivity extends BaseActivity {
 
     @Override
     public void finish() {
-        super.finish();
-
+        StoreInformationUtil.clearKey(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME);
+        if (timer != null){
+            timer.cancel();
+        }
         if (handler != null)
             handler.removeCallbacks(runnable);
-
+        super.finish();
         NavigationUtil.exitPageSide(this);
     }
 
@@ -332,7 +354,9 @@ public class PaymentActivity extends BaseActivity {
 
         termsTextView.setOnClickListener(view -> {
             Intent intent = new Intent(PaymentActivity.this, TermsConditionActivity.class);
-            startActivity(intent);
+            long remainingTime = Math.abs(System.currentTimeMillis()-timeStartingTime-StoreInformationUtil.getLongData(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,ShareData.SESSION_TIME_OUT_VALUE));
+            StoreInformationUtil.saveLongData(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,remainingTime);
+            termsAndConditionsLauncher.launch(intent);
             NavigationUtil.enterPageSide(PaymentActivity.this);
         });
 
@@ -477,6 +501,8 @@ public class PaymentActivity extends BaseActivity {
                 @Override
                 public void successResponse(CashoutPaymentSummery model) {
                     CustomProgressDialog.dismiss();
+                    timer.cancel();
+                    enableSessionTimeOut = false;
                     showSuccessResult(model);
                 }
 
@@ -693,4 +719,32 @@ public class PaymentActivity extends BaseActivity {
             }, successDelay);
         }, successAnimDelay);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userSessionStart();
+    }
+
+    private void userSessionStart() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = new Timer();
+        Long timerDuration = StoreInformationUtil.getLongData(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,ShareData.SESSION_TIME_OUT_VALUE);
+        timeStartingTime = System.currentTimeMillis();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (enableSessionTimeOut){
+                    Intent intent = new Intent();
+                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_request_timeout));
+                    setResult(Activity.RESULT_CANCELED, intent);
+                    finish();
+                }
+            }
+        },  (timerDuration) );
+    }
+
+
 }

@@ -5,7 +5,7 @@ package com.fastpay.payment.service.network.http;
  */
 public class HttpParams {
 
-    public static final String SANDBOX_URL = "https://staging-apigw-personal.fast-pay.iq/";
+    public static final String SANDBOX_URL = "https://dev-apigw-personal.fast-pay.iq/";
     public static final String PRODUCTION_URL = "https://apigw-personal.fast-pay.iq/";
     public static final String API_VERSION = "api/v1/";
 

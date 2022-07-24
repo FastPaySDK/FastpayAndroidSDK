@@ -12,5 +12,10 @@ public class ShareData {
     public static String KURDISH_LANG = "ku";
 
     public static final int PERMISSION_REQUEST_CODE = 100;
+    public static final String KEY_PAYMENT_TO_TERMS_TIME = "key_payment_to_terms_time";
+    public static final int PAYMENT_TERMS_TIME_OUT = 188;
+
+    public static long SESSION_TIME_OUT_VALUE = 1000 * 60 * 1;
+
 
 }
