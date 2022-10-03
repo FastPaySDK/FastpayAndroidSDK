@@ -107,7 +107,6 @@ public class PaymentActivity extends BaseActivity {
     //Timer Related
     private static Timer timer = null;
     private boolean enableSessionTimeOut = true;
-    private long timeStartingTime = 0;
     private ActivityResultLauncher<Intent> termsAndConditionsLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == ShareData.PAYMENT_TERMS_TIME_OUT) {
@@ -141,7 +140,7 @@ public class PaymentActivity extends BaseActivity {
 
     @Override
     public void finish() {
-        StoreInformationUtil.clearKey(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME);
+        StoreInformationUtil.clearKey(PaymentActivity.this,ShareData.KEY_FINISHING_TIME);
         if (timer != null){
             timer.cancel();
         }
@@ -354,8 +353,6 @@ public class PaymentActivity extends BaseActivity {
 
         termsTextView.setOnClickListener(view -> {
             Intent intent = new Intent(PaymentActivity.this, TermsConditionActivity.class);
-            long remainingTime = Math.abs(System.currentTimeMillis()-timeStartingTime-StoreInformationUtil.getLongData(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,ShareData.SESSION_TIME_OUT_VALUE));
-            StoreInformationUtil.saveLongData(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,remainingTime);
             termsAndConditionsLauncher.launch(intent);
             NavigationUtil.enterPageSide(PaymentActivity.this);
         });
@@ -726,13 +723,19 @@ public class PaymentActivity extends BaseActivity {
         userSessionStart();
     }
 
+
+
     private void userSessionStart() {
         if (timer != null) {
             timer.cancel();
         }
         timer = new Timer();
-        Long timerDuration = StoreInformationUtil.getLongData(PaymentActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,ShareData.SESSION_TIME_OUT_VALUE);
-        timeStartingTime = System.currentTimeMillis();
+        long finishingTime = StoreInformationUtil.getLongData(PaymentActivity.this,ShareData.KEY_FINISHING_TIME,-1L);
+        if (finishingTime == -1L){
+            finishingTime = System.currentTimeMillis()+ShareData.SESSION_TIME_OUT_VALUE;
+            StoreInformationUtil.saveLongData(PaymentActivity.this,ShareData.KEY_FINISHING_TIME,finishingTime);
+        }
+        long timerDuration = finishingTime-System.currentTimeMillis();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -745,6 +748,4 @@ public class PaymentActivity extends BaseActivity {
             }
         },  (timerDuration) );
     }
-
-
 }

@@ -32,9 +32,6 @@ public class TermsConditionActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_condition_layout);
-        remainIngTime = StoreInformationUtil.getLongData(TermsConditionActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,ShareData.SESSION_TIME_OUT_VALUE);
-        startingTime = System.currentTimeMillis();
-        userSessionStart();
         buildUi();
         initListener();
     }
@@ -47,8 +44,13 @@ public class TermsConditionActivity extends BaseActivity {
 
     @Override
     public void finish() {
-        StoreInformationUtil.saveLongData(TermsConditionActivity.this,ShareData.KEY_PAYMENT_TO_TERMS_TIME,Math.abs(System.currentTimeMillis()-startingTime-remainIngTime));
         super.finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userSessionStart();
     }
 
     private void buildUi() {
@@ -64,13 +66,20 @@ public class TermsConditionActivity extends BaseActivity {
             timer.cancel();
         }
         timer = new Timer();
+        long finishingTime = StoreInformationUtil.getLongData(TermsConditionActivity.this,ShareData.KEY_FINISHING_TIME,-1L);
+        if (finishingTime == -1L){
+            finishingTime = System.currentTimeMillis()+ShareData.SESSION_TIME_OUT_VALUE;
+            StoreInformationUtil.saveLongData(TermsConditionActivity.this,ShareData.KEY_FINISHING_TIME,finishingTime);
+        }
+        long timerDuration = finishingTime-System.currentTimeMillis();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 Intent intent = new Intent();
-                setResult(ShareData.PAYMENT_TERMS_TIME_OUT, intent);
+                intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_request_timeout));
+                setResult(Activity.RESULT_CANCELED, intent);
                 finish();
             }
-        },  (remainIngTime) );
+        },  (timerDuration) );
     }
 }
