@@ -14,6 +14,9 @@ import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.model.merchant.FastpaySDK;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class SDKTestActivity extends BaseActivity {
 
     ActivitySdkTestLayoutBinding layoutBinding;
@@ -79,6 +82,7 @@ public class SDKTestActivity extends BaseActivity {
             if (!orderId.isEmpty() && !amount.isEmpty() && Double.parseDouble(amount) > 0) {
                 FastpayRequest request = new FastpayRequest(this, "", "",
                         amount, orderId, FastpaySDK.SANDBOX);
+                request.sessionTimeout(5); //Timeout in Second
 
 /*                FastpayRequest request = new FastpayRequest(this)
                         .orderId("test-order-123")

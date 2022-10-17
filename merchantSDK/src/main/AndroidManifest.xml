@@ -17,13 +17,16 @@
         <activity
             android:name=".view.activity.PaymentActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
-        </activity>
+            tools:ignore="LockedOrientationActivity"/>
 
         <activity
             android:name=".view.activity.TermsConditionActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
+        <service android:name=".service.background.UserSessionTimer"
+            android:stopWithTask="true"
+            android:exported="false"/>
 
     </application>
 

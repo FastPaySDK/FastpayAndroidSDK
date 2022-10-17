@@ -17,7 +17,9 @@ public class ShareData {
     public static final String KEY_FINISHING_TIME = "key_finishing_time";
     public static final int PAYMENT_TERMS_TIME_OUT = 188;
 
-    public static long SESSION_TIME_OUT_VALUE = BuildConfig.DEBUG?10000:(1000 * 60 * 4);
+    public static long SESSION_TIME_OUT_VALUE = BuildConfig.DEBUG ? (1000 * 10) : (1000 * 60 * 4);
 
-
+    public static long USER_SESSION_TIMER_INTERVAL = 1L; // In second
+    public static long USER_SESSION_TIMER_TARGET = BuildConfig.DEBUG ? 10  : (4 * 60); // In second
+    public static String INTENT_USER_SESSION_FINISHED = "user_session_finished";
 }

@@ -63,4 +63,6 @@ dependencies {
 /*    implementation 'jp.wasabeef:blurry:3.0.0'*/
 
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
+
+    implementation project(path: ':merchantSDK')
 }

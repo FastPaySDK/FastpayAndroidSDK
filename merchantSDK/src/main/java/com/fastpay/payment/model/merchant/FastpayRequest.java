@@ -15,8 +15,8 @@ public class FastpayRequest implements Parcelable {
 
     public static final String EXTRA_PAYMENT_REQUEST = "PAYMENT_REQUEST";
     public static final String EXTRA_PAYMENT_MESSAGE = "PAYMENT_MESSAGE";
-    private Context mContext;
 
+    private Context mContext;
     private String mStoreId;
     private String mStorePassword;
     private String mAmount;
@@ -24,6 +24,7 @@ public class FastpayRequest implements Parcelable {
     private String mEnvironment;
     private String mCurrency = "IQD"; // Default is IQD
     private int mStoreLogo;  // Optional
+    private long mSessionTimeout = 0L;  // Optional
 
     public enum Environment {
         Sandbox,
@@ -78,6 +79,11 @@ public class FastpayRequest implements Parcelable {
         return this;
     }
 
+    public FastpayRequest sessionTimeout(long timeInSecond) {
+        mSessionTimeout = timeInSecond;
+        return this;
+    }
+
     public String getStoreId() {
         return mStoreId;
     }
@@ -106,6 +112,10 @@ public class FastpayRequest implements Parcelable {
         return mEnvironment;
     }
 
+    public long getSessionTimeout() {
+        return mSessionTimeout;
+    }
+
     public Intent getIntent() {
         return new Intent(mContext, PaymentActivity.class).putExtra(EXTRA_PAYMENT_REQUEST, this);
     }
@@ -118,6 +128,7 @@ public class FastpayRequest implements Parcelable {
         mCurrency = in.readString();
         mStoreLogo = in.readInt();
         mEnvironment = in.readString();
+        mSessionTimeout = in.readLong();
     }
 
     @Override
@@ -129,6 +140,7 @@ public class FastpayRequest implements Parcelable {
         dest.writeString(mCurrency);
         dest.writeInt(mStoreLogo);
         dest.writeString(mEnvironment);
+        dest.writeLong(mSessionTimeout);
     }
 
     @Override

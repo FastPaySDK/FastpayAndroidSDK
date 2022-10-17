@@ -2,6 +2,7 @@ package com.fastpay.payment.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,10 +22,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -35,18 +31,11 @@ import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.model.response.CashoutPaymentSummery;
 import com.fastpay.payment.model.response.InitiationSuccess;
-import com.fastpay.payment.model.response.PaymentSummery;
-import com.fastpay.payment.model.response.PaymentValidation;
+import com.fastpay.payment.service.background.UserSessionReceiver;
+import com.fastpay.payment.service.background.UserSessionTimer;
 import com.fastpay.payment.service.listener.CashOutPaymentListener;
-import com.fastpay.payment.service.listener.InitiationApiListener;
-import com.fastpay.payment.service.listener.PayWithCredentialApiListener;
-import com.fastpay.payment.service.listener.PaymentValidationApiListener;
-import com.fastpay.payment.service.network.request.RequestAuthPayment;
 import com.fastpay.payment.service.network.request.RequestCashOutPayment;
-import com.fastpay.payment.service.network.request.RequestPaymentInitiate;
-import com.fastpay.payment.service.network.request.RequestPaymentValidate;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
-import com.fastpay.payment.service.utill.DownloadImage;
 import com.fastpay.payment.service.utill.FormValidationUtil;
 import com.fastpay.payment.service.utill.GifDecoderView;
 import com.fastpay.payment.service.utill.NavigationUtil;
@@ -56,13 +45,10 @@ import com.fastpay.payment.service.utill.StoreInformationUtil;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
-import com.google.zxing.client.android.BuildConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class PaymentActivity extends BaseActivity {
 
@@ -95,6 +81,8 @@ public class PaymentActivity extends BaseActivity {
     private String initialText;
     private int dotCount = 0, animDot = 3;
 
+    private UserSessionReceiver sessionReceiver;
+
     private int dotAnimDelay = 700;
     private int successAnimDelay = 1 * 1000;
     private int successDelay = 3 * 1000;
@@ -103,19 +91,6 @@ public class PaymentActivity extends BaseActivity {
     private int initialError = 1;
     private int paymentError = 2;
     private int animIdPos = 0;
-
-    //Timer Related
-    private static Timer timer = null;
-    private boolean enableSessionTimeOut = true;
-    private ActivityResultLauncher<Intent> termsAndConditionsLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == ShareData.PAYMENT_TERMS_TIME_OUT) {
-                    Intent intent = new Intent();
-                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_request_timeout));
-                    setResult(Activity.RESULT_CANCELED, intent);
-                    finish();
-                }
-            });
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,23 +106,25 @@ public class PaymentActivity extends BaseActivity {
         }
 
         initiatePayment();
+        initiateTimer();
     }
 
     @Override
     public void onBackPressed() {
+        NavigationUtil.exitPageSide(this);
         finish();
     }
 
     @Override
-    public void finish() {
-        StoreInformationUtil.clearKey(PaymentActivity.this,ShareData.KEY_FINISHING_TIME);
-        if (timer != null){
-            timer.cancel();
+    protected void onDestroy() {
+        super.onDestroy();
+
+        StoreInformationUtil.saveLongData(PaymentActivity.this, ShareData.KEY_FINISHING_TIME, 0L);
+        if (sessionReceiver != null) {
+            unregisterReceiver(sessionReceiver);
+            sessionReceiver = null;
         }
-        if (handler != null)
-            handler.removeCallbacks(runnable);
-        super.finish();
-        NavigationUtil.exitPageSide(this);
+        stopService(new Intent(this, UserSessionTimer.class));
     }
 
 /*    @Override
@@ -213,11 +190,17 @@ public class PaymentActivity extends BaseActivity {
     private void buildUi() {
         merchantNameTextView.setText(getString(R.string.fp_app_name));
 
-        if (requestExtra != null && requestExtra.getAppLogo() > 0) {
-            merchantLogoImageView.setImageDrawable(ContextCompat.getDrawable(this, requestExtra.getAppLogo()));
-        } else {
-            Drawable appIcon = getPackageManager().getApplicationIcon(getApplicationInfo());
-            merchantLogoImageView.setImageDrawable(appIcon);
+        if (requestExtra != null) {
+            if (requestExtra.getAppLogo() > 0) {
+                merchantLogoImageView.setImageDrawable(ContextCompat.getDrawable(this, requestExtra.getAppLogo()));
+            } else {
+                Drawable appIcon = getPackageManager().getApplicationIcon(getApplicationInfo());
+                merchantLogoImageView.setImageDrawable(appIcon);
+            }
+
+            if (requestExtra.getSessionTimeout() > 0L) {
+                StoreInformationUtil.saveLongData(PaymentActivity.this, ShareData.KEY_FINISHING_TIME, requestExtra.getSessionTimeout());
+            }
         }
 
         if (!TextUtils.isEmpty(initiationModel.getOrderId()))
@@ -344,6 +327,7 @@ public class PaymentActivity extends BaseActivity {
             mobileNumberEditText.setText("1521331666");
             passwordEditText.setText("Password@1");
         }*/
+
     }
 
     private void initListener() {
@@ -353,7 +337,7 @@ public class PaymentActivity extends BaseActivity {
 
         termsTextView.setOnClickListener(view -> {
             Intent intent = new Intent(PaymentActivity.this, TermsConditionActivity.class);
-            termsAndConditionsLauncher.launch(intent);
+            startActivity(intent);
             NavigationUtil.enterPageSide(PaymentActivity.this);
         });
 
@@ -404,6 +388,7 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_initial_failed));
             setResult(Activity.RESULT_CANCELED, intent);
+            NavigationUtil.exitPageSide(this);
             finish();
         }*/
 
@@ -411,6 +396,7 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_orderid_empty));
             setResult(Activity.RESULT_CANCELED, intent);
+            NavigationUtil.exitPageSide(this);
             finish();
         }
 
@@ -418,6 +404,7 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_order_amount_empty));
             setResult(Activity.RESULT_CANCELED, intent);
+            NavigationUtil.exitPageSide(this);
             finish();
         }
 
@@ -459,12 +446,13 @@ public class PaymentActivity extends BaseActivity {
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(true);
         }*/
-        InitiationSuccess success = new InitiationSuccess(null,null,requestExtra.getOrderId(),requestExtra.getAmount(),ShareData.CURRENCY_IQD,null,null);
+        InitiationSuccess success = new InitiationSuccess(null, null, requestExtra.getOrderId(), requestExtra.getAmount(), ShareData.CURRENCY_IQD, null, null);
         this.initiationModel = success;
+
         buildUi();
     }
 
-    private void cashOutPayment(){
+    private void cashOutPayment() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
 
@@ -498,8 +486,6 @@ public class PaymentActivity extends BaseActivity {
                 @Override
                 public void successResponse(CashoutPaymentSummery model) {
                     CustomProgressDialog.dismiss();
-                    timer.cancel();
-                    enableSessionTimeOut = false;
                     showSuccessResult(model);
                 }
 
@@ -641,7 +627,7 @@ public class PaymentActivity extends BaseActivity {
 
     private FastpayResult getPaymentResult(CashoutPaymentSummery model) {
         return new FastpayResult("success", model.getSummary().getInvoiceId(),
-                model.getSummary().getOrderId(), model.getSummary().getAmount(),ShareData.CURRENCY_IQD,
+                model.getSummary().getOrderId(), model.getSummary().getAmount(), ShareData.CURRENCY_IQD,
                 model.getSummary().getRecipient().getName(), model.getSummary().getRecipient().getMobileNumber(), "");
     }
 
@@ -712,40 +698,28 @@ public class PaymentActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra(FastpayResult.EXTRA_PAYMENT_RESULT, getPaymentResult(model));
                 setResult(Activity.RESULT_OK, intent);
+                NavigationUtil.exitPageSide(this);
                 finish();
             }, successDelay);
         }, successAnimDelay);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        userSessionStart();
-    }
+    private void initiateTimer() {
+        if (sessionReceiver == null) sessionReceiver = new UserSessionReceiver();
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ShareData.INTENT_USER_SESSION_FINISHED);
+        registerReceiver(sessionReceiver, filter);
 
+        startService(new Intent(this, UserSessionTimer.class));
+        sessionReceiver.setSessionReceiverListener(() -> {
+            if (sessionFinishedListener != null) sessionFinishedListener.onSessionFinished();
 
-    private void userSessionStart() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = new Timer();
-        long finishingTime = StoreInformationUtil.getLongData(PaymentActivity.this,ShareData.KEY_FINISHING_TIME,-1L);
-        if (finishingTime == -1L){
-            finishingTime = System.currentTimeMillis()+ShareData.SESSION_TIME_OUT_VALUE;
-            StoreInformationUtil.saveLongData(PaymentActivity.this,ShareData.KEY_FINISHING_TIME,finishingTime);
-        }
-        long timerDuration = finishingTime-System.currentTimeMillis();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (enableSessionTimeOut){
-                    Intent intent = new Intent();
-                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_request_timeout));
-                    setResult(Activity.RESULT_CANCELED, intent);
-                    finish();
-                }
-            }
-        },  (timerDuration) );
+            Intent intent = new Intent();
+            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_request_timeout));
+            setResult(Activity.RESULT_CANCELED, intent);
+            NavigationUtil.exitPageSide(this);
+            finish();
+        });
     }
 }
