@@ -491,14 +491,14 @@ public class PaymentActivity extends BaseActivity {
 
                 @Override
                 public void failResponse(ArrayList<String> messages) {
-                    showError(TextUtils.join("\n\n", messages), paymentError);
                     CustomProgressDialog.dismiss();
+                    showError(TextUtils.join("\n\n", messages), paymentError);
                 }
 
                 @Override
                 public void errorResponse(String error) {
-                    showError(error, paymentError);
                     CustomProgressDialog.dismiss();
+                    showError(error, paymentError);
                 }
             });
             authPayment.execute();

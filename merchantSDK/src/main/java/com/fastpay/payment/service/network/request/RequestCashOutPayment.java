@@ -29,7 +29,7 @@ public class RequestCashOutPayment  extends BaseHttp {
 
     public RequestCashOutPayment(Context context, String environment) {
         super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL  + HttpParams.API_VERSION + HttpParams.API_CASH_OUT_PAYMENT: HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_CASH_OUT_PAYMENT);
-        this.mContext = mContext;
+        this.mContext = new WeakReference<>(context);
     }
 
     public void setResponseListener(CashOutPaymentListener responseListener) {
