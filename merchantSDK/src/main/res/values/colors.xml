@@ -20,7 +20,7 @@
     <color name="colorSdkBaseBackground">#FFFFFF</color>
     <color name="colorSdkBaseGrayBackground">#5E6070</color>
 
-    <!--Button color-->
+    <!--Button  color-->
     <color name="colorBtnBaseColor">#2892D7</color>
     <color name="colorBtnPositiveColor">#2892D7</color>
     <color name="colorBtnPositiveColorDark">#1C77B3</color>
