@@ -2,59 +2,23 @@
 <resources>
 
     <!--Layout Coloring-->
-    <color name="colorPrimary">#FAFDFF</color>
-    <color name="colorPrimaryDark">#E0E9EF</color>
+    <color name="colorSdkPrimary">#FAFDFF</color>
+    <color name="colorSdkPrimaryDark">#E0E9EF</color>
 
-    <color name="colorAccent">#F8004E</color>
-    <color name="colorAccentDark">#BA043C</color>
+    <color name="colorSdkAccent">#F8004E</color>
 
     <!--Text Color Part-->
-    <color name="colorBaseTextColor">#000000</color>
-    <color name="colorDimWhiteTextColor">#646D9D</color>
-    <color name="colorSecondTextColor">#62657E</color>
-    <color name="colorPINTextColor">#222D67</color>
-    <color name="colorSuccessTextColor">#0DCB82</color>
-    <color name="colorSuccessDarkTextColor">#0DCB82</color>
-    <color name="colorGrayDarkTextColor">#595F87</color>
-    <color name="colorGrayTextColor">#464C6C</color>
-    <color name="colorFailTextColor">#FC2861</color>
-    <color name="colorHighlightTextColor">#F8004E</color>
-    <color name="colorLightBlueTextColor">#B7BDD9</color>
+    <color name="colorSdkBaseTextColor">#000000</color>
+    <color name="colorSdkSecondTextColor">#62657E</color>
+    <color name="colorSdkSuccessTextColor">#0DCB82</color>
     <color name="colorDimLightBlueTextColor">#5F6AA0</color>
-    <color name="colorBlueDialogTextColor">#222D67</color>
-    <color name="colorAuthTitleTextColor">#5A5E79</color>
-    <color name="colorAccountMobileTextColor">#898D9F</color>
-    <color name="colorAccountUnVerifyTextColor">#FFB86F</color>
-    <color name="colorAccountVerifyTextColor">#0DCB82</color>
-    <color name="colorAccountVerifiedTextColor">#2B335E</color>
-    <color name="colorHomeMenuActiveTextColor">#2B335E</color>
-    <color name="colorHomeMenuInactiveTextColor">#A6AABD</color>
-    <color name="colorLangActiveTextColor">#FFFFFF</color>
-    <color name="colorLangInactiveTextColor">#595C80</color>
-    <color name="colorTabActiveTextColor">#0DCB82</color>
-    <color name="colorTabDefaultTextColor">#595C80</color>
-    <color name="colorRequestAcceptTextColor">#FFFFFF</color>
-    <color name="colorCustomToastTextColor">#646D9D</color>
     <color name="colorPaymentHeaderBackground">#ECF2F5</color>
     <color name="colorPaymentTextColor">#43466E</color>
 
-    <color name="colorSolidTextColor">#131313</color>
-    <color name="colorAccentLightTextColor">#FC2861</color>
-
     <!--Background color-->
-    <color name="colorBaseLightBackground">#EFF5F8</color>
-    <color name="colorBaseDarkLightBackground">#E9F0F7</color>
-    <color name="colorBaseBackground">#FFFFFF</color>
-    <color name="colorBaseDarkBackground">#0A0A12</color>
-    <color name="colorBaseGrayBackground">#5E6070</color>
-    <color name="colorSkyBlueBackground">#7494EA</color>
-    <color name="colorNegative">#FFFFFF</color>
-    <color name="colorToolbarBackground">#EFF5F8</color>
-    <color name="colorBorderDarkBLueColor">#202439</color>
-    <color name="colorDrawableBackground">#2B335E</color>
-    <color name="colorNavigationBackground">#EFF5F8</color>
-    <color name="colorSummeryDividerBackground">#7494EA</color>
-    <color name="colorNotificationBackground">#2B335E</color>
+    <color name="colorSdkBaseLightBackground">#EFF5F8</color>
+    <color name="colorSdkBaseBackground">#FFFFFF</color>
+    <color name="colorSdkBaseGrayBackground">#5E6070</color>
 
     <!--Button color-->
     <color name="colorBtnBaseColor">#2892D7</color>
@@ -62,75 +26,22 @@
     <color name="colorBtnPositiveColorDark">#1C77B3</color>
     <color name="colorBtnPositiveInactiveColor">#83C0E8</color>
     <color name="colorBtnTextColor">#F2F2F7</color>
-    <color name="colorBtnDarkLightColor">#E9F0F7</color>
-
-    <color name="colorBtnNegativeColor">#363A58</color>
-    <color name="colorBtnNegativeColorDark">#202335</color>
-    <color name="colorBtnNegativeColorBlack">#1B1D2C</color>
-
-    <color name="colorBtnSuccessColor">#00FFC5</color>
-    <color name="colorBtnSuccessColorDark">#00B78D</color>
-    <color name="colorBtnWarningColor">#FCE428</color>
 
 
     <!--Edittext Color-->
-    <color name="colorEditTextBaseColor">#E9F0F7</color>
     <color name="colorEditTextWhiteColor">#FFFFFF</color>
-    <color name="colorEditTextLightBlueColor">#D9E6EF</color>
-    <color name="colorValidColor">#ff03EBA3</color>
-    <color name="colorInvalidColor">#ffFC2861</color>
-    <color name="colorTocTextColor">#5F6AA0</color>
-
-    <color name="colorBlur">#33434343</color>
 
     <!--Dialog Colors-->
-    <color name="colorDialogValErrorTitle">#FF5A86</color>
-    <color name="colorDialogValErrorSubTitle">#101226</color>
-    <color name="colorDialogValErrorBackground">#FFFFFF</color>
+    <color name="colorSdkDialogValErrorTitle">#FF5A86</color>
+    <color name="colorSdkDialogValErrorSubTitle">#101226</color>
+    <color name="colorSdkDialogValErrorBackground">#FFFFFF</color>
 
-    <color name="colorDialogBackground">#FFFFFF</color>
-    <color name="colorDialogSecondaryBackground">#ECF2F5</color>
-    <color name="colorDialogWhiteBlueBackground">#222D67</color>
-    <color name="colorDialogSubmitBtnColor">#FC2861</color>
-    <color name="colorDialogSubmitBtnTextColor">#FFFFFF</color>
     <color name="colorDialogBottomBtnColor">#FC2861</color>
-    <color name="colorDialogPrimaryTextColor">#595C80</color>
-    <color name="colorDialogSecondTextColor">#FC2861</color>
-    <color name="colorDialogCloseBtnColor">#595C80</color>
-    <color name="colorDialogDividerColor">#7494EA</color>
-    <color name="colorDialogGraySubTitle">#F2F2F7</color>
-    <color name="colorDialogPositiveTitle">#03EBA3</color>
-    <color name="colorDialogPositiveSubTitle">#F2F2F7</color>
-    <color name="colorDialogPositiveBackground">#222D67</color>
-    <color name="colorDialogPositiveBtn">#F2F2F7</color>
-    <color name="colorDialogPositiveBtnDark">#DFDFDF</color>
-    <color name="colorDialogNegativeBtnLight">#FF4D61</color>
-
-    <color name="colorAlertBackground">#4D000000</color>
-
-    <color name="colorMenuDividerNavDrawer">#DFDFDF</color>
-    <color name="colorMenuDivider">#2A314E</color>
-    <color name="colorDividerLight">#62657E</color>
-    <color name="colorLightBlue">#1F2545</color>
-    <color name="colorDeepBlue">#1F2545</color>
-    <color name="colorLimitDivider">#2C2F47</color>
-    <color name="colorTopicDivider">#5F6AA0</color>
-    <color name="colorSliderIndicator">#7494EA</color>
 
     <!--Identical Color-->
     <color name="colorWhiteIdentical">#FFFFFF</color>
     <color name="colorWhiteGrayIdentical">#E8EEF2</color>
-    <color name="colorSkyIdentical">#7494EA</color>
-    <color name="colorGreenIdentical">#0DCB82</color>
     <color name="colorLightBlueIdentical">#595C80</color>
-    <color name="colorDarkNavyBlueIdentical">#25316F</color>
     <color name="colorNavyBlueIdentical">#636696</color>
-    <color name="colorDarkBlueIdentical">#25316F</color>
-    <color name="colorDimNavyBlueIdentical">#5A5E79</color>
-    <color name="colorGrayIdentical">#464C6C</color>
-    <color name="colorRadioButtonBackground">#E2EDF8</color>
-    <color name="colorPending">#FFB86F</color>
-    <color name="colorBtnTextColorInActive">#5A5E79</color>
-    <color name="colorLightWhiteIdentical">#F2F2F7</color>
 
 </resources>

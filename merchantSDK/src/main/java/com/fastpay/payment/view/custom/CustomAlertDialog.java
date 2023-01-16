@@ -200,11 +200,11 @@ public class CustomAlertDialog extends Dialog {
     }
 
     public void showFailResponse(String title, ArrayList<String> message) {
-        setTitle(title, R.color.colorDialogValErrorTitle);
-        setSubTitle(message, R.color.colorDialogValErrorSubTitle);
-        setCardBackground(R.color.colorDialogValErrorBackground);
+        setTitle(title, R.color.colorSdkDialogValErrorTitle);
+        setSubTitle(message, R.color.colorSdkDialogValErrorSubTitle);
+        setCardBackground(R.color.colorSdkDialogValErrorBackground);
         setImage(R.drawable.ic_validation_error_drawable);
-        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_try_again), R.color.colorDialogValErrorBackground);
+        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_try_again), R.color.colorSdkDialogValErrorBackground);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         setOnConfirmationBtnClickListener(view -> {
@@ -214,11 +214,11 @@ public class CustomAlertDialog extends Dialog {
     }
 
     public void showFailResponse(String title, String message) {
-        setTitle(title, R.color.colorDialogValErrorTitle);
-        setSubTitle(message, R.color.colorDialogValErrorSubTitle);
-        setCardBackground(R.color.colorDialogValErrorBackground);
+        setTitle(title, R.color.colorSdkDialogValErrorTitle);
+        setSubTitle(message, R.color.colorSdkDialogValErrorSubTitle);
+        setCardBackground(R.color.colorSdkDialogValErrorBackground);
         setImage(R.drawable.ic_validation_error_drawable);
-        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_try_again), R.color.colorDialogValErrorBackground);
+        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_try_again), R.color.colorSdkDialogValErrorBackground);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         setOnConfirmationBtnClickListener(view -> {
@@ -228,11 +228,11 @@ public class CustomAlertDialog extends Dialog {
     }
 
     public void showFailResponse(String title, String message, boolean isCustomDismiss) {
-        setTitle(title, R.color.colorDialogValErrorTitle);
-        setSubTitle(message, R.color.colorDialogValErrorSubTitle);
-        setCardBackground(R.color.colorDialogValErrorBackground);
+        setTitle(title, R.color.colorSdkDialogValErrorTitle);
+        setSubTitle(message, R.color.colorSdkDialogValErrorSubTitle);
+        setCardBackground(R.color.colorSdkDialogValErrorBackground);
         setImage(R.drawable.ic_validation_error_drawable);
-        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_try_again), R.color.colorDialogValErrorBackground);
+        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_try_again), R.color.colorSdkDialogValErrorBackground);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         if (!isCustomDismiss) {
@@ -244,11 +244,11 @@ public class CustomAlertDialog extends Dialog {
     }
 
     public void showInternetError(boolean isFinish) {
-        setTitle(activity.getString(R.string.fp_app_common_api_error), R.color.colorDialogValErrorTitle);
-        setSubTitle(activity.getString(R.string.fp_app_common_internet_not_connected), R.color.colorDialogValErrorSubTitle);
-        setCardBackground(R.color.colorDialogValErrorBackground);
+        setTitle(activity.getString(R.string.fp_app_common_api_error), R.color.colorSdkDialogValErrorTitle);
+        setSubTitle(activity.getString(R.string.fp_app_common_internet_not_connected), R.color.colorSdkDialogValErrorSubTitle);
+        setCardBackground(R.color.colorSdkDialogValErrorBackground);
         setImage(R.drawable.ic_validation_error_drawable);
-        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_settings), R.color.colorDialogValErrorBackground);
+        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_settings), R.color.colorSdkDialogValErrorBackground);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         setOnConfirmationBtnClickListener(view -> {
@@ -263,11 +263,11 @@ public class CustomAlertDialog extends Dialog {
     }
 
     public void showPermissionError(String title, String message) {
-        setTitle(title, R.color.colorDialogValErrorTitle);
-        setSubTitle(message, R.color.colorDialogValErrorSubTitle);
-        setCardBackground(R.color.colorDialogValErrorBackground);
+        setTitle(title, R.color.colorSdkDialogValErrorTitle);
+        setSubTitle(message, R.color.colorSdkDialogValErrorSubTitle);
+        setCardBackground(R.color.colorSdkDialogValErrorBackground);
         setImage(R.drawable.ic_validation_error_drawable);
-        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_settings), R.color.colorDialogValErrorBackground);
+        setPositiveButtonStyle(R.drawable.custom_dialog_btn_background, activity.getString(R.string.fp_app_common_settings), R.color.colorSdkDialogValErrorBackground);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         setOnConfirmationBtnClickListener(view -> {
@@ -281,13 +281,13 @@ public class CustomAlertDialog extends Dialog {
     }
 
     public void showSuccess(String title, ArrayList<String> messages) {
-        setTitle(title, R.color.colorSuccessTextColor);
-        setSubTitle(messages, R.color.colorSecondTextColor);
+        setTitle(title, R.color.colorSdkSuccessTextColor);
+        setSubTitle(messages, R.color.colorSdkSecondTextColor);
         setImage(R.drawable.ic_validation_success_drawable);
-        setCardBackground(R.color.colorPrimary);
+        setCardBackground(R.color.colorSdkPrimary);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
-        setPositiveButtonStyle(R.drawable.custom_dialog_bottom_dim_white_background, activity.getString(R.string.fp_app_common_done), R.color.colorPrimary);
+        setPositiveButtonStyle(R.drawable.custom_dialog_bottom_dim_white_background, activity.getString(R.string.fp_app_common_done), R.color.colorSdkPrimary);
         show();
     }
 }

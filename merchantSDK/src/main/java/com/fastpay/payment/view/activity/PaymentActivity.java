@@ -221,7 +221,7 @@ public class PaymentActivity extends BaseActivity {
         successIconBackground = new TransitionDrawable(new Drawable[]{getResources().getDrawable(R.drawable.ic_empty), getResources().getDrawable(R.drawable.ic_success_check_icon)});
 
         mobileNumberEditText.setHint(getString(R.string.fp_payment_page_mobile_number_hint));
-        mobileNumberEditText.setHintTextColor(getResources().getColor(R.color.colorBaseGrayBackground));
+        mobileNumberEditText.setHintTextColor(getResources().getColor(R.color.colorSdkBaseBackground));
         mobileNumberEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(12)});
         mobileNumberEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         mobileNumberEditTextEndImageView.setImageDrawable(successIconBackground);
@@ -279,8 +279,8 @@ public class PaymentActivity extends BaseActivity {
         // Password view
         passwordEditText.setHint(getString(R.string.fp_payment_page_enter_your_password));
         passwordEditText.setText("");
-        passwordEditText.setHintTextColor(getResources().getColor(R.color.colorBaseGrayBackground));
-        passwordEditText.setTextColor(getResources().getColor(R.color.colorBaseTextColor));
+        passwordEditText.setHintTextColor(getResources().getColor(R.color.colorSdkBaseBackground));
+        passwordEditText.setTextColor(getResources().getColor(R.color.colorSdkBaseTextColor));
         passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordEditText.setTransformationMethod(new PasswordTransformationMethod());
         passwordEditTextEndImageView.setImageResource(R.drawable.ic_invisible_icon);

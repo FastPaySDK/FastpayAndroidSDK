@@ -2,13 +2,13 @@
 
     <!-- Base application theme. -->
     <style name="FpAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorSdkPrimary</item>
+        <item name="colorPrimaryDark">@color/colorSdkPrimaryDark</item>
+        <item name="colorAccent">@color/colorSdkAccent</item>
         <item name="android:splitMotionEvents">false</item>
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:textColorSecondary">#2B335E</item>
-        <item name="android:textColor">@color/colorBaseTextColor</item>
+        <item name="android:textColor">@color/colorSdkBaseTextColor</item>
     </style>
 
     <style name="customCheckboxStyle" parent="FpAppTheme">

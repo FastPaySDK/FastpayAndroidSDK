@@ -2,39 +2,19 @@
     <string name="fp_app_name">Payment SDK</string>
 
     <!--App Common text-->
-    <string name="fp_app_common_go_back">Go Back</string>
-    <string name="fp_app_common_next">Next</string>
-    <string name="fp_app_common_confirm">Confirm</string>
-    <string name="fp_app_common_agree">I AGREE</string>
-    <string name="fp_app_common_accept">Accept</string>
-    <string name="fp_app_common_decline">Decline</string>
-    <string name="fp_app_common_cancel">Cancel</string>
-    <string name="fp_app_common_failed">Failed</string>
     <string name="fp_app_common_done">Done</string>
     <string name="fp_app_common_api_error">Error Occurred</string>
     <string name="fp_app_common_try_again">Try Again</string>
-    <string name="fp_app_common_invalid_response">Invalid response</string>
     <string name="fp_app_common_internet_not_connected">Internet not working properly. Please try again.</string>
     <string name="fp_app_common_settings">Settings</string>
     <string name="fp_app_common_or">Or</string>
     <string name="fp_app_common_error">Something went wrong!</string>
     <string name="fp_app_common_retry">Retry</string>
-    <string name="fp_app_common_permission_acceptence">Permission acceptance</string>
-    <string name="fp_app_common_permission_acceptence_success_message">Permission granted. Please try again</string>
-    <string name="fp_app_common_permission_acceptence_fail_message">You must have to accept permission to continue</string>
 
     <!--Alert Dialog Text-->
     <string name="fp_alert_dialog_common_validation_title">Whoops! Please find below errors -</string>
-    <string name="fp_alert_dialog_common_validation_sub_title">Error while sending verification code to your mobile number. Please try again after some times</string>
-    <string name="fp_alert_dialog_otp_miss_match">The entered OTP is not valid. Please use valid OTP to continue.</string>
 
     <!--Policy list-->
-    <string name="fp_password_check_list">Password checklist</string>
-    <string name="fp_password_policy_length">Password should be at least 8 characters</string>
-    <string name="fp_password_policy_lower_character">Add at least 1 lower letter</string>
-    <string name="fp_password_policy_caps_character">Add at least 1 CAP letter</string>
-    <string name="fp_password_policy_number_character">Add at least 1 number</string>
-    <string name="fp_password_policy_special_character">Add at least 1 symbol (#, @, . , $)</string>
 
     <!--Initial page Text-->
     <string name="fp_initial_page_initializing">Initializing</string>
@@ -42,7 +22,6 @@
     <!--Payment page Text-->
     <string name="fp_payment_page_order_id">Order ID: %s</string>
     <string name="fp_payment_page_default_amount">0 IQD</string>
-    <string name="fp_payment_page_pay_amount">%s IQD</string>
     <string name="fp_payment_page_pay_via">Pay via</string>
     <string name="fp_payment_page_mobile_number">Mobile Number</string>
     <string name="fp_payment_page_password">Password</string>

@@ -2,7 +2,7 @@
 <resources>
 
     <!--Layout Coloring-->
-    <color name="colorPrimary">#FAFDFF</color>
+    <color name="colorSdkPrimary">#FAFDFF</color>
     <color name="colorPrimaryDark">#E0E9EF</color>
 
     <color name="colorAccent">#F8004E</color>
