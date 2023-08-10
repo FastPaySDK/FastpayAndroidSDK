@@ -29,11 +29,14 @@ import androidx.core.content.ContextCompat;
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
+import com.fastpay.payment.model.request.SendOtpRequestModel;
 import com.fastpay.payment.model.response.CashoutPaymentSummery;
 import com.fastpay.payment.model.response.InitiationSuccess;
 import com.fastpay.payment.service.background.UserSessionReceiver;
 import com.fastpay.payment.service.background.UserSessionTimer;
 import com.fastpay.payment.service.listener.CashOutPaymentListener;
+import com.fastpay.payment.service.listener.SendOtpListener;
+import com.fastpay.payment.service.network.http.HttpParams;
 import com.fastpay.payment.service.network.request.RequestCashOutPayment;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.FormValidationUtil;
@@ -360,7 +363,8 @@ public class PaymentActivity extends BaseActivity {
         });
 
         paymentBtn.setOnClickListener(view -> {
-            cashOutPayment();
+            sendOtpAPi();
+            //startActivity(new Intent(PaymentActivity.this,OtpVerificationActivity.class));
         });
     }
 
@@ -452,7 +456,7 @@ public class PaymentActivity extends BaseActivity {
         buildUi();
     }
 
-    private void cashOutPayment() {
+    private void sendOtpAPi() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
 
@@ -461,27 +465,38 @@ public class PaymentActivity extends BaseActivity {
             String orderId = initiationModel.getOrderId();
             String amount = initiationModel.getBillAmount();
 
-            RequestCashOutPayment authPayment = new RequestCashOutPayment(this, requestExtra.getEnvironment());
-            authPayment.buildParams(orderId, amount, mobileNumber, password);
-            /*authPayment.setResponseListener(new PayWithCredentialApiListener() {
+            SendOtpRequestModel requestModel = new SendOtpRequestModel(this, requestExtra.getEnvironment());
+            requestModel.buildParams(orderId, amount, mobileNumber, password);
+
+            requestModel.setResponseListener(new SendOtpListener() {
                 @Override
-                public void successResponse(PaymentSummery model) {
-                    // CustomProgressDialog.dismiss();
-                    validatePayment();
+                public void successResponse(String message) {
+                    Intent intent = new Intent(PaymentActivity.this,OtpVerificationActivity.class);
+                    intent.putExtra(HttpParams.PARAM_ORDER_ID_2, orderId);
+                    intent.putExtra(HttpParams.PARAM_AMOUNT, amount);
+                    intent.putExtra(HttpParams.PARAM_MOBILE_NUMBER_2, mobileNumber);
+                    intent.putExtra(HttpParams.PARAM_PASSWORD, password);
+                    intent.putExtra(ShareData.KEY_OTP_MESSAGE,message);
+                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_REQUEST,requestExtra);
+                    startActivityForResult(intent,1200);
                 }
 
                 @Override
                 public void failResponse(ArrayList<String> messages) {
-                    showError(TextUtils.join("\n\n", messages), paymentError);
                     CustomProgressDialog.dismiss();
+                    showError(TextUtils.join("\n\n", messages), paymentError);
                 }
 
                 @Override
-                public void errorResponse(String message) {
-                    showError(message, paymentError);
+                public void errorResponse(String error) {
                     CustomProgressDialog.dismiss();
+                    showError(error, paymentError);
                 }
-            });*/
+            });
+            requestModel.execute();
+
+            /*RequestCashOutPayment authPayment = new RequestCashOutPayment(this, requestExtra.getEnvironment());
+            authPayment.buildParams(orderId, amount, mobileNumber, password);
             authPayment.setResponseListener(new CashOutPaymentListener() {
                 @Override
                 public void successResponse(CashoutPaymentSummery model) {
@@ -501,7 +516,7 @@ public class PaymentActivity extends BaseActivity {
                     showError(error, paymentError);
                 }
             });
-            authPayment.execute();
+            authPayment.execute();*/
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }

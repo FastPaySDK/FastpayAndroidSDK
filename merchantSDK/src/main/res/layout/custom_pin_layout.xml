@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/customEditTextLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/customEditTextStartImageView"
+        android:layout_width="@dimen/size_18dp"
+        android:layout_height="@dimen/size_18dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/size_10dp" />
+
+    <com.fastpay.payment.view.custom.CustomEditText
+        android:id="@+id/customEditTextView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_60dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:inputType="number"
+        android:paddingLeft="@dimen/size_10dp"
+        android:paddingTop="@dimen/size_5dp"
+        android:paddingRight="@dimen/size_10dp"
+        android:paddingBottom="@dimen/size_5dp"
+        android:textColor="@color/colorPINTextColor"
+        android:textColorHint="@color/colorSecondTextColor"
+        android:textSize="@dimen/text_medium"
+        app:textStyle="Normal" />
+
+    <ImageView
+        android:id="@+id/customEditTextEndImageView"
+        android:layout_width="@dimen/size_35dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/size_3dp"
+        android:padding="@dimen/size_7dp"
+        android:visibility="gone" />
+
+</LinearLayout>

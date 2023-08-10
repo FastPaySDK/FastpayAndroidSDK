@@ -12,6 +12,8 @@ public class PaymentRequest implements Serializable {
     private String token;
     private String mobileNumber;
     private String password;
+    private String amount;
+    private String otp;
 
     public PaymentRequest() {
     }
@@ -53,5 +55,21 @@ public class PaymentRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 }

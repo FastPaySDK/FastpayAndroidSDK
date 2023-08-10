@@ -10,6 +10,8 @@ public class HttpParams {
     public static final String API_VERSION = "api/v1/";
 
     public static final String API_INITIATE = "public/sdk/payment/initiation";
+    public static final String SEND_OTP  = "private/transaction/authorize-cash-out/send-otp";
+    public static final String VERIFY_OTP  = "private/transaction/authorize-cash-out/transfer";
     public static final String API_PAYMENT = "public/sdk/payment/pay";
     public static final String API_VALIDATE = "public/sdk/payment/validate";
     public static final String API_CASH_OUT_PAYMENT = "private/transaction/authorize-cash-out/execute";
@@ -25,4 +27,5 @@ public class HttpParams {
     public static final String PARAM_MOBILE_NUMBER = "mobileNumber";
     public static final String PARAM_MOBILE_NUMBER_2 = "mobile_number";
     public static final String PARAM_PASSWORD= "password";
+    public static final String PARAM_OTP= "otp";
 }
