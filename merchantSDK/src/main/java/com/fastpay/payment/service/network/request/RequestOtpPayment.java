@@ -2,16 +2,13 @@ package com.fastpay.payment.service.network.request;
 
 import android.content.Context;
 
-import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpaySDK;
 import com.fastpay.payment.model.response.BaseResponseModel;
 import com.fastpay.payment.service.listener.CashOutPaymentListener;
-import com.fastpay.payment.service.listener.PayWithCredentialApiListener;
 import com.fastpay.payment.service.network.http.BaseHttp;
 import com.fastpay.payment.service.network.http.HttpParams;
 import com.fastpay.payment.service.network.parser.BaseResponseParser;
 import com.fastpay.payment.service.network.parser.CashoutPaymentParser;
-import com.fastpay.payment.service.network.parser.PaymentSummeryParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,30 +16,31 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class RequestCashOutPayment  extends BaseHttp {
+public class RequestOtpPayment extends BaseHttp {
 
     private WeakReference<Context> mContext;
     private BaseResponseModel responseModel;
     private CashOutPaymentListener listener;
 
-    public RequestCashOutPayment(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL  + HttpParams.API_VERSION + HttpParams.API_CASH_OUT_PAYMENT: HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_CASH_OUT_PAYMENT);
-        this.mContext = new WeakReference<>(context);
+    public RequestOtpPayment(Context context, String environment) {
+        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
+                + HttpParams.API_VERSION + HttpParams.VERIFY_OTP);
+        mContext = new WeakReference<>(context);
     }
 
     public void setResponseListener(CashOutPaymentListener responseListener) {
         this.listener = responseListener;
     }
 
-    public void buildParams(String orderId, String amount, String mobileNumber, String password) {
+    public void buildParams(String orderId, String amount, String mobileNumber, String password,String otp) {
         JSONObject json = new JSONObject();
         try {
             json.put(HttpParams.PARAM_ORDER_ID_2, orderId);
             json.put(HttpParams.PARAM_AMOUNT, amount);
             json.put(HttpParams.PARAM_MOBILE_NUMBER_2, mobileNumber);
             json.put(HttpParams.PARAM_PASSWORD, password);
+            json.put(HttpParams.PARAM_OTP, otp);
         } catch (JSONException e) {
             e.printStackTrace();
         }

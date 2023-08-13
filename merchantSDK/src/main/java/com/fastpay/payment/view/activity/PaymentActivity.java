@@ -29,15 +29,13 @@ import androidx.core.content.ContextCompat;
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
-import com.fastpay.payment.model.request.SendOtpRequestModel;
+import com.fastpay.payment.service.network.request.SendOtpRequestModel;
 import com.fastpay.payment.model.response.CashoutPaymentSummery;
 import com.fastpay.payment.model.response.InitiationSuccess;
 import com.fastpay.payment.service.background.UserSessionReceiver;
 import com.fastpay.payment.service.background.UserSessionTimer;
-import com.fastpay.payment.service.listener.CashOutPaymentListener;
 import com.fastpay.payment.service.listener.SendOtpListener;
 import com.fastpay.payment.service.network.http.HttpParams;
-import com.fastpay.payment.service.network.request.RequestCashOutPayment;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.FormValidationUtil;
 import com.fastpay.payment.service.utill.GifDecoderView;
@@ -471,6 +469,7 @@ public class PaymentActivity extends BaseActivity {
             requestModel.setResponseListener(new SendOtpListener() {
                 @Override
                 public void successResponse(String message) {
+                    CustomProgressDialog.dismiss();
                     Intent intent = new Intent(PaymentActivity.this,OtpVerificationActivity.class);
                     intent.putExtra(HttpParams.PARAM_ORDER_ID_2, orderId);
                     intent.putExtra(HttpParams.PARAM_AMOUNT, amount);
@@ -519,6 +518,18 @@ public class PaymentActivity extends BaseActivity {
             authPayment.execute();*/
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1200) {
+            if(resultCode == Activity.RESULT_OK){
+                CashoutPaymentSummery paymentSummery = (CashoutPaymentSummery) data.getExtras().getSerializable("PAYMENT_SUMMERY");
+                showSuccessResult(paymentSummery);
+            }
         }
     }
 

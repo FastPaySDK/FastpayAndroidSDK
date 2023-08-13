@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainRootView"
     tools:context=".view.activity.OtpVerificationActivity">
 
     <ImageView
@@ -39,11 +40,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20dp"
         android:gravity="start"
-        android:text="Title"
+        android:text="@string/verify_your_account"
         android:textAlignment="viewStart"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_large"
-        app:layout_constraintEnd_toEndOf="@+id/goBackText"
+        app:layout_constraintEnd_toEndOf="@+id/pinField6"
         app:layout_constraintStart_toStartOf="@+id/pinField1"
         app:layout_constraintTop_toBottomOf="@+id/goBackText"
         app:textStyle="Normal" />

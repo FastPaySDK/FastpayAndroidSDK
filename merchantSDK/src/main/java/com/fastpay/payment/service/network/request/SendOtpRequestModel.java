@@ -1,4 +1,4 @@
-package com.fastpay.payment.model.request;
+package com.fastpay.payment.service.network.request;
 
 import android.content.Context;
 
@@ -70,7 +70,7 @@ public class SendOtpRequestModel extends BaseHttp {
             json.put(HttpParams.PARAM_AMOUNT, amount);
             json.put(HttpParams.PARAM_MOBILE_NUMBER_2, mobileNumber);
             json.put(HttpParams.PARAM_PASSWORD, password);
-            json.put(HttpParams.PARAM_PASSWORD, password);
+            json.put(HttpParams.PARAM_OTP, otp);
         } catch (JSONException e) {
             e.printStackTrace();
         }

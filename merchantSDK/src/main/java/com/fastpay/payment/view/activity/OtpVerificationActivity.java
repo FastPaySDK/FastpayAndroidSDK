@@ -1,11 +1,12 @@
 package com.fastpay.payment.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -21,7 +22,10 @@ import android.widget.LinearLayout;
 
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
-import com.fastpay.payment.model.request.SendOtpRequestModel;
+import com.fastpay.payment.model.response.CashoutPaymentSummery;
+import com.fastpay.payment.service.listener.CashOutPaymentListener;
+import com.fastpay.payment.service.network.request.RequestOtpPayment;
+import com.fastpay.payment.service.network.request.SendOtpRequestModel;
 import com.fastpay.payment.service.listener.SendOtpListener;
 import com.fastpay.payment.service.network.http.HttpParams;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
@@ -37,10 +41,12 @@ import java.util.ArrayList;
 public class OtpVerificationActivity extends AppCompatActivity implements View.OnKeyListener {
 
     private CustomEditText pin1,pin2,pin3,pin4,pin5,pin6;
-    private CustomTextView tvMessage;
+    private CustomTextView tvMessage,goBackText;
     private LinearLayout llPin1,llPin2,llPin3,llPin4,llPin5,llPin6;
     private String mobileNumber,password,orderId,amount,message;
     private FastpayRequest requestExtra;
+    private ConstraintLayout mainRootView;
+    private ImageView goBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +77,12 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
         llPin4 = findViewById(R.id.pinField4);
         llPin5 = findViewById(R.id.pinField5);
         llPin6 = findViewById(R.id.pinField6);
+        goBackBtn = findViewById(R.id.goBackBtn);
+        goBackText = findViewById(R.id.goBackText);
 
 
         tvMessage = findViewById(R.id.subTitle);
+        mainRootView = findViewById(R.id.mainRootView);
 
         pin1 = findViewById(R.id.pinField1).findViewById(R.id.customEditTextView);
         pin2 = findViewById(R.id.pinField2).findViewById(R.id.customEditTextView);
@@ -95,6 +104,13 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
 
         tvMessage.setText(message);
 
+        goBackBtn.setOnClickListener(v->{
+            finish();
+        });
+        goBackText.setOnClickListener(v->{
+            finish();
+        });
+
         pin1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -115,7 +131,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
                     pin2.requestFocus();
 
                     if (getOtpFullText().length() == 6) {
-                        //callApiToVerifyOtp();
+                        callApiToVerifyOtp();
                     }
                 }
             }
@@ -138,7 +154,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
                     ((TransitionDrawable) llPin2.getBackground()).startTransition(300);
                     pin3.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        //callApiToVerifyOtp();
+                        callApiToVerifyOtp();
                     }
                 }
 
@@ -164,7 +180,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
                     ((TransitionDrawable) llPin3.getBackground()).startTransition(300);
                     pin4.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        //callApiToVerifyOtp();
+                        callApiToVerifyOtp();
                     }
                 }
             }
@@ -189,7 +205,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
                     ((TransitionDrawable) llPin4.getBackground()).startTransition(300);
                     pin5.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        //callApiToVerifyOtp();
+                        callApiToVerifyOtp();
                     }
                 }
             }
@@ -214,7 +230,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
                     ((TransitionDrawable) llPin5.getBackground()).startTransition(300);
                     pin6.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        //callApiToVerifyOtp();
+                        callApiToVerifyOtp();
                     }
                 }
             }
@@ -237,7 +253,7 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
                     ((TransitionDrawable) llPin6.getBackground()).startTransition(300);
 
                     if (getOtpFullText().length() == 6) {
-                        //callApiToVerifyOtp();
+                        callApiToVerifyOtp();
                     }
                 }
             }
@@ -319,63 +335,38 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
         pin1.requestFocus();
     }
 
-    private void verifyOtpAPi() {
+    private void callApiToVerifyOtp() {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
 
-            SendOtpRequestModel requestModel = new SendOtpRequestModel(this, requestExtra.getEnvironment());
+            RequestOtpPayment requestModel = new RequestOtpPayment(this, requestExtra.getEnvironment());
             requestModel.buildParams(orderId, amount, mobileNumber, password,getOtpFullText());
 
-            requestModel.setResponseListener(new SendOtpListener() {
+            requestModel.setResponseListener(new CashOutPaymentListener() {
                 @Override
-                public void successResponse(String message) {
-                    /*Intent intent = new Intent(OtpVerificationActivity.this,OtpVerificationActivity.class);
-                    intent.putExtra(HttpParams.PARAM_ORDER_ID_2, orderId);
-                    intent.putExtra(HttpParams.PARAM_AMOUNT, amount);
-                    intent.putExtra(HttpParams.PARAM_MOBILE_NUMBER_2, mobileNumber);
-                    intent.putExtra(HttpParams.PARAM_PASSWORD, password);
-                    intent.putExtra(ShareData.KEY_OTP_MESSAGE,message);
-                    startActivityForResult(intent,1200);*/
+                public void successResponse(CashoutPaymentSummery data) {
+                    CustomProgressDialog.dismiss();
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("PAYMENT_SUMMERY",data);
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
                 }
 
                 @Override
                 public void failResponse(ArrayList<String> messages) {
                     CustomProgressDialog.dismiss();
-                    //showError(TextUtils.join("\n\n", messages), paymentError);
+                    clearPinData();
                 }
 
                 @Override
                 public void errorResponse(String error) {
                     CustomProgressDialog.dismiss();
-                    //showError(error, paymentError);
+                    clearPinData();
                 }
             });
             requestModel.execute();
-
-            /*RequestCashOutPayment authPayment = new RequestCashOutPayment(this, requestExtra.getEnvironment());
-            authPayment.buildParams(orderId, amount, mobileNumber, password);
-            authPayment.setResponseListener(new CashOutPaymentListener() {
-                @Override
-                public void successResponse(CashoutPaymentSummery model) {
-                    CustomProgressDialog.dismiss();
-                    showSuccessResult(model);
-                }
-
-                @Override
-                public void failResponse(ArrayList<String> messages) {
-                    CustomProgressDialog.dismiss();
-                    showError(TextUtils.join("\n\n", messages), paymentError);
-                }
-
-                @Override
-                public void errorResponse(String error) {
-                    CustomProgressDialog.dismiss();
-                    showError(error, paymentError);
-                }
-            });
-            authPayment.execute();*/
         } else {
-            //new CustomAlertDialog(this, mainRootView).showInternetError(false);
+            new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
     }
 }

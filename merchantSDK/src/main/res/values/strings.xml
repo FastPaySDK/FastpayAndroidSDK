@@ -68,5 +68,6 @@
     <string name="fp_payment_message_request_timeout">Request timeout</string>
     <string name="fp_payment_message_order_amount_empty">Order amount empty</string>
     <string name="fp_payment_message_token_empty">Payment token empty</string>
+    <string name="verify_your_account">Verify your account</string>
 
 </resources>

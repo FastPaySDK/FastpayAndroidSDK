@@ -27,7 +27,11 @@ public class BaseResponseParser {
                 }
 
                 if (jsonObject.has("messages")) {
-                    message = jsonObject.getString("messages");
+                    String listMessages = jsonObject.getString("messages");
+                    listMessages = listMessages.replace("[","");
+                    listMessages = listMessages.replace("]","");
+                    listMessages = listMessages.replace("\"","");
+                    message = listMessages;
                 }
 
                 if (jsonObject.has("errors")) {
