@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mainRootView"
+    android:id="@+id/clMain"
     tools:context=".view.activity.OtpVerificationActivity">
 
     <ImageView
@@ -64,71 +64,181 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:textStyle="Normal" />
 
-    <include
+    <LinearLayout
         android:id="@+id/pinField1"
-        layout="@layout/custom_pin_layout"
         android:layout_width="@dimen/size_50dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_10dp"
         app:layout_constraintEnd_toStartOf="@+id/pinField2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/subTitle">
 
-    <include
+        <com.fastpay.payment.view.custom.CustomEditText
+            android:id="@+id/tvPin1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_60dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingLeft="@dimen/size_10dp"
+            android:paddingTop="@dimen/size_5dp"
+            android:paddingRight="@dimen/size_10dp"
+            android:paddingBottom="@dimen/size_5dp"
+            android:textColor="@color/colorPINTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_medium"
+            app:textStyle="Normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/pinField2"
-        layout="@layout/custom_pin_layout"
         android:layout_width="@dimen/size_50dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/pinField1"
         app:layout_constraintEnd_toStartOf="@+id/pinField3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pinField1"
-        app:layout_constraintTop_toTopOf="@+id/pinField1" />
+        app:layout_constraintTop_toTopOf="@+id/pinField1">
 
-    <include
+        <com.fastpay.payment.view.custom.CustomEditText
+            android:id="@+id/tvPin2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_60dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingLeft="@dimen/size_10dp"
+            android:paddingTop="@dimen/size_5dp"
+            android:paddingRight="@dimen/size_10dp"
+            android:paddingBottom="@dimen/size_5dp"
+            android:textColor="@color/colorPINTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_medium"
+            app:textStyle="Normal" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/pinField3"
-        layout="@layout/custom_pin_layout"
         android:layout_width="@dimen/size_50dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/pinField1"
         app:layout_constraintEnd_toStartOf="@+id/pinField4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pinField2"
-        app:layout_constraintTop_toTopOf="@+id/pinField1" />
+        app:layout_constraintTop_toTopOf="@+id/pinField1">
 
-    <include
+        <com.fastpay.payment.view.custom.CustomEditText
+            android:id="@+id/tvPin3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_60dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingLeft="@dimen/size_10dp"
+            android:paddingTop="@dimen/size_5dp"
+            android:paddingRight="@dimen/size_10dp"
+            android:paddingBottom="@dimen/size_5dp"
+            android:textColor="@color/colorPINTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_medium"
+            app:textStyle="Normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/pinField4"
-        layout="@layout/custom_pin_layout"
         android:layout_width="@dimen/size_50dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/pinField1"
         app:layout_constraintEnd_toStartOf="@+id/pinField5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pinField3"
-        app:layout_constraintTop_toTopOf="@+id/pinField1" />
+        app:layout_constraintTop_toTopOf="@+id/pinField1">
 
-    <include
+        <com.fastpay.payment.view.custom.CustomEditText
+            android:id="@+id/tvPin4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_60dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingLeft="@dimen/size_10dp"
+            android:paddingTop="@dimen/size_5dp"
+            android:paddingRight="@dimen/size_10dp"
+            android:paddingBottom="@dimen/size_5dp"
+            android:textColor="@color/colorPINTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_medium"
+            app:textStyle="Normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/pinField5"
-        layout="@layout/custom_pin_layout"
         android:layout_width="@dimen/size_50dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/pinField1"
         app:layout_constraintEnd_toStartOf="@+id/pinField6"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pinField4"
-        app:layout_constraintTop_toTopOf="@+id/pinField1" />
+        app:layout_constraintTop_toTopOf="@+id/pinField1">
 
-    <include
+        <com.fastpay.payment.view.custom.CustomEditText
+            android:id="@+id/tvPin5"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_60dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingLeft="@dimen/size_10dp"
+            android:paddingTop="@dimen/size_5dp"
+            android:paddingRight="@dimen/size_10dp"
+            android:paddingBottom="@dimen/size_5dp"
+            android:textColor="@color/colorPINTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_medium"
+            app:textStyle="Normal" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/pinField6"
-        layout="@layout/custom_pin_layout"
         android:layout_width="@dimen/size_50dp"
-        android:layout_height="@dimen/size_60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/pinField1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/pinField5"
-        app:layout_constraintTop_toTopOf="@+id/pinField1" />
+        app:layout_constraintTop_toTopOf="@+id/pinField1">
+
+        <com.fastpay.payment.view.custom.CustomEditText
+            android:id="@+id/tvPin6"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_60dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingLeft="@dimen/size_10dp"
+            android:paddingTop="@dimen/size_5dp"
+            android:paddingRight="@dimen/size_10dp"
+            android:paddingBottom="@dimen/size_5dp"
+            android:textColor="@color/colorPINTextColor"
+            android:textColorHint="@color/colorSecondTextColor"
+            android:textSize="@dimen/text_medium"
+            app:textStyle="Normal" />
+
+    </LinearLayout>
 
     
 </androidx.constraintlayout.widget.ConstraintLayout>

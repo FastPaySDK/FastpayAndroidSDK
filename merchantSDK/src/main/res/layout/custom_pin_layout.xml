@@ -10,6 +10,7 @@
         android:layout_width="@dimen/size_18dp"
         android:layout_height="@dimen/size_18dp"
         android:layout_gravity="center"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/size_10dp" />
 
     <com.fastpay.payment.view.custom.CustomEditText

@@ -30,6 +30,7 @@ import com.fastpay.payment.service.listener.SendOtpListener;
 import com.fastpay.payment.service.network.http.HttpParams;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.CustomAsteriskPassTransformMethod;
+import com.fastpay.payment.service.utill.NavigationUtil;
 import com.fastpay.payment.service.utill.ShareData;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomEditText;
@@ -38,7 +39,7 @@ import com.fastpay.payment.view.custom.CustomTextView;
 
 import java.util.ArrayList;
 
-public class OtpVerificationActivity extends AppCompatActivity implements View.OnKeyListener {
+public class OtpVerificationActivity extends BaseActivity implements View.OnKeyListener {
 
     private CustomEditText pin1,pin2,pin3,pin4,pin5,pin6;
     private CustomTextView tvMessage,goBackText;
@@ -71,27 +72,39 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
             }
         }
 
-        llPin1 = findViewById(R.id.pinField1);
-        llPin2 = findViewById(R.id.pinField2);
-        llPin3 = findViewById(R.id.pinField3);
-        llPin4 = findViewById(R.id.pinField4);
-        llPin5 = findViewById(R.id.pinField5);
-        llPin6 = findViewById(R.id.pinField6);
+        llPin1 = (LinearLayout) findViewById(R.id.pinField1);
+        llPin2 = (LinearLayout) findViewById(R.id.pinField2);
+        llPin3 = (LinearLayout) findViewById(R.id.pinField3);
+        llPin4 = (LinearLayout) findViewById(R.id.pinField4);
+        llPin5 = (LinearLayout) findViewById(R.id.pinField5);
+        llPin6 = (LinearLayout) findViewById(R.id.pinField6);
         goBackBtn = findViewById(R.id.goBackBtn);
         goBackText = findViewById(R.id.goBackText);
 
 
         tvMessage = findViewById(R.id.subTitle);
-        mainRootView = findViewById(R.id.mainRootView);
+        mainRootView = (ConstraintLayout) findViewById(R.id.clMain);
 
-        pin1 = findViewById(R.id.pinField1).findViewById(R.id.customEditTextView);
-        pin2 = findViewById(R.id.pinField2).findViewById(R.id.customEditTextView);
-        pin3 = findViewById(R.id.pinField3).findViewById(R.id.customEditTextView);
-        pin4 = findViewById(R.id.pinField4).findViewById(R.id.customEditTextView);
-        pin5 = findViewById(R.id.pinField5).findViewById(R.id.customEditTextView);
-        pin6 = findViewById(R.id.pinField6).findViewById(R.id.customEditTextView);
+        pin1 = findViewById(R.id.tvPin1);
+        pin2 = findViewById(R.id.tvPin2);
+        pin3 = findViewById(R.id.tvPin3);
+        pin4 = findViewById(R.id.tvPin4);
+        pin5 = findViewById(R.id.tvPin5);
+        pin6 = findViewById(R.id.tvPin6);
 
         buildUi();
+
+        initListener();
+    }
+
+    @Override
+    public void onBackPressed() {
+        NavigationUtil.exitPageSide(this);
+        finish();
+    }
+
+    private void initListener() {
+        setSessionFinishedListener(this::onBackPressed);
     }
 
     private void buildUi() {
@@ -263,9 +276,6 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
 
     private void setOtpTextViewConfigure(LinearLayout pinField,EditText editText) {
 
-        ImageView startImageView = pinField.findViewById(R.id.customEditTextStartImageView);
-        ImageView endImageView = pinField.findViewById(R.id.customEditTextEndImageView);
-
         InputFilter[] otpFilters = new InputFilter[1];
         otpFilters[0] = new InputFilter.LengthFilter(1);
 
@@ -279,9 +289,6 @@ public class OtpVerificationActivity extends AppCompatActivity implements View.O
         editText.setTextSize(getResources().getDimension(R.dimen.text_14sp));
         editText.setTransformationMethod(new CustomAsteriskPassTransformMethod());
         editText.setPadding(0, ConfigurationUtil.convertDpToPixel(10, this).intValue(), 0, ConfigurationUtil.convertDpToPixel(10, this).intValue());
-
-        startImageView.setVisibility(View.GONE);
-        endImageView.setVisibility(View.GONE);
     }
 
     public String getOtpFullText() {
