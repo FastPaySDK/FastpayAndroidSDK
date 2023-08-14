@@ -48,7 +48,7 @@ public class CustomAlertDialog extends Dialog {
     }
 
     private void doConfig() {
-        this.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         displayMetrics = new DisplayMetrics();
         ((WindowManager) getContext().getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getMetrics(displayMetrics);

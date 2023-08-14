@@ -16,4 +16,11 @@
         <item name="colorControlActivated">@color/colorBtnBaseColor</item>
     </style>
 
+    <style name="CustomDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.8</item>
+    </style>
+
 </resources>

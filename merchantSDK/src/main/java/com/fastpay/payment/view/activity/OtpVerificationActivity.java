@@ -362,12 +362,14 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                 @Override
                 public void failResponse(ArrayList<String> messages) {
                     CustomProgressDialog.dismiss();
+                    new CustomAlertDialog(OtpVerificationActivity.this,mainRootView).showFailResponse(getString(R.string.fp_app_common_error),messages);
                     clearPinData();
                 }
 
                 @Override
                 public void errorResponse(String error) {
                     CustomProgressDialog.dismiss();
+                    new CustomAlertDialog(OtpVerificationActivity.this,mainRootView).showFailResponse(getString(R.string.fp_app_common_error),error);
                     clearPinData();
                 }
             });
