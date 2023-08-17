@@ -1,5 +1,7 @@
 package com.fastpay.payment.view.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -19,13 +21,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
+import com.fastpay.payment.model.response.CashoutPaymentSummery;
+import com.fastpay.payment.service.listener.CashOutPaymentListener;
 import com.fastpay.payment.service.network.http.HttpParams;
+import com.fastpay.payment.service.network.request.RequestOtpPayment;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.CustomAsteriskPassTransformMethod;
 import com.fastpay.payment.service.utill.NavigationUtil;
 import com.fastpay.payment.service.utill.ShareData;
+import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomEditText;
+import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.CustomTextView;
+
+import java.util.ArrayList;
 
 public class OtpVerificationActivity extends BaseActivity implements View.OnKeyListener {
 
@@ -447,7 +456,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
     }
 
     private void callApiToVerifyOtp() {
-        /*if (ConfigurationUtil.isInternetAvailable(this)) {
+        if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
 
             RequestOtpPayment requestModel = new RequestOtpPayment(this, requestExtra.getEnvironment());
@@ -480,6 +489,6 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             requestModel.execute();
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
-        }*/
+        }
     }
 }
