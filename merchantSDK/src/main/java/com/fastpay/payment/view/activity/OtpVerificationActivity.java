@@ -1,10 +1,5 @@
 package com.fastpay.payment.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -13,7 +8,6 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,24 +15,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
-import com.fastpay.payment.model.response.CashoutPaymentSummery;
-import com.fastpay.payment.service.listener.CashOutPaymentListener;
-import com.fastpay.payment.service.network.request.RequestOtpPayment;
-import com.fastpay.payment.service.network.request.SendOtpRequestModel;
-import com.fastpay.payment.service.listener.SendOtpListener;
 import com.fastpay.payment.service.network.http.HttpParams;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.CustomAsteriskPassTransformMethod;
 import com.fastpay.payment.service.utill.NavigationUtil;
 import com.fastpay.payment.service.utill.ShareData;
-import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomEditText;
-import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.CustomTextView;
-
-import java.util.ArrayList;
 
 public class OtpVerificationActivity extends BaseActivity implements View.OnKeyListener {
 
@@ -151,6 +138,15 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         });
 
+        pin1.setOnKeyListener((view, i, keyEvent) -> {
+            if(pin2.getText()!=null || pin2.getText().length() > 0){
+                if(keyEvent.getKeyCode() != KeyEvent.KEYCODE_DEL) {
+                    pin2.requestFocus();
+                }
+            }
+            return false;
+        });
+
         pin1.setOnPasteListener(text -> {
             pasteOtpText(text);
         });
@@ -194,6 +190,20 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         });
 
+        pin2.setOnKeyListener((view, i, keyEvent) -> {
+            if(pin2.getText()==null || pin2.getText().length() == 0){
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+                    pin1.requestFocus();
+                    pin1.setSelection(pin1.getText().length());
+                }
+            }else {
+                if(keyEvent.getKeyCode() != KeyEvent.KEYCODE_DEL) {
+                    pin3.requestFocus();
+                }
+            }
+            return false;
+        });
+
         pin3.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -217,6 +227,20 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                     }
                 }
             }
+        });
+
+        pin3.setOnKeyListener((view, i, keyEvent) -> {
+            if(pin3.getText()==null || pin3.getText().length() == 0){
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+                    pin2.requestFocus();
+                    pin2.setSelection(pin2.getText().length());
+                }
+            }else {
+                if(keyEvent.getKeyCode() != KeyEvent.KEYCODE_DEL) {
+                    pin4.requestFocus();
+                }
+            }
+            return false;
         });
 
         pin4.addTextChangedListener(new TextWatcher() {
@@ -244,6 +268,20 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         });
 
+        pin4.setOnKeyListener((view, i, keyEvent) -> {
+            if(pin4.getText()==null || pin4.getText().length() == 0){
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+                    pin3.requestFocus();
+                    pin3.setSelection(pin3.getText().length());
+                }
+            }else {
+                if(keyEvent.getKeyCode() != KeyEvent.KEYCODE_DEL) {
+                    pin5.requestFocus();
+                }
+            }
+            return false;
+        });
+
         pin5.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -269,6 +307,20 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         });
 
+        pin5.setOnKeyListener((view, i, keyEvent) -> {
+            if(pin5.getText()==null || pin5.getText().length() == 0){
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+                    pin4.requestFocus();
+                    pin4.setSelection(pin4.getText().length());
+                }
+            }else {
+                if(keyEvent.getKeyCode() != KeyEvent.KEYCODE_DEL) {
+                    pin6.requestFocus();
+                }
+            }
+            return false;
+        });
+
         pin6.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -282,6 +334,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             public void afterTextChanged(Editable s) {
                 if (s == null || TextUtils.isEmpty(s.toString())) {
                     ((TransitionDrawable) llPin6.getBackground()).reverseTransition(300);
+                    llPin5.requestFocus();
                 } else {
                     ((TransitionDrawable) llPin6.getBackground()).startTransition(300);
 
@@ -292,49 +345,36 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         });
 
+        pin6.setOnKeyListener((view, i, keyEvent) -> {
+            if(pin6.getText()==null || pin6.getText().length() == 0){
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+                    pin5.requestFocus();
+                    pin5.setSelection(pin5.getText().length());
+                }
+            }
+            return false;
+        });
+
     }
 
     private void pasteOtpText(CharSequence text) {
         if (text.length() >= 1) {
             pin1.setText(String.valueOf(text.charAt(0)));
-            //pin2.requestFocus();
         }
         if (text.length() >= 2) {
             pin2.setText(String.valueOf(text.charAt(1)));
-            //pin3.requestFocus();
         }
         if (text.length() >= 3) {
             pin3.setText(String.valueOf(text.charAt(2)));
-            //pin4.requestFocus();
         }
         if (text.length() >= 4) {
             pin4.setText(String.valueOf(text.charAt(3)));
-            //pin5.requestFocus();
         }
         if (text.length() >= 5) {
             pin5.setText(String.valueOf(text.charAt(4)));
-            //pin6.requestFocus();
         }
         if (text.length() >= 6) {
             pin6.setText(String.valueOf(text.charAt(5)));
-            //pin6.requestFocus();
-        }
-        switch (text.length()){
-            case 1:
-                pin2.requestFocus();
-                break;
-            case 2:
-                pin3.requestFocus();
-                break;
-            case 3:
-                pin4.requestFocus();
-                break;
-            case 4:
-                pin5.requestFocus();
-                break;
-            default:
-                pin6.requestFocus();
-                break;
         }
     }
 
