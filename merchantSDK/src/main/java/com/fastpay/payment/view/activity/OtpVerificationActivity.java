@@ -297,27 +297,44 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
     private void pasteOtpText(CharSequence text) {
         if (text.length() >= 1) {
             pin1.setText(String.valueOf(text.charAt(0)));
-            pin2.requestFocus();
+            //pin2.requestFocus();
         }
         if (text.length() >= 2) {
             pin2.setText(String.valueOf(text.charAt(1)));
-            pin3.requestFocus();
+            //pin3.requestFocus();
         }
         if (text.length() >= 3) {
             pin3.setText(String.valueOf(text.charAt(2)));
-            pin4.requestFocus();
+            //pin4.requestFocus();
         }
         if (text.length() >= 4) {
             pin4.setText(String.valueOf(text.charAt(3)));
-            pin5.requestFocus();
+            //pin5.requestFocus();
         }
         if (text.length() >= 5) {
             pin5.setText(String.valueOf(text.charAt(4)));
-            pin6.requestFocus();
+            //pin6.requestFocus();
         }
         if (text.length() >= 6) {
             pin6.setText(String.valueOf(text.charAt(5)));
-            pin6.requestFocus();
+            //pin6.requestFocus();
+        }
+        switch (text.length()){
+            case 1:
+                pin2.requestFocus();
+                break;
+            case 2:
+                pin3.requestFocus();
+                break;
+            case 3:
+                pin4.requestFocus();
+                break;
+            case 4:
+                pin5.requestFocus();
+                break;
+            default:
+                pin6.requestFocus();
+                break;
         }
     }
 
@@ -390,7 +407,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
     }
 
     private void callApiToVerifyOtp() {
-        if (ConfigurationUtil.isInternetAvailable(this)) {
+        /*if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
 
             RequestOtpPayment requestModel = new RequestOtpPayment(this, requestExtra.getEnvironment());
@@ -423,6 +440,6 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             requestModel.execute();
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
-        }
+        }*/
     }
 }
