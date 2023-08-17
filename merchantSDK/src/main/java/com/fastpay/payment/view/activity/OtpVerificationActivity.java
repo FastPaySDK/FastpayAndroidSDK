@@ -399,8 +399,8 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
         editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         editText.setGravity(Gravity.CENTER);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText.setTextSize(getResources().getDimension(R.dimen.text_14sp));
-        editText.setTransformationMethod(new CustomAsteriskPassTransformMethod());
+        editText.setTextSize(getResources().getDimension(R.dimen.text_12sp));
+        //editText.setTransformationMethod(new CustomAsteriskPassTransformMethod());
         editText.setPadding(0, ConfigurationUtil.convertDpToPixel(10, this).intValue(), 0, ConfigurationUtil.convertDpToPixel(10, this).intValue());
     }
 
