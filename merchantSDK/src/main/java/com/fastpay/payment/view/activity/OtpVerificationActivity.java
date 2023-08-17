@@ -13,6 +13,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -150,6 +151,25 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         });
 
+        pin1.setOnPasteListener(text -> {
+            pasteOtpText(text);
+        });
+        pin2.setOnPasteListener(text -> {
+            pasteOtpText(text);
+        });
+        pin3.setOnPasteListener(text -> {
+            pasteOtpText(text);
+        });
+        pin4.setOnPasteListener(text -> {
+            pasteOtpText(text);
+        });
+        pin5.setOnPasteListener(text -> {
+            pasteOtpText(text);
+        });
+        pin6.setOnPasteListener(text -> {
+            pasteOtpText(text);
+        });
+
         pin2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -272,6 +292,33 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         });
 
+    }
+
+    private void pasteOtpText(CharSequence text) {
+        if (text.length() >= 1) {
+            pin1.setText(String.valueOf(text.charAt(0)));
+            pin2.requestFocus();
+        }
+        if (text.length() >= 2) {
+            pin2.setText(String.valueOf(text.charAt(1)));
+            pin3.requestFocus();
+        }
+        if (text.length() >= 3) {
+            pin3.setText(String.valueOf(text.charAt(2)));
+            pin4.requestFocus();
+        }
+        if (text.length() >= 4) {
+            pin4.setText(String.valueOf(text.charAt(3)));
+            pin5.requestFocus();
+        }
+        if (text.length() >= 5) {
+            pin5.setText(String.valueOf(text.charAt(4)));
+            pin6.requestFocus();
+        }
+        if (text.length() >= 6) {
+            pin6.setText(String.valueOf(text.charAt(5)));
+            pin6.requestFocus();
+        }
     }
 
     private void setOtpTextViewConfigure(LinearLayout pinField,EditText editText) {

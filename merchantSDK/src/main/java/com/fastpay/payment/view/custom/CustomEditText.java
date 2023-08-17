@@ -18,6 +18,7 @@ public class CustomEditText extends AppCompatEditText {
 
     private String mPrefix;
     private Rect mPrefixRect = new Rect();
+    private OnPasteListener onPasteListener;
 
     public CustomEditText(Context context) {
         super(context);
@@ -32,6 +33,10 @@ public class CustomEditText extends AppCompatEditText {
     public CustomEditText(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
+    }
+
+    public void setOnPasteListener(OnPasteListener listener) {
+        this.onPasteListener = listener;
     }
 
     private void init(AttributeSet attrs) {
@@ -75,8 +80,32 @@ public class CustomEditText extends AppCompatEditText {
     }
 
     @Override
+    public boolean onTextContextMenuItem(int id) {
+        if (id == android.R.id.paste) {
+            CharSequence pasteText = getClipboardText();
+            if (onPasteListener != null) {
+                onPasteListener.onPaste(pasteText);
+            }
+        }
+        return super.onTextContextMenuItem(id);
+    }
+
+    private CharSequence getClipboardText() {
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboard != null && clipboard.hasPrimaryClip()) {
+            android.content.ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+            return item.getText();
+        }
+        return null;
+    }
+
+    @Override
     public int getCompoundPaddingLeft() {
         return super.getCompoundPaddingLeft() + mPrefixRect.width();
+    }
+
+    public interface OnPasteListener {
+        void onPaste(CharSequence text);
     }
 
 }
