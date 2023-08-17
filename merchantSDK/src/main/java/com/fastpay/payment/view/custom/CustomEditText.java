@@ -85,9 +85,13 @@ public class CustomEditText extends AppCompatEditText {
             CharSequence pasteText = getClipboardText();
             if (onPasteListener != null) {
                 onPasteListener.onPaste(pasteText);
+                return false;
+            }else {
+                return super.onTextContextMenuItem(id);
             }
+        }else {
+            return super.onTextContextMenuItem(id);
         }
-        return super.onTextContextMenuItem(id);
     }
 
     private CharSequence getClipboardText() {
