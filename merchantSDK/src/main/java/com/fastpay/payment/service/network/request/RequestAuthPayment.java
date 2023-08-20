@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 
 public class RequestAuthPayment extends BaseHttp {
@@ -27,6 +28,7 @@ public class RequestAuthPayment extends BaseHttp {
     public RequestAuthPayment(Context context, String environment) {
         super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL + HttpParams.API_VERSION_2 + HttpParams.API_PAYMENT_WITH_OTP_VERIFICATION : HttpParams.SANDBOX_URL + HttpParams.API_VERSION_2 + HttpParams.API_PAYMENT_WITH_OTP_VERIFICATION);
         mContext = new WeakReference<>(context);
+        this.environment = environment;
     }
 
     public void setResponseListener(PayWithCredentialApiListener responseListener) {
@@ -45,7 +47,10 @@ public class RequestAuthPayment extends BaseHttp {
             e.printStackTrace();
         }
 
-        Log.e("RequestAuthPayment", json.toString());
+        if(Objects.equals(environment, FastpaySDK.SANDBOX)){
+            Log.e("RequestBodyAuthPayment", json.toString());
+        }
+
         post(json.toString());
     }
 

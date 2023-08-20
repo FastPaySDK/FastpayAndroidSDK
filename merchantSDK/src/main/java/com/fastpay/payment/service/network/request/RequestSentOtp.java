@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RequestSentOtp extends BaseHttp {
     private WeakReference<Context> mContext;
@@ -41,7 +42,10 @@ public class RequestSentOtp extends BaseHttp {
             e.printStackTrace();
         }
 
-        Log.e("RequestSentOtp", json.toString());
+        if(Objects.equals(environment, FastpaySDK.SANDBOX)){
+            Log.e("RequestBodySentOtp", json.toString());
+        }
+
         post(json.toString());
     }
 
