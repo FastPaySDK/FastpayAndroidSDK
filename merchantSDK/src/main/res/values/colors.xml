@@ -30,6 +30,11 @@
 
     <!--Edittext Color-->
     <color name="colorEditTextWhiteColor">#FFFFFF</color>
+    <color name="colorEditTextBaseColor">#E9F0F7</color>
+    <color name="colorEditTextLightBlueColor">#D9E6EF</color>
+    <color name="colorValidColor">#ff03EBA3</color>
+    <color name="colorInvalidColor">#ffFC2861</color>
+    <color name="colorTocTextColor">#5F6AA0</color>
 
     <!--Dialog Colors-->
     <color name="colorSdkDialogValErrorTitle">#FF5A86</color>
