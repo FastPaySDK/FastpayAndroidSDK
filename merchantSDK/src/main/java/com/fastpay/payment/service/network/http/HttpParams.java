@@ -21,4 +21,8 @@ public class HttpParams {
     public static final String PARAM_TOKEN = "token";
     public static final String PARAM_MOBILE_NUMBER = "mobileNumber";
     public static final String PARAM_PASSWORD= "password";
+    public static final String PARAM_AMOUNT = "amount";
+    public static final String PARAM_ORDER_ID_2 = "order_id";
+    public static final String PARAM_MOBILE_NUMBER_2 = "mobile_number";
+    public static final String PARAM_OTP= "otp";
 }
