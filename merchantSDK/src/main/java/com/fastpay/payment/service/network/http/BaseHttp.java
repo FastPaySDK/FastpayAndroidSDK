@@ -18,7 +18,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Objects;
 
 public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
 
@@ -26,7 +25,7 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
     private String requestUrl, requestMethod;
     private String requestParams;
 
-    protected String environment;
+    protected String environment="";
     private static final String REQUEST_METHOD_GET = "GET";
     private static final String REQUEST_METHOD_POST = "POST";
 
@@ -134,7 +133,7 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
             e.printStackTrace();
         }
 
-        if(Objects.equals(environment, FastpaySDK.SANDBOX)){
+        if(environment.equals(FastpaySDK.SANDBOX)){
             Log.e("HttpResponse: ", result.toString());
         }
 

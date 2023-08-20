@@ -1,6 +1,7 @@
 package com.fastpay.payment.service.network.request;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
@@ -27,6 +28,7 @@ public class RequestPaymentInitiate extends BaseHttp {
     public RequestPaymentInitiate(Context context, String environment) {
         super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL + HttpParams.API_VERSION + HttpParams.API_INITIATE : HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_INITIATE);
         mContext = new WeakReference<>(context);
+        this.environment = environment;
     }
 
     public void setResponseListener(InitiationApiListener responseListener) {
@@ -43,6 +45,10 @@ public class RequestPaymentInitiate extends BaseHttp {
             json.put(HttpParams.PARAM_CURRENCY, requestModel.getCurrency());
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+
+        if(environment.equals(FastpaySDK.SANDBOX)){
+            Log.e("RequestBodyPaymentInit", json.toString());
         }
 
         post(json.toString());

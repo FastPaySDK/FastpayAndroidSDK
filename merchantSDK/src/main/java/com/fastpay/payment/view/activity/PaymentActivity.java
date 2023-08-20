@@ -94,6 +94,7 @@ public class PaymentActivity extends BaseActivity {
 
     private int initialError = 1;
     private int paymentError = 2;
+    private int otpError = 3;
     private int animIdPos = 0;
 
     @Override
@@ -378,7 +379,7 @@ public class PaymentActivity extends BaseActivity {
                     payWithCredential(data.getStringExtra(OtpVerificationActivity.EXTRA_OTP));
                 }
             }else {
-                showError("OTP Cancelled",paymentError);
+                showError("OTP Cancelled", otpError);
             }
         }
 
@@ -485,7 +486,7 @@ public class PaymentActivity extends BaseActivity {
 
                 @Override
                 public void failResponse(ArrayList<String> messages) {
-                    showError(TextUtils.join("\n\n", messages), paymentError);
+                    showError(TextUtils.join("\n\n", messages), otpError);
                     CustomProgressDialog.dismiss();
                 }
 
@@ -562,7 +563,7 @@ public class PaymentActivity extends BaseActivity {
     private void showError(String message, int errorState) {
         errorTextView.setText(message);
 
-        if (errorState == paymentError) {
+        if (errorState == paymentError || errorState == otpError) {
             paymentHeaderLayout.setVisibility(View.GONE);
             payViaLayout.setVisibility(View.GONE);
             paymentOptionLayout.setVisibility(View.GONE);
@@ -579,6 +580,12 @@ public class PaymentActivity extends BaseActivity {
                 paymentHeaderLayout.setVisibility(View.VISIBLE);
                 payViaLayout.setVisibility(View.VISIBLE);
                 paymentOptionLayout.setVisibility(View.VISIBLE);
+            } else if (errorState == otpError) {
+                errorLayout.setVisibility(View.GONE);
+                paymentHeaderLayout.setVisibility(View.VISIBLE);
+                payViaLayout.setVisibility(View.VISIBLE);
+                paymentOptionLayout.setVisibility(View.VISIBLE);
+                startActivityForResult(new Intent(PaymentActivity.this, OtpVerificationActivity.class), OTP_VERIFICATION_REQUEST_CODE);
             }
         });
     }

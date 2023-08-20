@@ -10,11 +10,12 @@ import com.fastpay.payment.service.listener.SendOtpListener;
 import com.fastpay.payment.service.network.http.BaseHttp;
 import com.fastpay.payment.service.network.http.HttpParams;
 import com.fastpay.payment.service.network.parser.BaseResponseParser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RequestSentOtp extends BaseHttp {
     private WeakReference<Context> mContext;
@@ -25,6 +26,7 @@ public class RequestSentOtp extends BaseHttp {
         super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
                 + HttpParams.API_VERSION_2 + HttpParams.API_SENT_OTP);
         mContext = new WeakReference<>(context);
+        this.environment = environment;
     }
 
     public void setResponseListener(SendOtpListener responseListener) {
@@ -42,7 +44,7 @@ public class RequestSentOtp extends BaseHttp {
             e.printStackTrace();
         }
 
-        if(Objects.equals(environment, FastpaySDK.SANDBOX)){
+        if(environment.equals(FastpaySDK.SANDBOX)){
             Log.e("RequestBodySentOtp", json.toString());
         }
 
@@ -61,9 +63,7 @@ public class RequestSentOtp extends BaseHttp {
             if (responseModel.getCode() == 200 ) {
                 listener.successResponse(responseModel.getMessage());
             } else {
-                ArrayList<String> errorList = new ArrayList<>();
-                errorList.add(responseModel.getMessage());
-                listener.failResponse(errorList);
+                listener.failResponse(new ArrayList<>(responseModel.getErrors()));
             }
         } else {
             listener.errorResponse(mContext.get().getString(R.string.fp_app_common_api_error));

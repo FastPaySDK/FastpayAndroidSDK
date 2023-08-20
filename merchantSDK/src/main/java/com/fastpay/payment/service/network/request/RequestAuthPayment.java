@@ -16,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
-import java.util.Objects;
 
 
 public class RequestAuthPayment extends BaseHttp {
@@ -47,7 +46,7 @@ public class RequestAuthPayment extends BaseHttp {
             e.printStackTrace();
         }
 
-        if(Objects.equals(environment, FastpaySDK.SANDBOX)){
+        if(environment.equals(FastpaySDK.SANDBOX)){
             Log.e("RequestBodyAuthPayment", json.toString());
         }
 

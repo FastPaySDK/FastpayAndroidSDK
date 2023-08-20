@@ -26,6 +26,7 @@ public class RequestPaymentValidate extends BaseHttp {
     public RequestPaymentValidate(Context context, String environment) {
         super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL + HttpParams.API_VERSION + HttpParams.API_VALIDATE : HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_VALIDATE);
         mContext = new WeakReference<>(context);
+        this.environment = environment;
     }
 
     public void setResponseListener(PaymentValidationApiListener responseListener) {
