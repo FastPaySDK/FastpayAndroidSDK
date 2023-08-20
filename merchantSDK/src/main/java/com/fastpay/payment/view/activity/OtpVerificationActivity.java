@@ -1,5 +1,6 @@
 package com.fastpay.payment.view.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -19,11 +20,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
-import com.fastpay.payment.service.network.http.HttpParams;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.CustomAsteriskPassTransformMethod;
 import com.fastpay.payment.service.utill.NavigationUtil;
-import com.fastpay.payment.service.utill.ShareData;
 import com.fastpay.payment.view.custom.CustomEditText;
 import com.fastpay.payment.view.custom.CustomTextView;
 
@@ -45,23 +44,6 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp_verification);
 
-        Bundle bundle = getIntent().getExtras();
-
-        if (bundle != null) {
-            if (bundle.containsKey(HttpParams.PARAM_MOBILE_NUMBER_2))
-                mobileNumber = getIntent().getStringExtra(HttpParams.PARAM_MOBILE_NUMBER_2);
-            if (bundle.containsKey(HttpParams.PARAM_ORDER_ID_2))
-                orderId = getIntent().getStringExtra(HttpParams.PARAM_ORDER_ID_2);
-            if (bundle.containsKey(HttpParams.PARAM_PASSWORD))
-                password = getIntent().getStringExtra(HttpParams.PARAM_PASSWORD);
-            if (bundle.containsKey(HttpParams.PARAM_AMOUNT))
-                amount = getIntent().getStringExtra(HttpParams.PARAM_AMOUNT);
-            if (bundle.containsKey(ShareData.KEY_OTP_MESSAGE))
-                message = getIntent().getStringExtra(ShareData.KEY_OTP_MESSAGE);
-            if (bundle.containsKey(FastpayRequest.EXTRA_PAYMENT_REQUEST)) {
-                requestExtra = bundle.getParcelable(FastpayRequest.EXTRA_PAYMENT_REQUEST);
-            }
-        }
 
         llPin1 = findViewById(R.id.pinField1);
         llPin2 = findViewById(R.id.pinField2);
@@ -91,6 +73,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
     @Override
     public void onBackPressed() {
         NavigationUtil.exitPageSide(this);
+        setResult(RESULT_CANCELED,null);
         finish();
     }
 
@@ -135,7 +118,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                     pin2.requestFocus();
 
                     if (getOtpFullText().length() == 6) {
-                        callApiToVerifyOtp();
+                        returnResult();
                     }
                 }
             }
@@ -186,7 +169,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                     ((TransitionDrawable) llPin2.getBackground()).startTransition(300);
                     pin3.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        callApiToVerifyOtp();
+                        returnResult();
                     }
                 }
 
@@ -226,7 +209,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                     ((TransitionDrawable) llPin3.getBackground()).startTransition(300);
                     pin4.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        callApiToVerifyOtp();
+                        returnResult();
                     }
                 }
             }
@@ -265,7 +248,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                     ((TransitionDrawable) llPin4.getBackground()).startTransition(300);
                     pin5.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        callApiToVerifyOtp();
+                        returnResult();
                     }
                 }
             }
@@ -304,7 +287,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                     ((TransitionDrawable) llPin5.getBackground()).startTransition(300);
                     pin6.requestFocus();
                     if (getOtpFullText().length() == 6) {
-                        callApiToVerifyOtp();
+                        returnResult();
                     }
                 }
             }
@@ -342,7 +325,7 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
                     ((TransitionDrawable) llPin6.getBackground()).startTransition(300);
 
                     if (getOtpFullText().length() == 6) {
-                        callApiToVerifyOtp();
+                        returnResult();
                     }
                 }
             }
@@ -449,40 +432,10 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
         pin1.requestFocus();
     }
 
-    private void callApiToVerifyOtp() {
-        /*if (ConfigurationUtil.isInternetAvailable(this)) {
-            CustomProgressDialog.show(this);
-
-            RequestOtpPayment requestModel = new RequestOtpPayment(this, requestExtra.getEnvironment());
-            requestModel.buildParams(orderId, amount, mobileNumber, password,getOtpFullText());
-
-            requestModel.setResponseListener(new CashOutPaymentListener() {
-                @Override
-                public void successResponse(CashoutPaymentSummery data) {
-                    CustomProgressDialog.dismiss();
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("PAYMENT_SUMMERY",data);
-                    setResult(Activity.RESULT_OK,returnIntent);
-                    finish();
-                }
-
-                @Override
-                public void failResponse(ArrayList<String> messages) {
-                    CustomProgressDialog.dismiss();
-                    new CustomAlertDialog(OtpVerificationActivity.this,mainRootView).showFailResponse(getString(R.string.fp_app_common_error),messages);
-                    clearPinData();
-                }
-
-                @Override
-                public void errorResponse(String error) {
-                    CustomProgressDialog.dismiss();
-                    new CustomAlertDialog(OtpVerificationActivity.this,mainRootView).showFailResponse(getString(R.string.fp_app_common_error),error);
-                    clearPinData();
-                }
-            });
-            requestModel.execute();
-        } else {
-            new CustomAlertDialog(this, mainRootView).showInternetError(false);
-        }*/
+    private void returnResult() {
+        Intent data = new Intent();
+        data.putExtra(EXTRA_OTP, getOtpFullText());
+        setResult(RESULT_OK,data);
+        finish();
     }
 }

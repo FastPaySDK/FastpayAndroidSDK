@@ -36,9 +36,11 @@ import com.fastpay.payment.model.response.PaymentValidation;
 import com.fastpay.payment.service.listener.InitiationApiListener;
 import com.fastpay.payment.service.listener.PayWithCredentialApiListener;
 import com.fastpay.payment.service.listener.PaymentValidationApiListener;
+import com.fastpay.payment.service.listener.SendOtpListener;
 import com.fastpay.payment.service.network.request.RequestAuthPayment;
 import com.fastpay.payment.service.network.request.RequestPaymentInitiate;
 import com.fastpay.payment.service.network.request.RequestPaymentValidate;
+import com.fastpay.payment.service.network.request.RequestSentOtp;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.DownloadImage;
 import com.fastpay.payment.service.utill.FormValidationUtil;
@@ -362,7 +364,7 @@ public class PaymentActivity extends BaseActivity {
         });
 
         paymentBtn.setOnClickListener(view -> {
-            startActivityForResult(new Intent(PaymentActivity.this, OtpVerificationActivity.class), OTP_VERIFICATION_REQUEST_CODE);
+            sendOtpAPi();
         });
     }
 
@@ -370,13 +372,14 @@ public class PaymentActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == OTP_VERIFICATION_REQUEST_CODE){
-            if(data!=null && data.getStringExtra(OtpVerificationActivity.EXTRA_OTP)!=null){
-                payWithCredential(data.getStringExtra(OtpVerificationActivity.EXTRA_OTP));
+        if(requestCode == OTP_VERIFICATION_REQUEST_CODE){
+            if(resultCode==RESULT_OK){
+                if(data!=null && data.getStringExtra(OtpVerificationActivity.EXTRA_OTP)!=null){
+                    payWithCredential(data.getStringExtra(OtpVerificationActivity.EXTRA_OTP));
+                }
+            }else {
+                showError("OTP Cancelled",paymentError);
             }
-        }else {
-            CustomAlertDialog dialog = new CustomAlertDialog(this,null);
-            dialog.showFailResponse("otp", "Something went wrong");
         }
 
     }
@@ -656,5 +659,51 @@ public class PaymentActivity extends BaseActivity {
                 finish();
             }, successDelay);
         }, successAnimDelay);
+    }
+
+    private void sendOtpAPi() {
+        if (ConfigurationUtil.isInternetAvailable(this)) {
+            CustomProgressDialog.show(this);
+
+            String mobileNumber = ShareData.COUNTRY_CODE + mobileNumberEditText.getText().toString().replaceAll("\\s+", "");
+            String password = passwordEditText.getText().toString().trim();
+            String orderId = initiationModel.getOrderId();
+            String token = initiationModel.getToken();
+
+            RequestSentOtp requestModel = new RequestSentOtp(this, requestExtra.getEnvironment());
+            requestModel.buildParams(orderId, token, mobileNumber, password);
+            requestModel.setResponseListener(new SendOtpListener() {
+                @Override
+                public void successResponse(String message) {
+                    CustomProgressDialog.dismiss();
+                    startActivityForResult(new Intent(PaymentActivity.this, OtpVerificationActivity.class), OTP_VERIFICATION_REQUEST_CODE);
+
+                    /*Intent intent = new Intent(PaymentActivity.this,OtpVerificationActivity.class);
+                    intent.putExtra(HttpParams.PARAM_ORDER_ID_2, orderId);
+                    intent.putExtra(HttpParams.PARAM_AMOUNT, amount);
+                    intent.putExtra(HttpParams.PARAM_MOBILE_NUMBER_2, mobileNumber);
+                    intent.putExtra(HttpParams.PARAM_PASSWORD, password);
+                    intent.putExtra(ShareData.KEY_OTP_MESSAGE,message);
+                    intent.putExtra(FastpayRequest.EXTRA_PAYMENT_REQUEST,requestExtra);
+                    startActivityForResult(intent,1200);*/
+                }
+
+                @Override
+                public void failResponse(ArrayList<String> messages) {
+                    CustomProgressDialog.dismiss();
+                    showError(TextUtils.join("\n\n", messages), paymentError);
+                }
+
+                @Override
+                public void errorResponse(String error) {
+                    CustomProgressDialog.dismiss();
+                    showError(error, paymentError);
+                }
+            });
+            requestModel.execute();
+
+        } else {
+            new CustomAlertDialog(this, mainRootView).showInternetError(false);
+        }
     }
 }

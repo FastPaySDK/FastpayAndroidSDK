@@ -15,6 +15,15 @@
     <application>
 
         <activity
+            android:name=".view.activity.OtpVerificationActivity"
+            android:screenOrientation="portrait"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".view.activity.PaymentActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">

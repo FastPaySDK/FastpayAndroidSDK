@@ -130,6 +130,7 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.e("BaseHttp: ", result.toString());
         return result.toString();
     }
 

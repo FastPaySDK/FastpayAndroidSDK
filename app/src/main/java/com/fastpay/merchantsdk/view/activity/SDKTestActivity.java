@@ -23,7 +23,6 @@ public class SDKTestActivity extends BaseActivity {
     @Override
     public void initView() {
         layoutBinding = DataBindingUtil.setContentView(this, R.layout.activity_sdk_test_layout);
-
         buildUi();
         initListener();
     }
@@ -77,7 +76,7 @@ public class SDKTestActivity extends BaseActivity {
             String amount = layoutBinding.paymentAmountEditText.getText().toString().trim();
 
             if (!orderId.isEmpty() && !amount.isEmpty() && Double.parseDouble(amount) > 0) {
-                FastpayRequest request = new FastpayRequest(this, "748957_847", "v=7bUPTeC2#nQ2-+",
+                FastpayRequest request = new FastpayRequest(this, "748909_667", "Password100@",
                         amount, orderId, FastpaySDK.SANDBOX);
 
 /*                FastpayRequest request = new FastpayRequest(this)

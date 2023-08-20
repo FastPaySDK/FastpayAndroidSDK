@@ -8,9 +8,11 @@ public class HttpParams {
     public static final String SANDBOX_URL = "https://staging-apigw-sdk.fast-pay.iq/";
     public static final String PRODUCTION_URL = "https://apigw-sdk.fast-pay.iq/";
     public static final String API_VERSION = "api/v1/";
+    public static final String API_VERSION_2 = "api/v2/";
 
     public static final String API_INITIATE = "public/sdk/payment/initiation";
     public static final String API_PAYMENT = "public/sdk/payment/pay";
+    public static final String API_SENT_OTP = "public/sdk/payment/pay/send-otp";
     public static final String API_PAYMENT_WITH_OTP_VERIFICATION = "public/sdk/payment/pay/do-payment";
     public static final String API_VALIDATE = "public/sdk/payment/validate";
 
