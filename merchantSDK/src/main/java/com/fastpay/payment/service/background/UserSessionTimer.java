@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.fastpay.payment.BuildConfig;
 import com.fastpay.payment.service.utill.ShareData;
 import com.fastpay.payment.service.utill.StoreInformationUtil;
 
@@ -47,6 +48,11 @@ public class UserSessionTimer extends Service {
 
     private CountDownTimer createTimer() {
         long appTimerCountInMillis = StoreInformationUtil.getLongData(getApplicationContext(), ShareData.KEY_FINISHING_TIME, ShareData.USER_SESSION_TIMER_TARGET);
+
+        if(BuildConfig.DEBUG){
+            appTimerCountInMillis = 60; //Seconds
+        }
+
         long timerIntervalMillis = TimeUnit.SECONDS.toMillis(ShareData.USER_SESSION_TIMER_INTERVAL);
         long timerCountInMillis = TimeUnit.SECONDS.toMillis(appTimerCountInMillis);
 

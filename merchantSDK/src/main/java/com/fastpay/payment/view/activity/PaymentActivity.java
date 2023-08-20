@@ -4,6 +4,7 @@ import static com.fastpay.payment.view.activity.OtpVerificationActivity.OTP_VERI
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.model.response.InitiationSuccess;
 import com.fastpay.payment.model.response.PaymentSummery;
 import com.fastpay.payment.model.response.PaymentValidation;
+import com.fastpay.payment.service.background.UserSessionReceiver;
+import com.fastpay.payment.service.background.UserSessionTimer;
 import com.fastpay.payment.service.listener.InitiationApiListener;
 import com.fastpay.payment.service.listener.PayWithCredentialApiListener;
 import com.fastpay.payment.service.listener.PaymentValidationApiListener;
@@ -48,6 +51,7 @@ import com.fastpay.payment.service.utill.GifDecoderView;
 import com.fastpay.payment.service.utill.NavigationUtil;
 import com.fastpay.payment.service.utill.QRCodeHelper;
 import com.fastpay.payment.service.utill.ShareData;
+import com.fastpay.payment.service.utill.StoreInformationUtil;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
@@ -96,6 +100,7 @@ public class PaymentActivity extends BaseActivity {
     private int paymentError = 2;
     private int otpError = 3;
     private int animIdPos = 0;
+    private UserSessionReceiver sessionReceiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,6 +117,7 @@ public class PaymentActivity extends BaseActivity {
         }
 
         initiatePayment();
+        initiateTimer();
     }
 
     @Override
@@ -712,5 +718,36 @@ public class PaymentActivity extends BaseActivity {
         } else {
             new CustomAlertDialog(this, mainRootView).showInternetError(false);
         }
+    }
+
+    private void initiateTimer() {
+        if (sessionReceiver == null) sessionReceiver = new UserSessionReceiver();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ShareData.INTENT_USER_SESSION_FINISHED);
+        registerReceiver(sessionReceiver, filter);
+
+        startService(new Intent(this, UserSessionTimer.class));
+        sessionReceiver.setSessionReceiverListener(() -> {
+            if (sessionFinishedListener != null) sessionFinishedListener.onSessionFinished();
+
+            Intent intent = new Intent();
+            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(com.fastpay.payment.R.string.fp_payment_message_request_timeout));
+            setResult(Activity.RESULT_CANCELED, intent);
+            NavigationUtil.exitPageSide(this);
+            finish();
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        StoreInformationUtil.saveLongData(PaymentActivity.this, ShareData.KEY_FINISHING_TIME, 0L);
+        if (sessionReceiver != null) {
+            unregisterReceiver(sessionReceiver);
+            sessionReceiver = null;
+        }
+        stopService(new Intent(this, UserSessionTimer.class));
     }
 }
