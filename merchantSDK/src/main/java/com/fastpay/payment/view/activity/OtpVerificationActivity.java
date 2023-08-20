@@ -60,18 +60,18 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
             }
         }
 
-        llPin1 = (LinearLayout) findViewById(R.id.pinField1);
-        llPin2 = (LinearLayout) findViewById(R.id.pinField2);
-        llPin3 = (LinearLayout) findViewById(R.id.pinField3);
-        llPin4 = (LinearLayout) findViewById(R.id.pinField4);
-        llPin5 = (LinearLayout) findViewById(R.id.pinField5);
-        llPin6 = (LinearLayout) findViewById(R.id.pinField6);
+        llPin1 = findViewById(R.id.pinField1);
+        llPin2 = findViewById(R.id.pinField2);
+        llPin3 = findViewById(R.id.pinField3);
+        llPin4 = findViewById(R.id.pinField4);
+        llPin5 = findViewById(R.id.pinField5);
+        llPin6 = findViewById(R.id.pinField6);
         goBackBtn = findViewById(R.id.goBackBtn);
         goBackText = findViewById(R.id.goBackText);
 
 
         tvMessage = findViewById(R.id.subTitle);
-        mainRootView = (ConstraintLayout) findViewById(R.id.clMain);
+        mainRootView = findViewById(R.id.clMain);
 
         pin1 = findViewById(R.id.tvPin1);
         pin2 = findViewById(R.id.tvPin2);
