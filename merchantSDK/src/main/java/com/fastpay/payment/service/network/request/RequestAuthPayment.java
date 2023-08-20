@@ -24,7 +24,7 @@ public class RequestAuthPayment extends BaseHttp {
     private PayWithCredentialApiListener listener;
 
     public RequestAuthPayment(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL + HttpParams.API_VERSION + HttpParams.API_PAYMENT : HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_PAYMENT);
+        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL + HttpParams.API_VERSION + HttpParams.API_PAYMENT : HttpParams.SANDBOX_URL + HttpParams.API_VERSION + HttpParams.API_PAYMENT_WITH_OTP_VERIFICATION);
         mContext = new WeakReference<>(context);
     }
 
@@ -32,11 +32,12 @@ public class RequestAuthPayment extends BaseHttp {
         this.listener = responseListener;
     }
 
-    public void buildParams(String orderId, String token, String mobileNumber, String password) {
+    public void buildParams(String orderId, String token, String mobileNumber, String password, String otp) {
         JSONObject json = new JSONObject();
         try {
             json.put(HttpParams.PARAM_ORDER_ID, orderId);
             json.put(HttpParams.PARAM_TOKEN, token);
+            json.put(HttpParams.PARAM_OTP, otp);
             json.put(HttpParams.PARAM_MOBILE_NUMBER, mobileNumber);
             json.put(HttpParams.PARAM_PASSWORD, password);
         } catch (JSONException e) {

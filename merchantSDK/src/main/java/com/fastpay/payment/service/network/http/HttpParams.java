@@ -11,6 +11,7 @@ public class HttpParams {
 
     public static final String API_INITIATE = "public/sdk/payment/initiation";
     public static final String API_PAYMENT = "public/sdk/payment/pay";
+    public static final String API_PAYMENT_WITH_OTP_VERIFICATION = "public/sdk/payment/pay/do-payment";
     public static final String API_VALIDATE = "public/sdk/payment/validate";
 
     public static final String PARAM_STORE_ID = "storeId";

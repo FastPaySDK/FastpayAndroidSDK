@@ -29,6 +29,9 @@ import com.fastpay.payment.view.custom.CustomTextView;
 
 public class OtpVerificationActivity extends BaseActivity implements View.OnKeyListener {
 
+    public static final String EXTRA_OTP = "otp";
+    public static final int OTP_VERIFICATION_REQUEST_CODE = 100;
+
     private CustomEditText pin1,pin2,pin3,pin4,pin5,pin6;
     private CustomTextView tvMessage,goBackText;
     private LinearLayout llPin1,llPin2,llPin3,llPin4,llPin5,llPin6;

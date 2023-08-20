@@ -1,5 +1,7 @@
 package com.fastpay.payment.view.activity;
 
+import static com.fastpay.payment.view.activity.OtpVerificationActivity.OTP_VERIFICATION_REQUEST_CODE;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -47,7 +49,6 @@ import com.fastpay.payment.service.utill.ShareData;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
-import com.google.zxing.client.android.BuildConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -361,8 +362,23 @@ public class PaymentActivity extends BaseActivity {
         });
 
         paymentBtn.setOnClickListener(view -> {
-            payWithCredential();
+            startActivityForResult(new Intent(PaymentActivity.this, OtpVerificationActivity.class), OTP_VERIFICATION_REQUEST_CODE);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == OTP_VERIFICATION_REQUEST_CODE){
+            if(data!=null && data.getStringExtra(OtpVerificationActivity.EXTRA_OTP)!=null){
+                payWithCredential(data.getStringExtra(OtpVerificationActivity.EXTRA_OTP));
+            }
+        }else {
+            CustomAlertDialog dialog = new CustomAlertDialog(this,null);
+            dialog.showFailResponse("otp", "Something went wrong");
+        }
+
     }
 
     private void checkReadyForSubmission() {
@@ -446,7 +462,7 @@ public class PaymentActivity extends BaseActivity {
         }
     }
 
-    private void payWithCredential() {
+    private void payWithCredential(String otp) {
         if (ConfigurationUtil.isInternetAvailable(this)) {
             CustomProgressDialog.show(this);
 
@@ -456,7 +472,7 @@ public class PaymentActivity extends BaseActivity {
             String token = initiationModel.getToken();
 
             RequestAuthPayment authPayment = new RequestAuthPayment(this, requestExtra.getEnvironment());
-            authPayment.buildParams(orderId, token, mobileNumber, password);
+            authPayment.buildParams(orderId, token, mobileNumber, password, otp);
             authPayment.setResponseListener(new PayWithCredentialApiListener() {
                 @Override
                 public void successResponse(PaymentSummery model) {
