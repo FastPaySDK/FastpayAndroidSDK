@@ -33,13 +33,13 @@ public class SendOtpRequestModel extends BaseHttp {
 
 
     public SendOtpRequestModel(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
+        super(context, (environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL)
                 + HttpParams.API_VERSION + HttpParams.SEND_OTP);
         mContext = new WeakReference<>(context);
     }
 
     public SendOtpRequestModel(Context context, String environment,int type) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
+        super(context, (environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL)
                 + HttpParams.API_VERSION + HttpParams.VERIFY_OTP);
         mContext = new WeakReference<>(context);
     }
