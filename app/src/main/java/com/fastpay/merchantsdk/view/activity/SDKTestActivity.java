@@ -14,6 +14,8 @@ import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.model.merchant.FastpaySDK;
 
+import java.util.Random;
+
 public class SDKTestActivity extends BaseActivity {
 
     ActivitySdkTestLayoutBinding layoutBinding;
@@ -55,7 +57,7 @@ public class SDKTestActivity extends BaseActivity {
     }
 
     private void buildUi() {
-        layoutBinding.orderIdEditText.setText("ORD51100");
+        layoutBinding.orderIdEditText.setText(getSaltString());
         layoutBinding.paymentAmountEditText.setText("250");
 
 /*        InputStream stream = null;
@@ -66,6 +68,19 @@ public class SDKTestActivity extends BaseActivity {
         }
 
         layoutBinding.customView.playGif(stream);*/
+    }
+
+    protected String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 10) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+
     }
 
     private void initListener() {
@@ -84,8 +99,8 @@ public class SDKTestActivity extends BaseActivity {
                         .amount(amount)
                         .storeLogo(R.drawable.ic_fastpay_logo)
                         .environment(FastpaySDK.SANDBOX);*/ // Optional
-
-                startActivityForResult(request.getIntent(), FASTPAY_REQUEST_CODE);
+                request.startPaymentIntent(SDKTestActivity.this,FASTPAY_REQUEST_CODE);
+                //startActivityForResult(request.getIntent(), FASTPAY_REQUEST_CODE);
             } else {
                 Toast.makeText(this, "Enter amount & order id", Toast.LENGTH_LONG).show();
             }

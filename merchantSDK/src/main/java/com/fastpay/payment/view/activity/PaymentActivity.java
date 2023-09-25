@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
+import com.fastpay.payment.model.merchant.FastpaySDK;
 import com.fastpay.payment.model.response.InitiationSuccess;
 import com.fastpay.payment.model.response.PaymentSummery;
 import com.fastpay.payment.model.response.PaymentValidation;
@@ -101,6 +103,7 @@ public class PaymentActivity extends BaseActivity {
     private int otpError = 3;
     private int animIdPos = 0;
     private UserSessionReceiver sessionReceiver;
+    private boolean isFastpayPaymentInitiated = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -441,7 +444,15 @@ public class PaymentActivity extends BaseActivity {
                 public void successResponse(InitiationSuccess model) {
                     if (model != null && !TextUtils.isEmpty(model.getToken())) {
                         initiationModel = model;
-                        buildUi();
+                        boolean isFPAppExist = requestExtra.isFastpayAppExist(PaymentActivity.this.getPackageManager());
+                        if (isFPAppExist){
+                            isFastpayPaymentInitiated = true;
+                            Intent intent = new Intent (Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()));
+                            startActivity(intent);
+                        }else{
+                            buildUi();
+                        }
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_token_empty));
@@ -730,9 +741,8 @@ public class PaymentActivity extends BaseActivity {
         startService(new Intent(this, UserSessionTimer.class));
         sessionReceiver.setSessionReceiverListener(() -> {
             if (sessionFinishedListener != null) sessionFinishedListener.onSessionFinished();
-
             Intent intent = new Intent();
-            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(com.fastpay.payment.R.string.fp_payment_message_request_timeout));
+            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(isFastpayPaymentInitiated?com.fastpay.payment.R.string.fp_payment_message_fastpay_payment:com.fastpay.payment.R.string.fp_payment_message_request_timeout));
             setResult(Activity.RESULT_CANCELED, intent);
             NavigationUtil.exitPageSide(this);
             finish();

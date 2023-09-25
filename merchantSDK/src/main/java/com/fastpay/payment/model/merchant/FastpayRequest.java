@@ -1,7 +1,9 @@
 package com.fastpay.payment.model.merchant;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -104,6 +106,27 @@ public class FastpayRequest implements Parcelable {
 
     public String getEnvironment() {
         return mEnvironment;
+    }
+
+    public void startPaymentIntent(Activity activity,int requestCode){
+        /*boolean isAppExist = isFastpayAppExist(activity.getPackageManager());
+        if (isAppExist){
+
+        }else{
+            Intent intent = new Intent(mContext, PaymentActivity.class).putExtra(EXTRA_PAYMENT_REQUEST, this);
+            activity.startActivityForResult(intent, requestCode);
+        }*/
+        Intent intent = new Intent(mContext, PaymentActivity.class).putExtra(EXTRA_PAYMENT_REQUEST, this);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    public boolean isFastpayAppExist(PackageManager packageManager) {
+        try {
+            packageManager.getPackageInfo("com.sslwireless.fastpay", 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
     public Intent getIntent() {

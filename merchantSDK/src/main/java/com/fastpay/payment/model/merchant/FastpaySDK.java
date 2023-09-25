@@ -10,6 +10,7 @@ public class FastpaySDK {
 
     public static final String SANDBOX = "FASTPAY_TEST";
     public static final String PRODUCTION = "FASTPAY_LIVE";
+    public static final String PAYMENT_DEEPLINK_URL = "appFpp://fast-pay.cash/qrpay?";
 
     public FastpaySDK() {
     }
