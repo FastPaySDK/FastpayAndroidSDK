@@ -3,6 +3,8 @@ package com.fastpay.payment.view.activity;
 import static com.fastpay.payment.view.activity.OtpVerificationActivity.OTP_VERIFICATION_REQUEST_CODE;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
@@ -61,6 +63,7 @@ import com.fastpay.payment.view.custom.MobileNumberFormat;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentActivity extends BaseActivity {
 
@@ -450,6 +453,11 @@ public class PaymentActivity extends BaseActivity {
                             Intent intent = new Intent (Intent.ACTION_VIEW);
                             intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()));
                             startActivity(intent);
+
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_fastpay_payment));
+                            setResult(Activity.RESULT_CANCELED, returnIntent);
+                            finish();
                         }else{
                             buildUi();
                         }
