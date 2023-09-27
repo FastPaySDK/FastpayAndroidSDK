@@ -25,7 +25,8 @@
     <dimen name="size_100dp">100dp</dimen>
     <dimen name="size_120dp">120dp</dimen>
     <dimen name="size_220dp">220dp</dimen>
-
+    <dimen name="size_3dp">3dp</dimen>
+    <dimen name="size_base_padding">15dp</dimen>
 
     <!--Test Size-->
     <dimen name="text_small_medium">13sp</dimen>

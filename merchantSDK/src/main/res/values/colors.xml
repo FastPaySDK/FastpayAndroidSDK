@@ -14,7 +14,7 @@
     <color name="colorDimLightBlueTextColor">#5F6AA0</color>
     <color name="colorPaymentHeaderBackground">#ECF2F5</color>
     <color name="colorPaymentTextColor">#43466E</color>
-
+    <color name="colorPINTextColor">#222D67</color>
     <!--Background color-->
     <color name="colorSdkBaseLightBackground">#EFF5F8</color>
     <color name="colorSdkBaseBackground">#FFFFFF</color>

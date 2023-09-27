@@ -452,6 +452,7 @@ public class PaymentActivity extends BaseActivity {
                             isFastpayPaymentInitiated = true;
                             Intent intent = new Intent (Intent.ACTION_VIEW);
                             intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()));
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 
                             Intent returnIntent = new Intent();
