@@ -23,8 +23,7 @@ public class RequestSentOtp extends BaseHttp {
     private SendOtpListener listener;
 
     public RequestSentOtp(Context context, String environment) {
-        super(context, environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL
-                + HttpParams.API_VERSION_2 + HttpParams.API_SENT_OTP);
+        super(context, (environment.equals(FastpaySDK.PRODUCTION) ? HttpParams.PRODUCTION_URL : HttpParams.SANDBOX_URL) + HttpParams.API_VERSION_2 + HttpParams.API_SENT_OTP);
         mContext = new WeakReference<>(context);
         this.environment = environment;
     }

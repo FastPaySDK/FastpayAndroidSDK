@@ -27,5 +27,5 @@ public class HttpParams {
     public static final String PARAM_AMOUNT = "amount";
     public static final String PARAM_ORDER_ID_2 = "order_id";
     public static final String PARAM_MOBILE_NUMBER_2 = "mobile_number";
-    public static final String PARAM_OTP= "otp";
+    public static final String PARAM_OTP = "otp";
 }
