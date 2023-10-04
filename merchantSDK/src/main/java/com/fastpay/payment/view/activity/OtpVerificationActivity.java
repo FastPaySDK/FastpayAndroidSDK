@@ -23,6 +23,7 @@ import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.CustomAsteriskPassTransformMethod;
 import com.fastpay.payment.service.utill.NavigationUtil;
+import com.fastpay.payment.service.utill.ShareData;
 import com.fastpay.payment.view.custom.CustomEditText;
 import com.fastpay.payment.view.custom.CustomTextView;
 
@@ -44,6 +45,12 @@ public class OtpVerificationActivity extends BaseActivity implements View.OnKeyL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp_verification);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            if (bundle.containsKey(ShareData.KEY_OTP_MESSAGE)) {
+                message = bundle.getString(ShareData.KEY_OTP_MESSAGE,"");
+            }
+        }
 
         llPin1 = findViewById(R.id.pinField1);
         llPin2 = findViewById(R.id.pinField2);

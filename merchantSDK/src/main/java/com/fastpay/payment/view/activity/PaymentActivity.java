@@ -107,6 +107,7 @@ public class PaymentActivity extends BaseActivity {
     private int animIdPos = 0;
     private UserSessionReceiver sessionReceiver;
     private boolean isFastpayPaymentInitiated = false;
+    private String otpMessage = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -611,7 +612,9 @@ public class PaymentActivity extends BaseActivity {
                 paymentHeaderLayout.setVisibility(View.VISIBLE);
                 payViaLayout.setVisibility(View.VISIBLE);
                 paymentOptionLayout.setVisibility(View.VISIBLE);
-                startActivityForResult(new Intent(PaymentActivity.this, OtpVerificationActivity.class), OTP_VERIFICATION_REQUEST_CODE);
+                /*Intent intent = new Intent(PaymentActivity.this, OtpVerificationActivity.class);
+                intent.putExtra(ShareData.KEY_OTP_MESSAGE,message);
+                startActivityForResult(intent, OTP_VERIFICATION_REQUEST_CODE);*/
             }
         });
     }
@@ -709,7 +712,10 @@ public class PaymentActivity extends BaseActivity {
                 @Override
                 public void successResponse(String message) {
                     CustomProgressDialog.dismiss();
-                    startActivityForResult(new Intent(PaymentActivity.this, OtpVerificationActivity.class), OTP_VERIFICATION_REQUEST_CODE);
+                    Intent intent = new Intent(PaymentActivity.this, OtpVerificationActivity.class);
+                    intent.putExtra(ShareData.KEY_OTP_MESSAGE,message);
+                    otpMessage = message;
+                    startActivityForResult(intent, OTP_VERIFICATION_REQUEST_CODE);
 
                     /*Intent intent = new Intent(PaymentActivity.this,OtpVerificationActivity.class);
                     intent.putExtra(HttpParams.PARAM_ORDER_ID_2, orderId);
