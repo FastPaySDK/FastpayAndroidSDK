@@ -768,7 +768,7 @@ public class PaymentActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        StoreInformationUtil.saveLongData(PaymentActivity.this, ShareData.KEY_FINISHING_TIME, 0L);
+        StoreInformationUtil.saveLongData(PaymentActivity.this, ShareData.KEY_FINISHING_TIME, ShareData.USER_SESSION_TIMER_TARGET);
         if (sessionReceiver != null) {
             unregisterReceiver(sessionReceiver);
             sessionReceiver = null;
