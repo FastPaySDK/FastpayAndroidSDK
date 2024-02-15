@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -751,7 +752,11 @@ public class PaymentActivity extends BaseActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ShareData.INTENT_USER_SESSION_FINISHED);
-        registerReceiver(sessionReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(sessionReceiver, filter, RECEIVER_EXPORTED);
+        }else {
+            registerReceiver(sessionReceiver, filter);
+        }
 
         startService(new Intent(this, UserSessionTimer.class));
         sessionReceiver.setSessionReceiverListener(() -> {
