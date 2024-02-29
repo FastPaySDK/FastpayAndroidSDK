@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fastpay.payment.SdkSingleton;
+import com.fastpay.payment.service.listener.ListenerFastpayCallback;
 import com.fastpay.payment.view.activity.PaymentActivity;
 
 /**
@@ -26,23 +28,33 @@ public class FastpayRequest implements Parcelable {
     private String mEnvironment;
     private String mCurrency = "IQD"; // Default is IQD
     private int mStoreLogo;  // Optional
+    private ListenerFastpayCallback listenerFastpayCallback;
 
     public enum Environment {
         Sandbox,
         Production
     }
 
+    public enum SDKStatus{
+        INIT,
+        PAYMENT_WITH_FASTPAY_APP,
+        PAYMENT_WITH_FASTPAY_SDK,
+        CANCEL
+    }
+
     public FastpayRequest(Context context) {
         mContext = context;
     }
 
-    public FastpayRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId, String environment) {
+    public FastpayRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId, String environment,ListenerFastpayCallback listenerFastpayCallback) {
         this.mContext = mContext;
         this.mStoreId = mStoreId;
         this.mStorePassword = mStorePassword;
         this.mAmount = mAmount;
         this.mOrderId = mOrderId;
         this.mEnvironment = environment;
+        this.listenerFastpayCallback = listenerFastpayCallback;
+        SdkSingleton.getInstance().setListenerFastpayCallback(listenerFastpayCallback);
     }
 
     public FastpayRequest storeId(String storeId) {
@@ -108,7 +120,7 @@ public class FastpayRequest implements Parcelable {
         return mEnvironment;
     }
 
-    public void startPaymentIntent(Activity activity,int requestCode){
+    public void startPaymentIntent(Activity activity, int requestCode){
         /*boolean isAppExist = isFastpayAppExist(activity.getPackageManager());
         if (isAppExist){
 

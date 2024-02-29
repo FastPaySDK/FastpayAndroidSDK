@@ -33,6 +33,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.fastpay.payment.R;
+import com.fastpay.payment.SdkSingleton;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.model.merchant.FastpaySDK;
@@ -130,6 +131,7 @@ public class PaymentActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.CANCEL,getString(R.string.fp_payment_user_backpressed));
         finish();
     }
 
@@ -423,6 +425,7 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_initial_failed));
             setResult(Activity.RESULT_CANCELED, intent);
+            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.CANCEL,getString(R.string.fp_payment_message_initial_failed));
             finish();
         }
 
@@ -430,6 +433,7 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_orderid_empty));
             setResult(Activity.RESULT_CANCELED, intent);
+            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.CANCEL,getString(R.string.fp_payment_message_orderid_empty));
             finish();
         }
 
@@ -437,6 +441,7 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_order_amount_empty));
             setResult(Activity.RESULT_CANCELED, intent);
+            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.CANCEL,getString(R.string.fp_payment_message_order_amount_empty));
             finish();
         }
 
@@ -444,6 +449,7 @@ public class PaymentActivity extends BaseActivity {
             showInitialAnim();
             RequestPaymentInitiate paymentInitiate = new RequestPaymentInitiate(this, requestExtra.getEnvironment());
             paymentInitiate.buildParams(requestExtra);
+            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.INIT,getString(R.string.fp_payment_initiated));
             paymentInitiate.setResponseListener(new InitiationApiListener() {
                 @Override
                 public void successResponse(InitiationSuccess model) {
@@ -453,21 +459,24 @@ public class PaymentActivity extends BaseActivity {
                         if (isFPAppExist){
                             isFastpayPaymentInitiated = true;
                             Intent intent = new Intent (Intent.ACTION_VIEW);
+                            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_message_fastpay_payment));
                             intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()));
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
 
-                            Intent returnIntent = new Intent();
+                            /*Intent returnIntent = new Intent();
                             returnIntent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_fastpay_payment));
-                            setResult(Activity.RESULT_CANCELED, returnIntent);
+                            setResult(Activity.RESULT_CANCELED, returnIntent);*/
                             finish();
                         }else{
+                            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_initiated_with_fastpay_sdk));
                             buildUi();
                         }
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_token_empty));
                         setResult(Activity.RESULT_CANCELED, intent);
+                        SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_SDK,getString(R.string.fp_payment_message_token_empty));
                         finish();
                     }
                 }
@@ -764,6 +773,7 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(isFastpayPaymentInitiated?com.fastpay.payment.R.string.fp_payment_message_fastpay_payment:com.fastpay.payment.R.string.fp_payment_message_request_timeout));
             setResult(Activity.RESULT_CANCELED, intent);
+            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.CANCEL,getString(isFastpayPaymentInitiated?com.fastpay.payment.R.string.fp_payment_message_fastpay_payment:com.fastpay.payment.R.string.fp_payment_message_request_timeout));
             NavigationUtil.exitPageSide(this);
             finish();
         });
@@ -780,4 +790,5 @@ public class PaymentActivity extends BaseActivity {
         }
         stopService(new Intent(this, UserSessionTimer.class));
     }
+
 }
