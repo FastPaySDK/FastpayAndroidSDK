@@ -97,21 +97,11 @@ public class SDKTestActivity extends BaseActivity {
             if (!orderId.isEmpty() && !amount.isEmpty() && Double.parseDouble(amount) > 0) {
                 /*FastpayRequest request = new FastpayRequest(this, "754912_901", "953751sS1@#",
                         amount, orderId, FastpaySDK.PRODUCTION);*/
-                FastpayRequest request = new FastpayRequest(this, "831463_230", "D@\\!n2o2$0p3e71aEku",
-                        amount, orderId, FastpaySDK.PRODUCTION, new ListenerFastpayCallback() {
+                FastpayRequest request = new FastpayRequest(this, "748957_847", "v=7bUPTeC2#nQ2-+",
+                        amount, orderId, FastpaySDK.SANDBOX, new ListenerFastpayCallback() {
                     @Override
                     public void sdkCallBack(FastpayRequest.SDKStatus sdkStatus, String message) {
                         Toast.makeText(SDKTestActivity.this,message,Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public int describeContents() {
-                        return 0;
-                    }
-
-                    @Override
-                    public void writeToParcel(@NonNull Parcel dest, int flags) {
-
                     }
                 });
 

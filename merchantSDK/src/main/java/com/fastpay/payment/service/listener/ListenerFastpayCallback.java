@@ -9,6 +9,6 @@ import com.fastpay.payment.model.merchant.FastpayResult;
  * @Created By Zarraf Ahmed
  * Created 2/29/2024 at 3:01 PM
  */
-public interface ListenerFastpayCallback extends Parcelable {
+public interface ListenerFastpayCallback {
     void sdkCallBack(FastpayRequest.SDKStatus sdkStatus,String message);
 }
