@@ -468,8 +468,8 @@ public class PaymentActivity extends BaseActivity {
                             isFastpayPaymentInitiated = true;
                             Intent intent = new Intent ();
                             SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_message_fastpay_payment));
-                            intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()));
-                            startActivityForResult(intent, PAYMENT_REQUEST_CODE);
+                            intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()+"&redirect_url="+requestExtra.getCallBackUrl()));
+                            startActivity(intent);
 
                             /*Intent returnIntent = new Intent();
                             returnIntent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_fastpay_payment));

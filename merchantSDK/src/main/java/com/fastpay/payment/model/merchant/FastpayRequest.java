@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.fastpay.payment.SdkSingleton;
 import com.fastpay.payment.service.listener.ListenerFastpayCallback;
 import com.fastpay.payment.view.activity.PaymentActivity;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by Sahidul Islam on 2/15/2021.
@@ -28,6 +32,7 @@ public class FastpayRequest implements Parcelable {
     private String mEnvironment;
     private String mCurrency = "IQD"; // Default is IQD
     private int mStoreLogo;  // Optional
+    private String callBackUrl;
     private ListenerFastpayCallback listenerFastpayCallback;
 
     public enum Environment {
@@ -46,13 +51,14 @@ public class FastpayRequest implements Parcelable {
         mContext = context;
     }
 
-    public FastpayRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId, String environment,ListenerFastpayCallback listenerFastpayCallback) {
+    public FastpayRequest(Context mContext, String mStoreId, String mStorePassword, String mAmount, String mOrderId, String environment,String callBackUrl,ListenerFastpayCallback listenerFastpayCallback) {
         this.mContext = mContext;
         this.mStoreId = mStoreId;
         this.mStorePassword = mStorePassword;
         this.mAmount = mAmount;
         this.mOrderId = mOrderId;
         this.mEnvironment = environment;
+        this.callBackUrl = callBackUrl;
         this.listenerFastpayCallback = listenerFastpayCallback;
         SdkSingleton.getInstance().setListenerFastpayCallback(listenerFastpayCallback);
     }
@@ -120,6 +126,19 @@ public class FastpayRequest implements Parcelable {
         return mEnvironment;
     }
 
+    public String getCallBackUrl() {
+        try {
+            return URLEncoder.encode(callBackUrl,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return callBackUrl;
+    }
+
+    public void setCallBackUrl(String callBackUrl) {
+        this.callBackUrl = callBackUrl;
+    }
+
     public void startPaymentIntent(Activity activity, int requestCode){
         /*boolean isAppExist = isFastpayAppExist(activity.getPackageManager());
         if (isAppExist){
@@ -152,6 +171,7 @@ public class FastpayRequest implements Parcelable {
         mOrderId = in.readString();
         mCurrency = in.readString();
         mStoreLogo = in.readInt();
+        callBackUrl = in.readString();
         mEnvironment = in.readString();
     }
 
@@ -163,6 +183,7 @@ public class FastpayRequest implements Parcelable {
         dest.writeString(mOrderId);
         dest.writeString(mCurrency);
         dest.writeInt(mStoreLogo);
+        dest.writeString(callBackUrl);
         dest.writeString(mEnvironment);
     }
 

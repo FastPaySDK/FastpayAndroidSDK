@@ -64,6 +64,13 @@ public class SDKTestActivity extends BaseActivity {
         layoutBinding.orderIdEditText.setText(getSaltString());
         layoutBinding.paymentAmountEditText.setText("250");
 
+        try {
+            String success = getIntent().getData().getQueryParameter("amount");
+            String transaction_id = getIntent().getData().getQueryParameter("transaction_id");
+            Toast.makeText(SDKTestActivity.this,"Payment is completed:: transactionID:::"+transaction_id+" and amout:::"+success,Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+
+        }
 /*        InputStream stream = null;
         try {
             stream = getAssets().open("success.gif");
@@ -98,12 +105,7 @@ public class SDKTestActivity extends BaseActivity {
                 /*FastpayRequest request = new FastpayRequest(this, "754912_901", "953751sS1@#",
                         amount, orderId, FastpaySDK.PRODUCTION);*/
                 FastpayRequest request = new FastpayRequest(this, "748957_847", "v=7bUPTeC2#nQ2-+",
-                        amount, orderId, FastpaySDK.SANDBOX, new ListenerFastpayCallback() {
-                    @Override
-                    public void sdkCallBack(FastpayRequest.SDKStatus sdkStatus, String message) {
-                        Toast.makeText(SDKTestActivity.this,message,Toast.LENGTH_LONG).show();
-                    }
-                });
+                        amount, orderId, FastpaySDK.SANDBOX, "sdk://fastpay-sdk.com/callback", (sdkStatus, message) -> Toast.makeText(SDKTestActivity.this,message,Toast.LENGTH_LONG).show());
 
 /*                FastpayRequest request = new FastpayRequest(this)
                         .orderId("test-order-123")
