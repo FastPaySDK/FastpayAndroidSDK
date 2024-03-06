@@ -3,8 +3,6 @@ package com.fastpay.payment.view.activity;
 import static com.fastpay.payment.view.activity.OtpVerificationActivity.OTP_VERIFICATION_REQUEST_CODE;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
@@ -20,6 +18,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -65,9 +64,10 @@ import com.fastpay.payment.view.custom.MobileNumberFormat;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PaymentActivity extends BaseActivity {
+
+    public static final int PAYMENT_REQUEST_CODE = 200;
 
     private ConstraintLayout mainRootView, mobileNumberLayout, errorLayout;
     private ConstraintLayout paymentInitLayout, paymentOptionLayout, qrOptionLayout;
@@ -110,6 +110,7 @@ public class PaymentActivity extends BaseActivity {
     private UserSessionReceiver sessionReceiver;
     private boolean isFastpayPaymentInitiated = false;
     private String otpMessage = "";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -397,6 +398,13 @@ public class PaymentActivity extends BaseActivity {
             }else {
                 showError("OTP Cancelled", otpError);
             }
+        }else if(requestCode == PAYMENT_REQUEST_CODE){
+            Log.i("TAG", "onActivityResult: ..........................."+data.getData()+"   "+resultCode);
+            if(resultCode==RESULT_OK){
+                validatePayment();
+            }else {
+                showError("Payment Cancelled", paymentError);
+            }
         }
 
     }
@@ -458,16 +466,15 @@ public class PaymentActivity extends BaseActivity {
                         boolean isFPAppExist = requestExtra.isFastpayAppExist(PaymentActivity.this.getPackageManager());
                         if (isFPAppExist){
                             isFastpayPaymentInitiated = true;
-                            Intent intent = new Intent (Intent.ACTION_VIEW);
+                            Intent intent = new Intent ();
                             SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_message_fastpay_payment));
                             intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()));
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                            startActivityForResult(intent, PAYMENT_REQUEST_CODE);
 
                             /*Intent returnIntent = new Intent();
                             returnIntent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_fastpay_payment));
                             setResult(Activity.RESULT_CANCELED, returnIntent);*/
-                            finish();
+                            //finish();
                         }else{
                             SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_initiated_with_fastpay_sdk));
                             buildUi();
