@@ -26,8 +26,8 @@
 -keepattributes EnclosingMethod
 -keepattributes InnerClasses
 
-#-dontwarn com.fastpay.payment.**
-#-keep class com.fastpay.** { *; }
+-dontwarn com.fastpay.payment.**
+-keep class com.fastpay.** { *; }
 
 -dontobfuscate
 -optimizations !code/allocation/variable
@@ -98,6 +98,7 @@
     <init>(java.lang.Throwable);
 }
 
+-keep class com.intellij.extensions.Extensions.** {*;}
 
 
 
