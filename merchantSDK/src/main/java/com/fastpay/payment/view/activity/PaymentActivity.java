@@ -474,7 +474,7 @@ public class PaymentActivity extends BaseActivity {
                             /*Intent returnIntent = new Intent();
                             returnIntent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_fastpay_payment));
                             setResult(Activity.RESULT_CANCELED, returnIntent);*/
-                            //finish();
+                            finish();
                         }else{
                             SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_initiated_with_fastpay_sdk));
                             buildUi();
