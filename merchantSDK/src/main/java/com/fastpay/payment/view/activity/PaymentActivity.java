@@ -453,6 +453,14 @@ public class PaymentActivity extends BaseActivity {
             finish();
         }
 
+        if (requestExtra.getCallBackUrl().isEmpty()) {
+            Intent intent = new Intent();
+            intent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_order_callback_url_empty));
+            setResult(Activity.RESULT_CANCELED, intent);
+            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.CANCEL,getString(R.string.fp_payment_message_order_callback_url_empty));
+            finish();
+        }
+
         if (ConfigurationUtil.isInternetAvailable(this)) {
             showInitialAnim();
             RequestPaymentInitiate paymentInitiate = new RequestPaymentInitiate(this, requestExtra.getEnvironment());
@@ -466,15 +474,15 @@ public class PaymentActivity extends BaseActivity {
                         boolean isFPAppExist = requestExtra.isFastpayAppExist(PaymentActivity.this.getPackageManager());
                         if (isFPAppExist){
                             isFastpayPaymentInitiated = true;
-                            Intent intent = new Intent ();
+                            Intent intent = new Intent (Intent.ACTION_VIEW);
                             SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_message_fastpay_payment));
-                            intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()+"&redirect_url="+requestExtra.getCallBackUrl()));
+                            intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()+"&redirect_url="+requestExtra.getCallBackUrl()+"&order_id="+requestExtra.getOrderId()));
                             startActivity(intent);
 
                             /*Intent returnIntent = new Intent();
                             returnIntent.putExtra(FastpayRequest.EXTRA_PAYMENT_MESSAGE, getString(R.string.fp_payment_message_fastpay_payment));
                             setResult(Activity.RESULT_CANCELED, returnIntent);*/
-                            //finish();
+                            finish();
                         }else{
                             SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_initiated_with_fastpay_sdk));
                             buildUi();

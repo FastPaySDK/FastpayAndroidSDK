@@ -65,9 +65,16 @@ public class SDKTestActivity extends BaseActivity {
         layoutBinding.paymentAmountEditText.setText("250");
 
         try {
-            String success = getIntent().getData().getQueryParameter("amount");
+            Log.i("CALLBACK URL", "buildUi: ....................."+getIntent().getData());
+            String amount = getIntent().getData().getQueryParameter("amount");
+            String orderId = getIntent().getData().getQueryParameter("order_id");
+            String status = getIntent().getData().getQueryParameter("status");
             String transaction_id = getIntent().getData().getQueryParameter("transaction_id");
-            Toast.makeText(SDKTestActivity.this,"Payment is completed:: transactionID:::"+transaction_id+" and amout:::"+success,Toast.LENGTH_LONG).show();
+            if (status.contains("success")){
+                Toast.makeText(SDKTestActivity.this,"Payment is completed:: transactionID:::"+transaction_id+" and amount:::"+amount,Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(SDKTestActivity.this,"Payment is failed ::: ORDER ID:::"+orderId,Toast.LENGTH_LONG).show();
+            }
         }catch (Exception e){
 
         }
