@@ -78,14 +78,6 @@ public class SDKTestActivity extends BaseActivity {
         }catch (Exception e){
 
         }
-/*        InputStream stream = null;
-        try {
-            stream = getAssets().open("success.gif");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        layoutBinding.customView.playGif(stream);*/
     }
 
     protected String getSaltString() {
