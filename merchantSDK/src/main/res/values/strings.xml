@@ -53,5 +53,6 @@
     <string name="fp_payment_initiated_with_fastpay_sdk">Fastpay payment processing with fastpay SDK</string>
     <string name="fp_payment_initiated">Fastpay payment initiated</string>
     <string name="fp_payment_user_backpressed">Fastpay payment canceled</string>
+    <string name="fp_payment_page_cancel_payment">Cancel payment</string>
 
 </resources>

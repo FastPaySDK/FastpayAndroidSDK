@@ -76,7 +76,7 @@ public class PaymentActivity extends BaseActivity {
     private ScrollView paymentLayout;
     private TextView merchantNameTextView, orderIdTextView, paymentAmountTextView;
     private TextView mobileNumberCode, paymentBtn, termsTextView;
-    private TextView initialTextView, loginTitleTextView, generateQrTextView;
+    private TextView initialTextView, loginTitleTextView, generateQrTextView, cancelPayment;
     private TextView successTextView, backAppTextView, errorTextView, retryTextView;
     private EditText mobileNumberEditText, passwordEditText;
     private ImageView merchantLogoImageView, qrPaymentBtnImageView;
@@ -191,6 +191,7 @@ public class PaymentActivity extends BaseActivity {
         mobileNumberLayout = findViewById(R.id.mobileNumberLayout);
         paymentInitLayout = findViewById(R.id.paymentInitLayout);
         paymentOptionLayout = findViewById(R.id.paymentOptionLayout);
+        cancelPayment = findViewById(R.id.cancelPayment);
         successLayout = findViewById(R.id.successLayout);
         paymentLayout = findViewById(R.id.paymentLayout);
         initialTextView = findViewById(R.id.initialText);
@@ -380,6 +381,11 @@ public class PaymentActivity extends BaseActivity {
         loginTitleTextView.setOnClickListener(view -> {
             qrOptionLayout.setVisibility(View.GONE);
             paymentOptionLayout.setVisibility(View.VISIBLE);
+        });
+
+        cancelPayment.setOnClickListener(view -> {
+            SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.CANCEL,getString(R.string.fp_payment_user_backpressed));
+            onBackPressed();
         });
 
         paymentBtn.setOnClickListener(view -> {
