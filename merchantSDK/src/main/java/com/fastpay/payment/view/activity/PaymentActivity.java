@@ -31,6 +31,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.fastpay.payment.BuildConfig;
 import com.fastpay.payment.R;
 import com.fastpay.payment.SdkSingleton;
 import com.fastpay.payment.model.merchant.FastpayRequest;
@@ -399,7 +400,9 @@ public class PaymentActivity extends BaseActivity {
                 showError("OTP Cancelled", otpError);
             }
         }else if(requestCode == PAYMENT_REQUEST_CODE){
-            Log.i("TAG", "onActivityResult: ..........................."+data.getData()+"   "+resultCode);
+            if(BuildConfig.DEBUG){
+                Log.i("TAG", "onActivityResult: ..........................."+data.getData()+"   "+resultCode);
+            }
             if(resultCode==RESULT_OK){
                 validatePayment();
             }else {
@@ -475,6 +478,7 @@ public class PaymentActivity extends BaseActivity {
                         if (isFPAppExist){
                             isFastpayPaymentInitiated = true;
                             Intent intent = new Intent (Intent.ACTION_VIEW);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             SdkSingleton.getInstance().getListenerFastpayCallback().sdkCallBack(FastpayRequest.SDKStatus.PAYMENT_WITH_FASTPAY_APP,getString(R.string.fp_payment_message_fastpay_payment));
                             intent.setData(Uri.parse(FastpaySDK.PAYMENT_DEEPLINK_URL+"qrData="+model.getQrToken()+"&redirect_url="+requestExtra.getCallBackUrl()+"&order_id="+requestExtra.getOrderId()));
                             startActivity(intent);

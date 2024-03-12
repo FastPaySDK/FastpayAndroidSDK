@@ -2,6 +2,8 @@ package com.fastpay.payment.service.utill;
 
 import android.util.Log;
 
+import com.fastpay.payment.BuildConfig;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,7 +33,9 @@ public class DateUtil {
                 sdf.parse(date);
                 return format;
             } catch (ParseException e) {
-                Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+                if(BuildConfig.DEBUG){
+                    Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+                }
             }
         }
         return "";
@@ -81,7 +85,9 @@ public class DateUtil {
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss a", Locale.ENGLISH);
             newDate = sdf.parse(date);
         } catch (ParseException e) {
-            Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+            if(BuildConfig.DEBUG){
+                Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+            }
         }
 
         SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
@@ -97,7 +103,9 @@ public class DateUtil {
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss a", Locale.ENGLISH);
             newDate = sdf.parse(date);
         } catch (ParseException e) {
-            Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+            if(BuildConfig.DEBUG){
+                Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+            }
         }
 
         SimpleDateFormat newDateFormat = new SimpleDateFormat("hh:mm:ss a", Locale.ENGLISH);
@@ -113,7 +121,9 @@ public class DateUtil {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             newDate = sdf.parse(date);
         } catch (ParseException e) {
-            Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+            if(BuildConfig.DEBUG){
+                Log.e("Date", "Error in Parsing Time : " + e.getMessage());
+            }
         }
 
         SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH);

@@ -59,7 +59,9 @@ public class UserSessionTimer extends Service {
         return new CountDownTimer(timerCountInMillis, timerIntervalMillis) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.e("onTimerTick: ", String.valueOf(millisUntilFinished));
+                if(BuildConfig.DEBUG){
+                    Log.e("onTimerTick: ", String.valueOf(millisUntilFinished));
+                }
             }
 
             @Override

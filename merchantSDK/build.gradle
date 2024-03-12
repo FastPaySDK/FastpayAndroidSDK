@@ -1,22 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 group = 'com.fastpay.payment'
-version '1.0.1'
+version '1.0.2'
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier "sources"
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.fastpay.payment'
-            artifactId = 'lib'
-            version = '1.0.1'
-        }
-    }
-}
 android {
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
@@ -43,6 +34,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.debug
             minifyEnabled false
             shrinkResources false
             debuggable false
@@ -74,9 +66,6 @@ dependencies {
 }
 
 //apply plugin: 'com.github.dcendents.android-maven'
-
-
-
 
 
 

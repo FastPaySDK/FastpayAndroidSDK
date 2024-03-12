@@ -2,20 +2,18 @@ package com.fastpay.merchantsdk.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.fastpay.merchantsdk.R;
 import com.fastpay.merchantsdk.databinding.ActivitySdkTestLayoutBinding;
+import com.fastpay.payment.BuildConfig;
 import com.fastpay.payment.model.merchant.FastpayRequest;
 import com.fastpay.payment.model.merchant.FastpayResult;
 import com.fastpay.payment.model.merchant.FastpaySDK;
-import com.fastpay.payment.service.listener.ListenerFastpayCallback;
 
 import java.util.Random;
 
@@ -46,7 +44,10 @@ public class SDKTestActivity extends BaseActivity {
                 case Activity.RESULT_OK:
                     if (data != null && data.hasExtra(FastpayResult.EXTRA_PAYMENT_RESULT)) {
                         FastpayResult result = data.getParcelableExtra(FastpayResult.EXTRA_PAYMENT_RESULT);
-                        Log.e("payment_result", result.getTransactionId());
+
+                        if(BuildConfig.DEBUG){
+                            Log.e("payment_result", result.getTransactionId());
+                        }
                         Toast.makeText(SDKTestActivity.this,"Payment Result:: SUCCESS =>"+result.getTransactionId(),Toast.LENGTH_LONG).show();
                     }
                     break;
@@ -65,7 +66,9 @@ public class SDKTestActivity extends BaseActivity {
         layoutBinding.paymentAmountEditText.setText("250");
 
         try {
-            Log.i("CALLBACK URL", "buildUi: ....................."+getIntent().getData());
+            if(BuildConfig.DEBUG){
+                Log.i("CALLBACK URL", "buildUi: ....................."+getIntent().getData());
+            }
             String amount = getIntent().getData().getQueryParameter("amount");
             String orderId = getIntent().getData().getQueryParameter("order_id");
             String status = getIntent().getData().getQueryParameter("status");

@@ -2,7 +2,6 @@ package com.fastpay.payment.service.utill;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Movie;
 import android.net.Uri;
 import android.os.SystemClock;
@@ -10,8 +9,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.fastpay.payment.BuildConfig;
+
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -91,7 +91,9 @@ public class GIFView extends View {
             mInputStream = mContext.getContentResolver().openInputStream(uri);
             init();
         } catch (FileNotFoundException e) {
-            Log.e("GIfImageView", "File not found");
+            if(BuildConfig.DEBUG){
+                Log.e("GIfImageView", "File not found");
+            }
         }
     }
 }

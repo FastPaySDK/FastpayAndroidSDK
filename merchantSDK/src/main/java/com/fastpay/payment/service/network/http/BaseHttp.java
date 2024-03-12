@@ -25,7 +25,7 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
     private String requestUrl, requestMethod;
     private String requestParams;
 
-    protected String environment="";
+    protected String environment = "";
     private static final String REQUEST_METHOD_GET = "GET";
     private static final String REQUEST_METHOD_POST = "POST";
 
@@ -36,15 +36,17 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
         this.mContext = context;
         this.requestUrl = requestUrl;
         this.requestMethod = REQUEST_METHOD_GET;
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG) {
             Log.v("BaseHttp: ", requestUrl);
+        }
     }
 
     public void post(String requestParams) {
         this.requestMethod = REQUEST_METHOD_POST;
         this.requestParams = requestParams;
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG){
             Log.v("BaseHttp: ", "Params: " + requestParams);
+        }
     }
 
     @Override
@@ -64,8 +66,9 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
 
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG){
             Log.v("BaseHttp: ", "Response: " + response);
+        }
         onTaskComplete();
     }
 
@@ -110,8 +113,9 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
     }
 
     private String getResponseInString(HttpURLConnection httpURLConnection) throws IOException {
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG){
             Log.v("BaseHttp: ", "Status: " + httpURLConnection.getResponseCode());
+        }
 
         StringBuilder result = new StringBuilder();
         try {
@@ -133,7 +137,7 @@ public abstract class BaseHttp extends AsyncTask<Void, Void, String> {
             e.printStackTrace();
         }
 
-        if(environment.equals(FastpaySDK.SANDBOX)){
+        if (environment.equals(FastpaySDK.SANDBOX) && BuildConfig.DEBUG) {
             Log.e("HttpResponse: ", result.toString());
         }
 

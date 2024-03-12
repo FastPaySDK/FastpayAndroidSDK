@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.fastpay.payment.BuildConfig;
+
 import java.io.InputStream;
 
 /**
@@ -25,8 +27,9 @@ public class DownloadImage extends AsyncTask<String, Void, Bitmap> {
             InputStream in = new java.net.URL(urldisplay).openStream();
             mIcon11 = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
-            Log.d("Error", e.getStackTrace().toString());
-
+            if(BuildConfig.DEBUG){
+                Log.d("Error", e.getStackTrace().toString());
+            }
         }
         return mIcon11;
     }

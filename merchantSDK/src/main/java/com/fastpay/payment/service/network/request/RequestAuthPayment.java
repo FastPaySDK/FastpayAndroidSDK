@@ -3,6 +3,7 @@ package com.fastpay.payment.service.network.request;
 import android.content.Context;
 import android.util.Log;
 
+import com.fastpay.payment.BuildConfig;
 import com.fastpay.payment.R;
 import com.fastpay.payment.model.merchant.FastpaySDK;
 import com.fastpay.payment.model.response.BaseResponseModel;
@@ -46,7 +47,7 @@ public class RequestAuthPayment extends BaseHttp {
             e.printStackTrace();
         }
 
-        if(environment.equals(FastpaySDK.SANDBOX)){
+        if(environment.equals(FastpaySDK.SANDBOX) && BuildConfig.DEBUG) {
             Log.e("RequestBodyAuthPayment", json.toString());
         }
 
