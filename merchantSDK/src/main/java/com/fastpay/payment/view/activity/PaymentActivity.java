@@ -5,6 +5,7 @@ import static com.fastpay.payment.view.activity.OtpVerificationActivity.OTP_VERI
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -61,6 +63,7 @@ import com.fastpay.payment.service.utill.StoreInformationUtil;
 import com.fastpay.payment.view.custom.CustomAlertDialog;
 import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,7 +79,7 @@ public class PaymentActivity extends BaseActivity {
     private ScrollView paymentLayout;
     private TextView merchantNameTextView, orderIdTextView, paymentAmountTextView;
     private TextView mobileNumberCode, paymentBtn, termsTextView;
-    private TextView initialTextView, loginTitleTextView, generateQrTextView, cancelPayment;
+    private TextView initialTextView, cancelPayment;
     private TextView successTextView, backAppTextView, errorTextView, retryTextView;
     private EditText mobileNumberEditText, passwordEditText;
     private ImageView merchantLogoImageView, qrPaymentBtnImageView;
@@ -84,6 +87,7 @@ public class PaymentActivity extends BaseActivity {
     private ImageView qrCodeImageView;
     private ImageView passwordEditTextEndImageView;
     private CheckBox confirmCheckBox;
+    private TabLayout payViaTabLayout;
 
     private GifDecoderView customTickView;
 
@@ -179,7 +183,6 @@ public class PaymentActivity extends BaseActivity {
         orderIdTextView = findViewById(R.id.orderId);
         paymentAmountTextView = findViewById(R.id.paymentAmount);
         paymentBtn = findViewById(R.id.paymentBtn);
-        qrPaymentBtnImageView = findViewById(R.id.qrPaymentBtn);
         mobileNumberCode = findViewById(R.id.mobileNumberCode);
         mobileNumberEditText = findViewById(R.id.mobileNumberEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -195,8 +198,6 @@ public class PaymentActivity extends BaseActivity {
         successLayout = findViewById(R.id.successLayout);
         paymentLayout = findViewById(R.id.paymentLayout);
         initialTextView = findViewById(R.id.initialText);
-        loginTitleTextView = findViewById(R.id.loginTitleView);
-        generateQrTextView = findViewById(R.id.generateQrTitleView);
         customTickView = findViewById(R.id.customTickView);
         qrCodeImageView = findViewById(R.id.qrCodeView);
         successTextView = findViewById(R.id.successTextView);
@@ -206,6 +207,7 @@ public class PaymentActivity extends BaseActivity {
         errorLayout = findViewById(R.id.errorLayout);
         errorTextView = findViewById(R.id.errorTextView);
         retryTextView = findViewById(R.id.retryTextView);
+        payViaTabLayout = findViewById(R.id.payViaTabLayout);
     }
 
     private void buildUi() {
@@ -337,15 +339,50 @@ public class PaymentActivity extends BaseActivity {
 
         paymentInitLayout.setVisibility(View.GONE);
         paymentHeaderLayout.setVisibility(View.VISIBLE);
-        payViaLayout.setVisibility(View.VISIBLE);
         paymentLayout.setVisibility(View.VISIBLE);
-        paymentOptionLayout.setVisibility(View.VISIBLE);
+        showPaymentQr();
+        qrOptionLayout.setVisibility(View.VISIBLE);
 
         initListener();
 /*        if (BuildConfig.DEBUG) {
             mobileNumberEditText.setText("1521331666");
             passwordEditText.setText("Password@1");
         }*/
+
+        payViaTabLayout.setClipToOutline(true);
+        payViaTabLayout.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                int cornerRadius = 16; // Adjust corner radius
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), cornerRadius);
+            }
+        });
+
+        payViaTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        paymentOptionLayout.setVisibility(View.GONE);
+                        qrOptionLayout.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        paymentOptionLayout.setVisibility(View.VISIBLE);
+                        qrOptionLayout.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void initListener() {
@@ -357,30 +394,6 @@ public class PaymentActivity extends BaseActivity {
             Intent intent = new Intent(PaymentActivity.this, TermsConditionActivity.class);
             startActivity(intent);
             NavigationUtil.enterPageSide(PaymentActivity.this);
-        });
-
-        qrPaymentBtnImageView.setOnClickListener(view -> {
-            showPaymentQr();
-
-/*            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-            } else {
-                showPaymentQr();
-            }*/
-        });
-
-        generateQrTextView.setOnClickListener(view -> {
-            showPaymentQr();
-/*            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-            } else {
-                showPaymentQr();
-            }*/
-        });
-
-        loginTitleTextView.setOnClickListener(view -> {
-            qrOptionLayout.setVisibility(View.GONE);
-            paymentOptionLayout.setVisibility(View.VISIBLE);
         });
 
         cancelPayment.setOnClickListener(view -> {

@@ -54,5 +54,8 @@
     <string name="fp_payment_initiated">Fastpay payment initiated</string>
     <string name="fp_payment_user_backpressed">Fastpay payment canceled</string>
     <string name="fp_payment_page_cancel_payment">Cancel payment</string>
+    <string name="fp_payment_page_scan_qr_code">Scan QR Code</string>
+    <string name="fp_payment_page_login_to_pay">Login To Pay</string>
+    <string name="fp_payment_page_how_would_you_like_to_pay">How would you like to pay?</string>
 
 </resources>

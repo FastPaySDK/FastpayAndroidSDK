@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Payment init loading layout Start-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/paymentInitLayout"
         android:layout_width="match_parent"
@@ -37,7 +38,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Payment init loading layout End-->
 
+    <!--payment header layout Start-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/paymentHeaderLayout"
         android:layout_width="match_parent"
@@ -148,13 +151,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Payment Header layout End-->
 
+
+    <!-- Payment Option Scroll layout Start-->
     <ScrollView
         android:id="@+id/paymentLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="none"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -165,416 +171,390 @@
             android:layout_height="wrap_content"
             android:background="@color/colorSdkBaseBackground">
 
+
+            <!-- Pay via layout Start -->
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/payViaLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_30dp"
-                android:layout_marginTop="@dimen/size_15dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="@dimen/size_30dp"
                 android:background="@color/colorSdkBaseBackground"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1.2dp"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:background="@color/colorWhiteGrayIdentical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/payViaLogo"
-                    app:layout_constraintStart_toStartOf="@+id/payViaText"
-                    app:layout_constraintTop_toBottomOf="@+id/payViaText" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/payViaLogo"
-                    android:layout_width="@dimen/size_90dp"
+                    android:layout_width="@dimen/size_120dp"
                     android:layout_height="@dimen/size_25dp"
                     android:layout_marginStart="@dimen/size_15dp"
                     android:background="@color/colorWhiteIdentical"
-                    app:layout_constraintBottom_toBottomOf="@+id/payViaText"
-                    app:layout_constraintStart_toEndOf="@+id/payViaText"
-                    app:layout_constraintTop_toTopOf="@+id/payViaText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_fastpay_sdk_logo" />
 
                 <com.fastpay.payment.view.custom.CustomTextView
                     android:id="@+id/payViaText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fp_payment_page_pay_via"
-                    android:textColor="@color/colorSdkBaseTextColor"
-                    android:textSize="@dimen/text_14sp"
+                    android:layout_marginTop="16dp"
+                    app:textStyle="Medium"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/fp_payment_page_how_would_you_like_to_pay"
+                    android:textColor="@color/colorSdkSecondTextColor"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/payViaLogo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/paymentOptionLayout"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/payViaTabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorSdkBaseBackground"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="@dimen/size_50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/bg_payment_option_layout"
+                android:orientation="horizontal"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/payViaLayout">
+                app:layout_constraintTop_toBottomOf="@+id/payViaLayout"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/colorSdkAccent"
+                app:tabIndicatorGravity="center"
+                app:tabIndicatorHeight="@dimen/size_50dp"
+                app:tabSelectedTextColor="@color/colorWhiteIdentical"
+                app:tabTextColor="@color/colorSdkAccent">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/qrPaymentBtn"
-                    android:layout_width="@dimen/size_60dp"
-                    android:layout_height="@dimen/size_60dp"
-                    android:layout_marginTop="@dimen/size_15dp"
-                    android:background="@color/colorWhiteIdentical"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="@+id/paymentBtn"
-                    app:layout_constraintStart_toStartOf="@+id/paymentBtn"
-                    app:layout_constraintTop_toBottomOf="@+id/orTitleView"
-                    app:srcCompat="@drawable/ic_generate_qr" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/mobileNumberLayout"
-                    android:layout_width="0dp"
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabQR"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:background="@drawable/drawable_edittext_form_background_white"
-                    app:layout_constraintBottom_toTopOf="@+id/passwordTitleView"
-                    app:layout_constraintEnd_toEndOf="@+id/mobileNumberTitleView"
-                    app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
-                    app:layout_constraintTop_toBottomOf="@+id/mobileNumberTitleView">
+                    android:text="@string/fp_payment_page_scan_qr_code" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mobileNumberEditTextEndImageView"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="@dimen/size_15dp"
-                        android:paddingTop="@dimen/size_14dp"
-                        android:paddingBottom="@dimen/size_14dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="1.5"
-                        app:layout_constraintStart_toEndOf="@+id/mobileNumberEditText"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.fastpay.payment.view.custom.CustomEditText
-                        android:id="@+id/mobileNumberEditText"
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fp_payment_page_login_to_pay" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+
+
+            <FrameLayout
+                android:paddingVertical="16dp"
+                android:id="@+id/paymentOptionContainerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/payViaTabLayout">
+
+                <!-- Payment with credential Option layout Start -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/paymentOptionLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorSdkBaseBackground"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/payViaTabLayout">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/mobileNumberLayout"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:inputType="number"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:background="@drawable/drawable_edittext_form_background_white"
+                        app:layout_constraintBottom_toTopOf="@+id/passwordTitleView"
+                        app:layout_constraintEnd_toEndOf="@+id/mobileNumberTitleView"
+                        app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
+                        app:layout_constraintTop_toBottomOf="@+id/mobileNumberTitleView">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/mobileNumberEditTextEndImageView"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="@dimen/size_15dp"
+                            android:paddingTop="@dimen/size_14dp"
+                            android:paddingBottom="@dimen/size_14dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_weight="1.5"
+                            app:layout_constraintStart_toEndOf="@+id/mobileNumberEditText"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.fastpay.payment.view.custom.CustomEditText
+                            android:id="@+id/mobileNumberEditText"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:inputType="number"
+                            android:textColor="@color/colorSdkBaseTextColor"
+                            android:textColorHint="@color/colorSdkSecondTextColor"
+                            android:textSize="@dimen/text_14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/mobileNumberEditTextEndImageView"
+                            app:layout_constraintHorizontal_weight="6.3"
+                            app:layout_constraintStart_toEndOf="@+id/mobileNumberCode"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:textStyle="Normal" />
+
+                        <com.fastpay.payment.view.custom.CustomTextView
+                            android:id="@+id/mobileNumberCode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_15dp"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="@dimen/size_15dp"
+                            android:paddingBottom="@dimen/size_15dp"
+                            android:text="964"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/text_14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/mobileNumberEditText"
+                            app:layout_constraintHorizontal_weight="2.2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/passwordLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:background="@drawable/drawable_edittext_form_background_white"
+                        app:layout_constraintEnd_toEndOf="@+id/mobileNumberTitleView"
+                        app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
+                        app:layout_constraintTop_toBottomOf="@+id/passwordTitleView">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/passwordEditTextEndImageView"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="@dimen/size_15dp"
+                            android:paddingTop="@dimen/size_17dp"
+                            android:paddingBottom="@dimen/size_17dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_weight="1.5"
+                            app:layout_constraintStart_toEndOf="@+id/passwordEditText"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.fastpay.payment.view.custom.CustomEditText
+                            android:id="@+id/passwordEditText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_15dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:inputType="number"
+                            android:paddingTop="@dimen/size_15dp"
+                            android:paddingBottom="@dimen/size_15dp"
+                            android:textColor="@color/colorSdkBaseTextColor"
+                            android:textColorHint="@color/colorSdkSecondTextColor"
+                            android:textSize="@dimen/text_14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/passwordEditTextEndImageView"
+                            app:layout_constraintHorizontal_weight="8.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:textStyle="Normal" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.fastpay.payment.view.custom.CustomCheckbox
+                        android:id="@+id/confirmCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:checked="false"
+                        android:padding="@dimen/size_7dp"
+                        android:text="@string/fp_payment_page_i_accept_the"
                         android:textColor="@color/colorSdkBaseTextColor"
-                        android:textColorHint="@color/colorSdkSecondTextColor"
+                        android:textSize="@dimen/text_small_medium"
+                        android:theme="@style/customCheckboxStyle"
+                        app:layout_constraintBottom_toTopOf="@+id/paymentBtn"
+                        app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
+                        app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
+
+                    <com.fastpay.payment.view.custom.CustomTextView
+                        android:id="@+id/mobileNumberTitleView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_30dp"
+                        android:layout_marginEnd="@dimen/size_30dp"
+                        android:gravity="start"
+                        android:text="@string/fp_payment_page_mobile_number"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorSdkBaseTextColor"
                         android:textSize="@dimen/text_14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/mobileNumberEditTextEndImageView"
-                        app:layout_constraintHorizontal_weight="6.3"
-                        app:layout_constraintStart_toEndOf="@+id/mobileNumberCode"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:textStyle="Normal" />
 
                     <com.fastpay.payment.view.custom.CustomTextView
-                        android:id="@+id/mobileNumberCode"
+                        android:id="@+id/passwordTitleView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_15dp"
-                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/size_15dp"
+                        android:gravity="start"
+                        android:text="@string/fp_payment_page_password"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorSdkBaseTextColor"
+                        android:textSize="@dimen/text_14sp"
+                        app:layout_constraintBottom_toTopOf="@+id/passwordLayout"
+                        app:layout_constraintEnd_toEndOf="@+id/mobileNumberTitleView"
+                        app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
+                        app:layout_constraintTop_toBottomOf="@+id/mobileNumberLayout"
+                        app:textStyle="Normal" />
+
+                    <com.fastpay.payment.view.custom.CustomTextView
+                        android:id="@+id/termsTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fp_payment_page_terms_and_condition"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorBtnBaseColor"
+                        android:textSize="@dimen/text_small_medium"
+                        app:layout_constraintBottom_toBottomOf="@+id/confirmCheckBox"
+                        app:layout_constraintStart_toEndOf="@+id/confirmCheckBox"
+                        app:layout_constraintTop_toTopOf="@+id/confirmCheckBox"
+                        app:textStyle="Medium" />
+
+                    <com.fastpay.payment.view.custom.CustomTextView
+                        android:id="@+id/paymentBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:background="@drawable/action_button_background"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
                         android:paddingTop="@dimen/size_15dp"
                         android:paddingBottom="@dimen/size_15dp"
-                        android:text="964"
+                        android:text="@string/fp_payment_page_proceed_to_pay"
                         android:textAlignment="center"
-                        android:textSize="@dimen/text_14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/mobileNumberEditText"
-                        app:layout_constraintHorizontal_weight="2.2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorBtnTextColor"
+                        android:textSize="@dimen/text_small_medium"
+                        app:layout_constraintEnd_toEndOf="@+id/passwordLayout"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="@+id/passwordLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/confirmCheckBox"
+                        app:textStyle="Medium" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!--Payment with  QR Option Layout -->
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/passwordLayout"
-                    android:layout_width="0dp"
+                    android:id="@+id/qrOptionLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:background="@drawable/drawable_edittext_form_background_white"
-                    app:layout_constraintEnd_toEndOf="@+id/mobileNumberTitleView"
-                    app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
-                    app:layout_constraintTop_toBottomOf="@+id/passwordTitleView">
+                    android:background="@color/colorSdkBaseBackground"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/payViaTabLayout">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/passwordEditTextEndImageView"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="@dimen/size_15dp"
-                        android:paddingTop="@dimen/size_17dp"
-                        android:paddingBottom="@dimen/size_17dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/qrCodeViewLayout"
+                        android:layout_width="@dimen/size_220dp"
+                        android:layout_height="@dimen/size_220dp"
+                        android:layout_marginStart="@dimen/size_20dp"
+                        android:layout_marginTop="@dimen/size_15dp"
+                        android:layout_marginEnd="@dimen/size_20dp"
+                        android:background="@drawable/drawable_qr_border_background"
+                        app:layout_constraintBottom_toTopOf="@+id/qrOrTitleView"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_weight="1.5"
-                        app:layout_constraintStart_toEndOf="@+id/passwordEditText"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/qrScanTitleView">
 
-                    <com.fastpay.payment.view.custom.CustomEditText
-                        android:id="@+id/passwordEditText"
-                        android:layout_width="0dp"
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/qrCodeView"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_margin="@dimen/size_15dp"
+                            android:background="@color/colorWhiteIdentical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.fastpay.payment.view.custom.CustomTextView
+                        android:id="@+id/qrScanTitleView"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_15dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:inputType="number"
-                        android:paddingTop="@dimen/size_15dp"
-                        android:paddingBottom="@dimen/size_15dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="@string/fp_payment_page_qr_scan_title"
                         android:textColor="@color/colorSdkBaseTextColor"
-                        android:textColorHint="@color/colorSdkSecondTextColor"
-                        android:textSize="@dimen/text_14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/passwordEditTextEndImageView"
-                        app:layout_constraintHorizontal_weight="8.5"
+                        android:textSize="@dimen/text_small_medium"
+                        app:layout_constraintBottom_toTopOf="@+id/qrCodeViewLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:textStyle="Normal" />
 
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.fastpay.payment.view.custom.CustomCheckbox
-                    android:id="@+id/confirmCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:checked="false"
-                    android:padding="@dimen/size_7dp"
-                    android:text="@string/fp_payment_page_i_accept_the"
-                    android:textColor="@color/colorSdkBaseTextColor"
-                    android:textSize="@dimen/text_small_medium"
-                    android:theme="@style/customCheckboxStyle"
-                    app:layout_constraintBottom_toTopOf="@+id/paymentBtn"
-                    app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
-                    app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/mobileNumberTitleView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_30dp"
-                    android:layout_marginTop="@dimen/size_20dp"
-                    android:layout_marginEnd="@dimen/size_30dp"
-                    android:gravity="start"
-                    android:text="@string/fp_payment_page_mobile_number"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorSdkBaseTextColor"
-                    android:textSize="@dimen/text_14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/mobileNumberLayout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:textStyle="Normal" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/passwordTitleView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_15dp"
-                    android:gravity="start"
-                    android:text="@string/fp_payment_page_password"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorSdkBaseTextColor"
-                    android:textSize="@dimen/text_14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/passwordLayout"
-                    app:layout_constraintEnd_toEndOf="@+id/mobileNumberTitleView"
-                    app:layout_constraintStart_toStartOf="@+id/mobileNumberTitleView"
-                    app:layout_constraintTop_toBottomOf="@+id/mobileNumberLayout"
-                    app:textStyle="Normal" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/termsTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fp_payment_page_terms_and_condition"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorBtnBaseColor"
-                    android:textSize="@dimen/text_small_medium"
-                    app:layout_constraintBottom_toBottomOf="@+id/confirmCheckBox"
-                    app:layout_constraintStart_toEndOf="@+id/confirmCheckBox"
-                    app:layout_constraintTop_toTopOf="@+id/confirmCheckBox"
-                    app:textStyle="Medium" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/paymentBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:background="@drawable/action_button_background"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/size_15dp"
-                    android:paddingBottom="@dimen/size_15dp"
-                    android:text="@string/fp_payment_page_proceed_to_pay"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorBtnTextColor"
-                    android:textSize="@dimen/text_small_medium"
-                    app:layout_constraintEnd_toEndOf="@+id/passwordLayout"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/passwordLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/confirmCheckBox"
-                    app:textStyle="Medium" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/orTitleView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_15dp"
-                    android:gravity="start"
-                    android:text="@string/fp_app_common_or"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorSdkBaseTextColor"
-                    android:textSize="@dimen/text_14sp"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/paymentBtn"
-                    app:textStyle="Normal" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/generateQrTitleView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:gravity="start"
-                    android:text="@string/fp_payment_page_generate_qr"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorBtnBaseColor"
-                    android:textSize="@dimen/text_small_medium"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toTopOf="@+id/cancelPayment"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/qrPaymentBtn"
-                    app:textStyle="Medium" />
+            </FrameLayout>
 
 
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/cancelPayment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/size_30dp"
-                    android:background="@drawable/drawable_active_btn_background"
-                    android:backgroundTint="@color/colorPaymentHeaderBackground"
-                    android:gravity="start"
-                    android:paddingTop="@dimen/size_8dp"
-                    android:paddingBottom="@dimen/size_8dp"
-                    android:paddingStart="@dimen/size_10dp"
-                    android:paddingRight="@dimen/size_10dp"
-                    android:text="@string/fp_payment_page_cancel_payment"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorPaymentTextColor"
-                    android:textSize="@dimen/text_small_medium"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:textStyle="Medium" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/qrOptionLayout"
-                android:layout_width="match_parent"
+            <com.fastpay.payment.view.custom.CustomTextView
+                android:id="@+id/cancelPayment"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorSdkBaseBackground"
-                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/size_30dp"
+                android:background="@drawable/drawable_active_btn_background"
+                android:backgroundTint="@color/colorPaymentHeaderBackground"
+                android:gravity="start"
+                android:paddingStart="@dimen/size_10dp"
+                android:paddingTop="@dimen/size_8dp"
+                android:paddingRight="@dimen/size_10dp"
+                android:paddingBottom="@dimen/size_8dp"
+                android:text="@string/fp_payment_page_cancel_payment"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorPaymentTextColor"
+                android:textSize="@dimen/text_small_medium"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/payViaLayout">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/qrCodeViewLayout"
-                    android:layout_width="@dimen/size_220dp"
-                    android:layout_height="@dimen/size_220dp"
-                    android:layout_marginStart="@dimen/size_20dp"
-                    android:layout_marginTop="@dimen/size_15dp"
-                    android:layout_marginEnd="@dimen/size_20dp"
-                    android:background="@drawable/drawable_qr_border_background"
-                    app:layout_constraintBottom_toTopOf="@+id/qrOrTitleView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/qrScanTitleView">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/qrCodeView"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_margin="@dimen/size_15dp"
-                        android:background="@color/colorWhiteIdentical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/qrScanTitleView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_20dp"
-                    android:gravity="start"
-                    android:text="@string/fp_payment_page_qr_scan_title"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorSdkBaseTextColor"
-                    android:textSize="@dimen/text_small_medium"
-                    app:layout_constraintBottom_toTopOf="@+id/qrCodeViewLayout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:textStyle="Normal" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/qrOrTitleView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_15dp"
-                    android:layout_marginBottom="@dimen/size_15dp"
-                    android:gravity="start"
-                    android:text="@string/fp_app_common_or"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorSdkBaseTextColor"
-                    android:textSize="@dimen/text_14sp"
-                    app:layout_constraintBottom_toTopOf="@+id/loginTitleView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/qrCodeViewLayout"
-                    app:textStyle="Normal" />
-
-                <com.fastpay.payment.view.custom.CustomTextView
-                    android:id="@+id/loginTitleView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/size_50dp"
-                    android:gravity="start"
-                    android:text="@string/fp_payment_page_use_login"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorBtnBaseColor"
-                    android:textSize="@dimen/text_small_medium"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/qrOrTitleView"
-                    app:textStyle="Medium" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@+id/paymentOptionContainerLayout"
+                app:textStyle="Medium" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+    <!-- Payment Option Scroll layout End -->
 
+
+    <!--Success Layout Start-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/successLayout"
         android:layout_width="0dp"
@@ -590,12 +570,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_60dp"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/fp_payment_page_payment_success"
-            android:textAlignment="center"
             android:textColor="@color/colorNavyBlueIdentical"
             android:textSize="@dimen/text_medium"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/customTickView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -616,9 +595,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_40dp"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/fp_payment_page_back_to_app"
-            android:textAlignment="center"
             android:textColor="@color/colorNavyBlueIdentical"
             android:textSize="@dimen/text_14sp"
             android:visibility="invisible"
@@ -628,7 +606,11 @@
             app:textStyle="Normal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Success Layout End-->
 
+
+
+    <!--Error Layout Start-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/errorLayout"
         android:layout_width="match_parent"
@@ -653,9 +635,8 @@
             android:id="@+id/errorTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/fp_app_common_error"
-            android:textAlignment="center"
             android:textColor="@color/colorSdkBaseTextColor"
             android:textSize="@dimen/text_small_medium"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -670,13 +651,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_15dp"
             android:background="@drawable/drawable_btn_border_round"
-            android:gravity="start"
+            android:gravity="center"
             android:paddingStart="@dimen/size_10dp"
             android:paddingTop="@dimen/size_5dp"
             android:paddingEnd="@dimen/size_10dp"
             android:paddingBottom="@dimen/size_5dp"
             android:text="@string/fp_app_common_retry"
-            android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorBtnBaseColor"
             android:textSize="@dimen/text_small_medium"
@@ -686,5 +666,6 @@
             app:textStyle="Medium" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--Error Layout End-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
