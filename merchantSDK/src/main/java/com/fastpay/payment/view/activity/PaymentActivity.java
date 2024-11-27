@@ -3,6 +3,7 @@ package com.fastpay.payment.view.activity;
 import static com.fastpay.payment.view.activity.OtpVerificationActivity.OTP_VERIFICATION_REQUEST_CODE;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Outline;
@@ -22,6 +23,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -75,7 +77,7 @@ public class PaymentActivity extends BaseActivity {
 
     private ConstraintLayout mainRootView, mobileNumberLayout, errorLayout;
     private ConstraintLayout paymentInitLayout, paymentOptionLayout, qrOptionLayout;
-    private ConstraintLayout successLayout, payViaLayout, paymentHeaderLayout;
+    private ConstraintLayout successLayout, paymentOptionLayoutContainer, paymentHeaderLayout;
     private ScrollView paymentLayout;
     private TextView merchantNameTextView, orderIdTextView, paymentAmountTextView;
     private TextView mobileNumberCode, paymentBtn, termsTextView;
@@ -196,13 +198,13 @@ public class PaymentActivity extends BaseActivity {
         paymentOptionLayout = findViewById(R.id.paymentOptionLayout);
         cancelPayment = findViewById(R.id.cancelPayment);
         successLayout = findViewById(R.id.successLayout);
+        paymentOptionLayoutContainer = findViewById(R.id.paymentOptionLayoutContainer);
         paymentLayout = findViewById(R.id.paymentLayout);
         initialTextView = findViewById(R.id.initialText);
         customTickView = findViewById(R.id.customTickView);
         qrCodeImageView = findViewById(R.id.qrCodeView);
         successTextView = findViewById(R.id.successTextView);
         backAppTextView = findViewById(R.id.backAppTextView);
-        payViaLayout = findViewById(R.id.payViaLayout);
         paymentHeaderLayout = findViewById(R.id.paymentHeaderLayout);
         errorLayout = findViewById(R.id.errorLayout);
         errorTextView = findViewById(R.id.errorTextView);
@@ -365,6 +367,7 @@ public class PaymentActivity extends BaseActivity {
                     case 0:
                         paymentOptionLayout.setVisibility(View.GONE);
                         qrOptionLayout.setVisibility(View.VISIBLE);
+                        hideKeyboard(paymentOptionLayoutContainer);
                         break;
                     case 1:
                         paymentOptionLayout.setVisibility(View.VISIBLE);
@@ -404,6 +407,19 @@ public class PaymentActivity extends BaseActivity {
         paymentBtn.setOnClickListener(view -> {
             sendOtpAPi();
         });
+
+        mainRootView.setOnClickListener(this::hideKeyboard);
+        paymentOptionLayoutContainer.setOnClickListener(this::hideKeyboard);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        mobileNumberEditText.clearFocus();
+        passwordEditText.clearFocus();
+        mainRootView.requestFocus();
     }
 
     @Override
@@ -640,8 +656,7 @@ public class PaymentActivity extends BaseActivity {
 
         if (errorState == paymentError || errorState == otpError) {
             paymentHeaderLayout.setVisibility(View.GONE);
-            payViaLayout.setVisibility(View.GONE);
-            paymentOptionLayout.setVisibility(View.GONE);
+            paymentLayout.setVisibility(View.GONE);
         }
 
         errorLayout.setVisibility(View.VISIBLE);
@@ -653,17 +668,30 @@ public class PaymentActivity extends BaseActivity {
             } else if (errorState == paymentError) {
                 errorLayout.setVisibility(View.GONE);
                 paymentHeaderLayout.setVisibility(View.VISIBLE);
-                payViaLayout.setVisibility(View.VISIBLE);
-                paymentOptionLayout.setVisibility(View.VISIBLE);
+                paymentLayout.setVisibility(View.VISIBLE);
+
             } else if (errorState == otpError) {
                 errorLayout.setVisibility(View.GONE);
                 paymentHeaderLayout.setVisibility(View.VISIBLE);
-                payViaLayout.setVisibility(View.VISIBLE);
-                paymentOptionLayout.setVisibility(View.VISIBLE);
+                paymentLayout.setVisibility(View.VISIBLE);
                 /*Intent intent = new Intent(PaymentActivity.this, OtpVerificationActivity.class);
                 intent.putExtra(ShareData.KEY_OTP_MESSAGE,message);
                 startActivityForResult(intent, OTP_VERIFICATION_REQUEST_CODE);*/
             }
+
+            mobileNumberEditText.setText("");
+            passwordEditText.setText("");
+            confirmCheckBox.setChecked(false);
+            mobileNumberEditTextEndImageView.setVisibility(View.GONE);
+
+            mobileNumberBackground1 = new TransitionDrawable(new Drawable[]{getResources().getDrawable(R.drawable.drawable_edittext_form_background_white), getResources().getDrawable(R.drawable.drawable_edittext_form_invalid_background_white)});
+            mobileNumberLayout.setBackground(mobileNumberBackground1);
+            if (animIdPos == R.drawable.drawable_edittext_form_invalid_background_white) {
+                mobileNumberBackground1.reverseTransition(300);
+            }
+            animIdPos = R.drawable.drawable_edittext_form_background_white;
+
+            hideKeyboard(mainRootView);
         });
     }
 
