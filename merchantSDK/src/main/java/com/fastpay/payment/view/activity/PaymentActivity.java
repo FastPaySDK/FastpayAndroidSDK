@@ -12,6 +12,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
@@ -57,7 +58,6 @@ import com.fastpay.payment.service.network.request.RequestSentOtp;
 import com.fastpay.payment.service.utill.ConfigurationUtil;
 import com.fastpay.payment.service.utill.DownloadImage;
 import com.fastpay.payment.service.utill.FormValidationUtil;
-import com.fastpay.payment.service.utill.GifDecoderView;
 import com.fastpay.payment.service.utill.NavigationUtil;
 import com.fastpay.payment.service.utill.QRCodeHelper;
 import com.fastpay.payment.service.utill.ShareData;
@@ -67,8 +67,6 @@ import com.fastpay.payment.view.custom.CustomProgressDialog;
 import com.fastpay.payment.view.custom.MobileNumberFormat;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class PaymentActivity extends BaseActivity {
@@ -91,7 +89,7 @@ public class PaymentActivity extends BaseActivity {
     private CheckBox confirmCheckBox;
     private TabLayout payViaTabLayout;
 
-    private GifDecoderView customTickView;
+    private ImageView customTickView;
 
     private FastpayRequest requestExtra;
     private InitiationSuccess initiationModel;
@@ -106,9 +104,9 @@ public class PaymentActivity extends BaseActivity {
     private int dotCount = 0, animDot = 3;
 
     private int dotAnimDelay = 700;
-    private int successAnimDelay = 1 * 1000;
-    private int successDelay = 3 * 1000;
-    private int qrPaymentDelay = 10 * 1000;
+    private int successAnimDelay = 1000;
+    private int successDelay = 1000;
+    private int qrPaymentDelayInSecond = 10;
 
     private int initialError = 1;
     private int paymentError = 2;
@@ -118,6 +116,7 @@ public class PaymentActivity extends BaseActivity {
     private boolean isFastpayPaymentInitiated = false;
     private String otpMessage = "";
 
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -633,7 +632,7 @@ public class PaymentActivity extends BaseActivity {
             paymentValidate.setResponseListener(new PaymentValidationApiListener() {
                 @Override
                 public void successResponse(PaymentValidation model) {
-                    handler.removeCallbacksAndMessages(null);
+                    handler.removeCallbacks(runnable);
                     showSuccessResult(model);
                 }
 
@@ -709,11 +708,8 @@ public class PaymentActivity extends BaseActivity {
             QRCodeHelper qrCodeHelper = new QRCodeHelper(this, qrCodeImageView, null);
             qrCodeHelper.generateQRWithOutImage(initiationModel.getQrToken());
 
-            handler = new Handler(Looper.getMainLooper());
-            runnable = () -> {
-                checkQrPayment();
-                handler.postDelayed(runnable, qrPaymentDelay);
-            };
+            startQrPaymentApnCallTimer();
+
         } else {
             Toast.makeText(this, getString(R.string.fp_payment_page_qr_token_empty), Toast.LENGTH_SHORT).show();
         }
@@ -752,12 +748,6 @@ public class PaymentActivity extends BaseActivity {
         paymentLayout.setVisibility(View.GONE);
         successLayout.setVisibility(View.VISIBLE);
 
-        try {
-            InputStream stream = getAssets().open("success.gif");
-            customTickView.playGif(stream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
@@ -855,6 +845,31 @@ public class PaymentActivity extends BaseActivity {
             sessionReceiver = null;
         }
         stopService(new Intent(this, UserSessionTimer.class));
+    }
+
+    private void startQrPaymentApnCallTimer() {
+
+        long appTimerCountInMillis = StoreInformationUtil.getLongData(getApplicationContext(), ShareData.KEY_FINISHING_TIME, ShareData.USER_SESSION_TIMER_TARGET);
+
+        if(BuildConfig.DEBUG){
+            appTimerCountInMillis = 60; //Seconds
+        }
+
+        countDownTimer = new CountDownTimer(appTimerCountInMillis * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long secondsRemaining = millisUntilFinished / 1000;
+                if (secondsRemaining % qrPaymentDelayInSecond == 0) {
+                    checkQrPayment();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                countDownTimer.cancel();
+            }
+        };
+        countDownTimer.start();
     }
 
 }

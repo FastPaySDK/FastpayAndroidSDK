@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+
+import androidx.activity.result.ActivityResultLauncher;
 
 import com.fastpay.payment.SdkSingleton;
 import com.fastpay.payment.service.listener.ListenerFastpayCallback;
@@ -139,7 +140,7 @@ public class FastpayRequest implements Parcelable {
         this.callBackUrl = callBackUrl;
     }
 
-    public void startPaymentIntent(Activity activity, int requestCode){
+    public void startPaymentIntent(Activity activity, ActivityResultLauncher<Intent> resultLauncher){
         /*boolean isAppExist = isFastpayAppExist(activity.getPackageManager());
         if (isAppExist){
 
@@ -148,7 +149,7 @@ public class FastpayRequest implements Parcelable {
             activity.startActivityForResult(intent, requestCode);
         }*/
         Intent intent = new Intent(mContext, PaymentActivity.class).putExtra(EXTRA_PAYMENT_REQUEST, this);
-        activity.startActivityForResult(intent, requestCode);
+        resultLauncher.launch(intent);
     }
 
     public boolean isFastpayAppExist(PackageManager packageManager) {

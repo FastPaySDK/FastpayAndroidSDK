@@ -44,22 +44,18 @@ public class GifDecoderView extends AppCompatImageView {
         new Thread(() -> {
             final int n = mGifDecoder.getFrameCount();
             final int ntimes = mGifDecoder.getLoopCount();
-/*            int repetitionCounter = 0;
-            do {*/
-                for (int i = 0; i < n; i++) {
-                    mTmpBitmap = mGifDecoder.getFrame(i);
-                    int t = mGifDecoder.getDelay(i);
-                    mHandler.post(mUpdateResults);
-                    try {
-                        Thread.sleep(t);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            for (int i = 0; i < n; i++) {
+                mTmpBitmap = mGifDecoder.getFrame(i);
+                int t = mGifDecoder.getDelay(i);
+                // Ensure delay is non-negative; use a default if invalid
+                t = Math.max(t, 10); // Minimum 10ms delay
+                mHandler.post(mUpdateResults);
+                try {
+                    Thread.sleep(t);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-/*                if (ntimes != 0) {
-                    repetitionCounter++;
-                }
-            } while (mIsPlayingGif && (repetitionCounter <= ntimes));*/
+            }
         }).start();
     }
 
