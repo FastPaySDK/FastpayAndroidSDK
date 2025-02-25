@@ -1,0 +1,134 @@
+[33mb147c2a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmerchant_sdk[m[33m, [m[1;31morigin/merchant_sdk[m[33m)[m HEAD@{0}: reset: moving to b147c2a2d3f599d3e19e8ddd92d2c6fb7632cf87
+[33m3acaf24[m HEAD@{1}: commit (amend): - sdk moved to maven repo
+[33mecaf1f2[m HEAD@{2}: commit (amend): - sdk moved to maven repo
+[33m0e282c4[m HEAD@{3}: commit (amend): - sdk moved to maven repo
+[33meb973f9[m HEAD@{4}: commit (amend): - sdk moved to maven repo
+[33m3e65ee9[m HEAD@{5}: reset: moving to 3e65ee99dcaba1c1b309f33b5aa64915b248c945
+[33m3e65ee9[m HEAD@{6}: commit (amend): - sdk moved to maven repo
+[33m4ff188e[m HEAD@{7}: commit (amend): - sdk moved to maven repo
+[33md66a909[m HEAD@{8}: commit (amend): - sdk moved to maven repo
+[33m70dd267[m HEAD@{9}: commit (amend): - sdk moved to maven repo
+[33m904aea4[m HEAD@{10}: commit: - sdk moved to maven repo
+[33mb147c2a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmerchant_sdk[m[33m, [m[1;31morigin/merchant_sdk[m[33m)[m HEAD@{11}: reset: moving to b147c2a2d3f599d3e19e8ddd92d2c6fb7632cf87
+[33mb147c2a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmerchant_sdk[m[33m, [m[1;31morigin/merchant_sdk[m[33m)[m HEAD@{12}: merge origin/merchant_sdk: Merge made by the 'ort' strategy.
+[33mafffbb1[m HEAD@{13}: commit (amend): - version up 1.0.3
+[33mb9740b9[m HEAD@{14}: commit: - version up 1.0.3
+[33m383ba4a[m HEAD@{15}: commit: - ActivityResultLauncher added
+[33mcbbbb7d[m HEAD@{16}: commit: - example unit test file removed
+[33m3c2fe42[m[33m ([m[1;31morigin/feat_result_back[m[33m, [m[1;32mfeat_result_back[m[33m)[m HEAD@{17}: checkout: moving from feat_obfuscation to merchant_sdk
+[33md4e1f55[m[33m ([m[1;31morigin/feat_obfuscation[m[33m, [m[1;32mfeat_obfuscation[m[33m)[m HEAD@{18}: reset: moving to HEAD
+[33md4e1f55[m[33m ([m[1;31morigin/feat_obfuscation[m[33m, [m[1;32mfeat_obfuscation[m[33m)[m HEAD@{19}: checkout: moving from merchant_sdk to feat_obfuscation
+[33m3c2fe42[m[33m ([m[1;31morigin/feat_result_back[m[33m, [m[1;32mfeat_result_back[m[33m)[m HEAD@{20}: merge refs/heads/feat_result_back: Fast-forward
+[33ma346d35[m HEAD@{21}: checkout: moving from feat_result_back to merchant_sdk
+[33m3c2fe42[m[33m ([m[1;31morigin/feat_result_back[m[33m, [m[1;32mfeat_result_back[m[33m)[m HEAD@{22}: commit: - version up to 1.0.2
+[33m6f7a4e3[m HEAD@{23}: commit: - hide keyboard on click outside edittext done
+[33m8c4d384[m HEAD@{24}: commit: - new tab design done
+[33mdfd6c9a[m HEAD@{25}: commit (merge): Merge remote-tracking branch 'origin/feat_result_back' into feat_result_back
+[33m77c8dd5[m HEAD@{26}: commit (amend): - show log only on debug mode done
+[33mcb3c54c[m HEAD@{27}: reset: moving to cb3c54c3a99e07cb79b81249bb2939a75c29118d
+[33med19371[m HEAD@{28}: commit: - removed secrets
+[33m57c7443[m HEAD@{29}: commit (merge): Merge remote-tracking branch 'origin/feat_result_back' into feat_result_back
+[33mcb3c54c[m HEAD@{30}: commit: - show log only on debug mode done
+[33mb8b90c9[m HEAD@{31}: merge origin/feat_result_back: Fast-forward
+[33m9fd2a82[m HEAD@{32}: commit: - deep link uri set on manifest
+[33ma3763a5[m HEAD@{33}: pull: Fast-forward
+[33mcc77322[m HEAD@{34}: commit: result back in progress
+[33ma346d35[m HEAD@{35}: checkout: moving from merchant_sdk to feat_result_back
+[33ma346d35[m HEAD@{36}: checkout: moving from feat_obfuscation to merchant_sdk
+[33md4e1f55[m[33m ([m[1;31morigin/feat_obfuscation[m[33m, [m[1;32mfeat_obfuscation[m[33m)[m HEAD@{37}: commit: obfuscation in progress
+[33ma346d35[m HEAD@{38}: checkout: moving from merchant_sdk to feat_obfuscation
+[33ma346d35[m HEAD@{39}: merge origin/merchant_sdk: Fast-forward
+[33m8249390[m HEAD@{40}: commit: feature: sdk timer feature added.
+[33mdd1322e[m HEAD@{41}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{42}: checkout: moving from merchant_sdk to ziChargeSdk
+[33mdd1322e[m HEAD@{43}: reset: moving to HEAD
+[33mdd1322e[m HEAD@{44}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{45}: checkout: moving from merchant_sdk to ziChargeSdk
+[33mdd1322e[m HEAD@{46}: reset: moving to HEAD
+[33mdd1322e[m HEAD@{47}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{48}: checkout: moving from merchant_sdk to ziChargeSdk
+[33mdd1322e[m HEAD@{49}: reset: moving to HEAD
+[33mdd1322e[m HEAD@{50}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{51}: checkout: moving from merchant_sdk to ziChargeSdk
+[33mdd1322e[m HEAD@{52}: commit: timer service classed added
+[33m365bc03[m HEAD@{53}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{54}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m365bc03[m HEAD@{55}: reset: moving to HEAD
+[33m365bc03[m HEAD@{56}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{57}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m365bc03[m HEAD@{58}: reset: moving to HEAD
+[33m365bc03[m HEAD@{59}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{60}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m365bc03[m HEAD@{61}: reset: moving to HEAD
+[33m365bc03[m HEAD@{62}: reset: moving to 365bc03990a90987bfdd0b74a7912a66cc487b25
+[33m365bc03[m HEAD@{63}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{64}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m365bc03[m HEAD@{65}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{66}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m365bc03[m HEAD@{67}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m7e679ed[m[33m ([m[1;32mziChargeSdk[m[33m)[m HEAD@{68}: merge origin/ziChargeSdk: Fast-forward
+[33m2a06d3f[m HEAD@{69}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m365bc03[m HEAD@{70}: commit: fix:
+[33m0533cd5[m HEAD@{71}: commit: clean up
+[33mef4566c[m HEAD@{72}: commit: feature: otp flow done
+[33me2a8a0d[m HEAD@{73}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{74}: checkout: moving from merchant_sdk to ziChargeSdk
+[33me2a8a0d[m HEAD@{75}: reset: moving to HEAD
+[33me2a8a0d[m HEAD@{76}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{77}: checkout: moving from merchant_sdk to ziChargeSdk
+[33me2a8a0d[m HEAD@{78}: reset: moving to HEAD
+[33me2a8a0d[m HEAD@{79}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{80}: checkout: moving from merchant_sdk to ziChargeSdk
+[33me2a8a0d[m HEAD@{81}: reset: moving to HEAD
+[33me2a8a0d[m HEAD@{82}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{83}: checkout: moving from merchant_sdk to ziChargeSdk
+[33me2a8a0d[m HEAD@{84}: reset: moving to HEAD
+[33me2a8a0d[m HEAD@{85}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{86}: checkout: moving from merchant_sdk to ziChargeSdk
+[33me2a8a0d[m HEAD@{87}: reset: moving to HEAD
+[33me2a8a0d[m HEAD@{88}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{89}: checkout: moving from merchant_sdk to ziChargeSdk
+[33me2a8a0d[m HEAD@{90}: commit: otp verification and payment api and functionality added
+[33m48ed330[m HEAD@{91}: commit: on paste listener added with custom edittext, dependency resolved on otp verification activity
+[33m291f7d6[m HEAD@{92}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{93}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m291f7d6[m HEAD@{94}: reset: moving to HEAD
+[33m291f7d6[m HEAD@{95}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{96}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m291f7d6[m HEAD@{97}: reset: moving to HEAD
+[33m291f7d6[m HEAD@{98}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{99}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m291f7d6[m HEAD@{100}: commit: valid invalid pin drawable added
+[33m5c1466e[m HEAD@{101}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{102}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m5c1466e[m HEAD@{103}: reset: moving to HEAD
+[33m5c1466e[m HEAD@{104}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{105}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m5c1466e[m HEAD@{106}: commit: New Share data added
+[33m154a696[m HEAD@{107}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{108}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m154a696[m HEAD@{109}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{110}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m154a696[m HEAD@{111}: commit: HTTP params added
+[33m3dd3e39[m HEAD@{112}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{113}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m3dd3e39[m HEAD@{114}: commit: feature: otp verification activity and layout added
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{115}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{116}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{117}: reset: moving to HEAD
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{118}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{119}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{120}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{121}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{122}: checkout: moving from ziChargeSdk to merchant_sdk
+[33m2a06d3f[m HEAD@{123}: checkout: moving from merchant_sdk to ziChargeSdk
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{124}: checkout: moving from zahid_dev to merchant_sdk
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{125}: checkout: moving from ziChargeSdk to zahid_dev
+[33m2a06d3f[m HEAD@{126}: commit: fix: default paste behaviour override for OTP edittext.
+[33m9e863c7[m HEAD@{127}: commit: fix: OTP paste issue, clear and edit issue.
+[33md962497[m HEAD@{128}: pull: Fast-forward
+[33m71ef695[m HEAD@{129}: checkout: moving from zahid_dev to ziChargeSdk
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{130}: checkout: moving from ziChargeSdk to zahid_dev
+[33m71ef695[m HEAD@{131}: checkout: moving from zahid_dev to ziChargeSdk
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{132}: reset: moving to HEAD
+[33m12ad6c1[m[33m ([m[1;31morigin/zahid_dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mzahid_dev[m[33m)[m HEAD@{133}: clone: from github.com:FastPaySDK/FastpayAndroidSDK.git

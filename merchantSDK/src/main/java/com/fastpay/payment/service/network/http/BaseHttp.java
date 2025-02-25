@@ -5,8 +5,8 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.fastpay.payment.BuildConfig;
 import com.fastpay.payment.model.merchant.FastpaySDK;
-import com.google.zxing.client.android.BuildConfig;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

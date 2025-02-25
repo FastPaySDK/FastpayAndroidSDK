@@ -229,6 +229,8 @@
                 android:orientation="horizontal"
                 app:tabRippleColor="@color/zxing_transparent"
                 android:visibility="visible"
+                app:tabMode="fixed"
+                android:layoutMode="clipBounds"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/payViaLayout"
@@ -236,19 +238,20 @@
                 app:tabIndicatorColor="@color/colorSdkAccent"
                 app:tabIndicatorGravity="center"
                 app:tabIndicatorHeight="@dimen/size_50dp"
+                app:tabIndicatorFullWidth="true"
                 app:tabSelectedTextColor="@color/colorWhiteIdentical"
                 app:tabTextColor="@color/colorSdkAccent">
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tabQR"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/fp_payment_page_scan_qr_code" />
 
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tabLogin"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/fp_payment_page_login_to_pay" />
 
@@ -487,7 +490,6 @@
                         android:layout_marginTop="@dimen/size_15dp"
                         android:layout_marginEnd="@dimen/size_20dp"
                         android:background="@drawable/drawable_qr_border_background"
-                        app:layout_constraintBottom_toTopOf="@+id/qrOrTitleView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/qrScanTitleView">
