@@ -506,6 +506,8 @@ public class PaymentActivity extends BaseActivity {
             paymentInitiate.setResponseListener(new InitiationApiListener() {
                 @Override
                 public void successResponse(InitiationSuccess model) {
+
+                    Log.e("QR_DATA_SAMPLE", model.getQrToken());
                     if (model != null && !TextUtils.isEmpty(model.getToken())) {
                         initiationModel = model;
                         boolean isFPAppExist = requestExtra.isFastpayAppExist(PaymentActivity.this.getPackageManager());

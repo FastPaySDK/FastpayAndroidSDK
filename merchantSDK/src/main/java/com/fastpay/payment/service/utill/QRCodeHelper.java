@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -31,36 +32,44 @@ public class QRCodeHelper {
         this.overLayImage = overLayImage;
     }
 
-    public  void CreateQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
+    public void createQRCode(String qrCodeData, String charset, Map<EncodeHintType, ?> hintMap, int qrCodeHeight, int qrCodeWidth) {
         try {
-            BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeData.getBytes(charset), charset),
-                    BarcodeFormat.QR_CODE, qrCodewidth, qrCodeheight, hintMap);
+            BitMatrix matrix = new MultiFormatWriter().encode(
+                    new String(qrCodeData.getBytes(charset), charset),
+                    BarcodeFormat.QR_CODE,
+                    qrCodeWidth,
+                    qrCodeHeight,
+                    hintMap
+            );
 
             int width = matrix.getWidth();
             int height = matrix.getHeight();
             int[] pixels = new int[width * height];
+
             for (int y = 0; y < height; y++) {
                 int offset = y * width;
                 for (int x = 0; x < width; x++) {
-                    pixels[offset + x] = matrix.get(x, y) ?
-                            Color.BLACK : Color.WHITE;
+                    pixels[offset + x] = matrix.get(x, y) ? Color.BLACK : Color.WHITE;
                 }
             }
 
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-            //Bitmap finalQrBitmap = mergeBitmaps(Bitmap.createScaledBitmap(overLayImage,50,60,false),bitmap);
-            Bitmap finalQrBitmap = null;
-            if (qrCodeheight == 300)
-                finalQrBitmap = mergeBitmaps(scaleDown(overLayImage,80,true),bitmap);
-            else
-                finalQrBitmap = mergeBitmaps(scaleDown(overLayImage,100,true),bitmap);
+
+            Bitmap finalQrBitmap;
+            if (qrCodeHeight == 300) {
+                finalQrBitmap = mergeBitmaps(scaleDown(overLayImage, 80, true), bitmap);
+            } else {
+                finalQrBitmap = mergeBitmaps(scaleDown(overLayImage, 100, true), bitmap);
+            }
+
             imageView.setImageBitmap(getRoundedCornerBitmap(finalQrBitmap));
 
-        }catch (Exception er){
-            er.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
