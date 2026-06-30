@@ -3,7 +3,7 @@
 This guide provides step-by-step instructions on how to integrate the **FastPayMerchantSDK** into your Android application and use it to process payments.
 
 ## Latest Version
-`1.0.1`
+`1.0.2`
 
 
 ---
