@@ -125,15 +125,35 @@ public class PaymentActivity extends BaseActivity {
         setContentView(R.layout.activity_payment_layout);
         initView();
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            if (bundle.containsKey(FastpayRequest.EXTRA_PAYMENT_REQUEST)) {
-                requestExtra = bundle.getParcelable(FastpayRequest.EXTRA_PAYMENT_REQUEST);
+        if (savedInstanceState != null) {
+            requestExtra = savedInstanceState.getParcelable("requestExtra");
+            initiationModel = (InitiationSuccess) savedInstanceState.getSerializable("initiationModel");
+            otpMessage = savedInstanceState.getString("otpMessage", "");
+            isFastpayPaymentInitiated = savedInstanceState.getBoolean("isFastpayPaymentInitiated", false);
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                if (bundle.containsKey(FastpayRequest.EXTRA_PAYMENT_REQUEST)) {
+                    requestExtra = bundle.getParcelable(FastpayRequest.EXTRA_PAYMENT_REQUEST);
+                }
             }
         }
 
-        initiatePayment();
+        if (initiationModel != null) {
+            buildUi();
+        } else {
+            initiatePayment();
+        }
         initiateTimer();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("requestExtra", requestExtra);
+        outState.putSerializable("initiationModel", initiationModel);
+        outState.putString("otpMessage", otpMessage);
+        outState.putBoolean("isFastpayPaymentInitiated", isFastpayPaymentInitiated);
     }
 
     @Override
@@ -819,11 +839,7 @@ public class PaymentActivity extends BaseActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ShareData.INTENT_USER_SESSION_FINISHED);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(sessionReceiver, filter, RECEIVER_EXPORTED);
-        }else {
-            registerReceiver(sessionReceiver, filter);
-        }
+        ContextCompat.registerReceiver(this, sessionReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
 
         startService(new Intent(this, UserSessionTimer.class));
         sessionReceiver.setSessionReceiverListener(() -> {

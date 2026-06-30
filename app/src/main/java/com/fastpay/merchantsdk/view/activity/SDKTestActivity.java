@@ -39,8 +39,12 @@ public class SDKTestActivity extends BaseActivity {
     }
 
     private void buildUi() {
-        layoutBinding.orderIdEditText.setText(getSaltString());
-        layoutBinding.paymentAmountEditText.setText("250");
+        if (layoutBinding.orderIdEditText.getText().toString().isEmpty()) {
+            layoutBinding.orderIdEditText.setText(getSaltString());
+        }
+        if (layoutBinding.paymentAmountEditText.getText().toString().isEmpty()) {
+            layoutBinding.paymentAmountEditText.setText("250");
+        }
 
         try {
             if(BuildConfig.DEBUG){

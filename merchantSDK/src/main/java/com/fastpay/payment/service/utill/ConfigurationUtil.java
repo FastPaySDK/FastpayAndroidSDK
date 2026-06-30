@@ -74,7 +74,7 @@ public class ConfigurationUtil {
     public static void softHideKeyBoard(Activity activity) {
         if (activity != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         }
     }
 
