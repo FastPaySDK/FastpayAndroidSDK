@@ -61,7 +61,7 @@ dependencies {
     // ... other dependencies
     
     // FastPay Merchant SDK
-    implementation("com.fastpay:merchant-sdk:1.0.1")
+    implementation("com.fastpay:merchant-sdk:LATEST_VERSION")
 }
 ```
 
