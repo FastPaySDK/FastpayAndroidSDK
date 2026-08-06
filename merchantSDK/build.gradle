@@ -48,8 +48,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -92,7 +91,7 @@ publishing {
         bar(MavenPublication) {
             groupId = "com.fastpay"
             artifactId = "merchant-sdk"
-            version = "1.0.1"
+            version = "1.0.3"
             artifact("$buildDir/outputs/aar/merchantSDK-release.aar")
 
             pom.withXml {
