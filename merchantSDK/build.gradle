@@ -91,7 +91,7 @@ publishing {
         bar(MavenPublication) {
             groupId = "com.fastpay"
             artifactId = "merchant-sdk"
-            version = "1.0.3"
+            version = "1.0.4"
             artifact("$buildDir/outputs/aar/merchantSDK-release.aar")
 
             pom.withXml {

@@ -26,8 +26,10 @@
 -keepattributes EnclosingMethod
 -keepattributes InnerClasses
 
-#-dontwarn com.fastpay.payment.**
-#-keep class com.fastpay.** { *; }
+
+-dontwarn com.fastpay.payment.**
+-keep class com.fastpay.** { *; }
+
 
 -dontobfuscate
 -optimizations !code/allocation/variable
